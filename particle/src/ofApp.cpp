@@ -1,7 +1,15 @@
 #include "ofApp.h"
 
+#include <cstdio>
+#include "primitives/vec3.h"
+
 //--------------------------------------------------------------
 void ofApp::setup(){
+
+}
+
+void spawParticle(int n)
+{
 
 }
 
