@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+particle/particle.sln
+particle/particle.vcxproj
+particle/particle.vcxproj.filters
+particle/particle.vcxproj.user
