@@ -38,3 +38,6 @@ particle/particle.vcxproj.user
 particle/bin
 particle/obj
 particle/.vs
+particle/.vscode/c_cpp_properties.json
+particle/.vscode/settings.json
+particle/.vscode/tasks.json

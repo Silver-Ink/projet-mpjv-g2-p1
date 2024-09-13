@@ -2,10 +2,11 @@
 
 #include <cstdio>
 #include "primitives/vec3.h"
+#include "tests/testClass.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+	TestClass::s_testVec3();
 }
 
 void spawParticle(int n)
