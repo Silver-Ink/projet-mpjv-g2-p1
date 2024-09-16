@@ -7,18 +7,19 @@ float rng(float a, float b) { return (rand() % static_cast<int>(b - a)) + a; }
 class Particle
 {
 public:
-	Particle(float maxTrans, float maxVel, float maxAcc) : mPosition(rng(-maxTrans, maxTrans)), mVelocity(rng(-maxVel, maxVel)), mAcceleration(rng(-maxAcc, maxAcc)) {}
 
-	void update();
-	void draw();
+	virtual void update();
+	virtual void draw() = 0;
 
 	void setMass(float _mass) { inverseMass = 1 / _mass; }
 	float getinverseMass() { return inverseMass; }
 
+	void integrate(float _dt);
+
 private:
-	Vec3 mPosition;
-	Vec3 mVelocity;
-	Vec3 mAcceleration;
+	Vec3 position;
+	Vec3 velocity;
+	Vec3 acceleration;
 	float inverseMass;
 };
 
