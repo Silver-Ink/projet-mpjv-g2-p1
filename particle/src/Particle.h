@@ -8,7 +8,8 @@ class Particle
 {
 public:
 
-	virtual void update();
+	void computeForces(float dt);
+	virtual void update(float dt);
 	virtual void draw() = 0;
 
 	void setMass(float _mass) { inverseMass = 1 / _mass; }
@@ -16,7 +17,7 @@ public:
 
 	void integrate(float _dt);
 
-private:
+protected:
 	Vec3 position;
 	Vec3 velocity;
 	Vec3 acceleration;

@@ -1,15 +1,14 @@
 #include "Particle.h"
 #include "ofApp.h"
 
-void Particle::update()
+void Particle::computeForces(float dt)
 {
-	integrate(1. / 60.); //TODO : change to deltatime
+	acceleration = Vec3(0, 9.8, 0); //Apply Gravity
 }
 
-void Particle::draw()
+void Particle::update(float dt)
 {
-	//ofDrawCircle(mPosition, 5.);
-	//ofDrawCircle()
+	integrate(1. / 60.); //TODO : change to deltatime
 }
 
 void Particle::integrate(float _dt)
