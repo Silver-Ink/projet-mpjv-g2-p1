@@ -11,9 +11,14 @@ public:
 
 	void update();
 	void draw();
+
+	void setMass(float _mass) { inverseMass = 1 / _mass; }
+	float getinverseMass() { return inverseMass; }
+
 private:
 	Vec3 mPosition;
 	Vec3 mVelocity;
 	Vec3 mAcceleration;
+	float inverseMass;
 };
 
