@@ -1,6 +1,6 @@
 #pragma once
 
-#include "primitives/vec3.h"
+#include "primitives/Vec3.h"
 
 float rng(float a, float b) { return (rand() % static_cast<int>(b - a)) + a; }
 

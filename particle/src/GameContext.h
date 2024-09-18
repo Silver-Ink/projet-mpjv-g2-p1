@@ -1,5 +1,5 @@
 #pragma once
-#include "primitives/vec3.h"
+#include "primitives/Vec3.h"
 #include "Particle.h"
 
 
@@ -16,8 +16,8 @@ private:
 	GameContext() {};
 
 public:
-	GameContext(const GameContext &) = delete;
-	void operator=(const GameContext &) = delete;
+	GameContext(const GameContext&) = delete;
+	void operator=(const GameContext&) = delete;
 
 // INTERFACE
 

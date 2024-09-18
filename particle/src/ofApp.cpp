@@ -1,8 +1,8 @@
 #include "ofApp.h"
 
 #include <cstdio>
-#include "primitives/vec3.h"
-#include "tests/testClass.h"
+#include "primitives/Vec3.h"
+#include "tests/TestClass.h"
 #include "projectiles/FireBall.h"
 
 //--------------------------------------------------------------

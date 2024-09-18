@@ -1,4 +1,4 @@
-#include "vec3.h"
+#include "Vec3.h"
 
 Vec3& Vec3::operator=(const Vec3& _other)
 {

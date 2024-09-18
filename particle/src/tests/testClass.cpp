@@ -1,5 +1,5 @@
-#include "testClass.h"
-#include "../primitives/vec3.h"
+#include "TestClass.h"
+#include "../primitives/Vec3.h"
 
 #define COMMA ,
 
