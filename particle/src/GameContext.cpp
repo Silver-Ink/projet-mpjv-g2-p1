@@ -1,25 +1,27 @@
 #include "GameContext.h"
 #include "../ofMain.h"
-#include "projectiles/FireBall.h"
+#include "projectiles/CanonBall.h"
 
 void GameContext::update(float dt)
 {
 	int x = ofGetMouseX();
 	int y = ofGetMouseY() - ofGetHeight();
 
+	aimAngle = -atan2(y, x);
+
 	if (ofGetMousePressed(OF_MOUSE_BUTTON_1))
 	{
-		FireBall* f = new FireBall;
+		CanonBall* f = new CanonBall(aimAngle);
 		f->setMass(5.f);
 		lstParticle.emplace_back(f);
 	}
-
-	aimAngle = -atan2(y,x);
 }
 
 void GameContext::draw()
 {
 	//Draw the arrow
+	ofSetColor(255, 255, 255);
+
 	float r = 100.;
 	float a = -aimAngle;
 

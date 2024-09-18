@@ -22,5 +22,6 @@ protected:
 	Vec3 velocity;
 	Vec3 acceleration;
 	float inverseMass;
+	float lifeTime;				// in seconds
 };
 
