@@ -8,6 +8,8 @@ void FireBall::update(float dt)
 
 void FireBall::draw()
 {
-	// ofDrawCircle({ 0, 0 }, 50.);
+	ofSetColor({ 255, 131, 48 });
+	ofDrawCircle({ position.x, position.y}, 50.);
+	ofSetColor(ofColor::white);
 	
 }

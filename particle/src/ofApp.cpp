@@ -17,11 +17,21 @@ void spawParticle(int n)
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	GameContext::getInstance().update(1./60.); // TODO ; change to delta time
+	float dt = 1. / 60.; // TODO ; change to delta time
+	GameContext::getInstance().update(dt); 
+	for (Particle* p : GameContext::getInstance().lstParticle)
+	{
+		p->computeForces(dt);
+		p->update(dt);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	for (Particle* p : GameContext::getInstance().lstParticle)
+	{
+		p->draw();
+	}
 	GameContext::getInstance().draw();
 }
 
