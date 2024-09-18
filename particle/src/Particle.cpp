@@ -3,7 +3,7 @@
 
 void Particle::computeForces(float dt)
 {
-	acceleration = Vec3(0, 9.8, 0); //Apply Gravity
+	acceleration = Vec3(0, 99.8, 0); //Apply Gravity
 }
 
 void Particle::update(float dt)

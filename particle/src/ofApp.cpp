@@ -19,6 +19,7 @@ void spawParticle(int n)
 void ofApp::update(){
 	float dt = 1. / 60.; // TODO ; change to delta time
 	GameContext::getInstance().update(dt); 
+	
 	for (Particle* p : GameContext::getInstance().lstParticle)
 	{
 		p->computeForces(dt);

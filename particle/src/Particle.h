@@ -8,7 +8,7 @@ class Particle
 {
 public:
 
-	void computeForces(float dt);
+	void computeForces(float _dt);
 	virtual void update(float dt);
 	virtual void draw() = 0;
 
@@ -22,5 +22,6 @@ protected:
 	Vec3 velocity;
 	Vec3 acceleration;
 	float inverseMass;
+
 };
 
