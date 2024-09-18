@@ -3,12 +3,13 @@
 
 void Particle::computeForces(float dt)
 {
-	acceleration = Vec3(0, 99.8, 0); //Apply Gravity
+	acceleration = Vec3(0, 9.8, 0); //Apply Gravity
+	
 }
 
-void Particle::update(float dt)
+void Particle::update(float _dt)
 {
-	integrate(1. / 60.); //TODO : change to deltatime
+	integrate(_dt); 
 }
 
 void Particle::integrate(float _dt)
