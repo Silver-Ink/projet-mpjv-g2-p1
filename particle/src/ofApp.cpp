@@ -3,6 +3,7 @@
 #include <cstdio>
 #include "primitives/vec3.h"
 #include "tests/testClass.h"
+#include "projectiles/FireBall.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -16,13 +17,12 @@ void spawParticle(int n)
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+	GameContext::getInstance().update(1./60.); // TODO ; change to delta time
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofDrawCircle({ 1024/2, 768/2 }, 50.);
-
+	GameContext::getInstance().draw();
 }
 
 //--------------------------------------------------------------

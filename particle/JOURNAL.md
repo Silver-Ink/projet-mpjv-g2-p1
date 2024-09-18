@@ -12,3 +12,5 @@
 - Intégration d'Euler
 - Reflection sur l'architecture du code en groupe
 
+## 17/09/2024
+- Singleton GameContext pour gérer l'interraction avec le joueur qui ne fait pas directement parti du moteur physique.
