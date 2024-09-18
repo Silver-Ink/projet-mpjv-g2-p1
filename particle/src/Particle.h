@@ -7,9 +7,10 @@ float rng(float a, float b) { return (rand() % static_cast<int>(b - a)) + a; }
 class Particle
 {
 public:
+	Particle();
 
 	void computeForces(float _dt);
-	virtual void update(float dt);
+	virtual void update(float _dt);
 	virtual void draw() = 0;
 
 	void setMass(float _mass) { inverseMass = 1 / _mass; }

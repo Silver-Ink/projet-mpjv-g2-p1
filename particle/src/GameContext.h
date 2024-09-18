@@ -30,13 +30,13 @@ public:
 // INTERFACE
 
 public:
-	void		update(float dt);
+	void		update(float _dt);
 	void		draw();
 
 	std::vector<Particle*> lstParticle;
 
 private:
-	bool updateThrower(float dt);
+	bool updateThrower(float _dt);
 
 	float aimAngle = 0;
 	EProjectile currentProjectile = EProjectile_FireBall;

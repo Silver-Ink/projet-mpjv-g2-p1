@@ -4,7 +4,9 @@
 class FireBall : public Particle
 {
 public:
-	virtual void update(float dt) override;
+	FireBall(float angle);
+
+	virtual void update(float _dt) override;
 	virtual void draw() override;
 	
 };

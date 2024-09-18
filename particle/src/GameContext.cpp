@@ -1,17 +1,27 @@
 #include "GameContext.h"
 #include "../ofMain.h"
+#include "projectiles/Ball.h"
 #include "projectiles/CanonBall.h"
+#include "projectiles/FireBall.h"
+#include "projectiles/Laser.h"
 
-void GameContext::update(float dt)
+void GameContext::update(float _dt)
 {
 	int x = ofGetMouseX();
 	int y = ofGetMouseY() - ofGetHeight();
 
 	aimAngle = -atan2(y, x);
 
-	if (updateThrower(dt))
+	if (updateThrower(_dt))
 	{
-		CanonBall* f = new CanonBall(aimAngle);
+		Particle* f;
+		switch (currentProjectile)
+		{
+		case EProjectile_Ball:			f = new Ball{};					break;
+		case EProjectile_CanonBall:		f = new CanonBall{aimAngle};	break;
+		case EProjectile_FireBall:		f = new FireBall{aimAngle};				break;
+		case EProjectile_Laser:			f = new	Laser{};				break;
+		}
 		f->setMass(5.f);
 		lstParticle.emplace_back(f);
 	}
@@ -40,7 +50,7 @@ void GameContext::draw()
 		x2 + cosf(a - arrowSharpness) * arrowHead, y2 + sinf(a - arrowSharpness) * arrowHead);
 }
 
-bool GameContext::updateThrower(float dt)
+bool GameContext::updateThrower(float _dt)
 {
 	if (ofGetKeyPressed(OF_KEY_F1))
 	{
@@ -69,7 +79,7 @@ bool GameContext::updateThrower(float dt)
 
 	if (ofGetMousePressed(OF_MOUSE_BUTTON_1))
 	{
-		throwerCooldownTimer -= dt;
+		throwerCooldownTimer -= _dt;
 		if (throwerCooldownTimer <= 0)
 		{
 			throwerCooldownTimer = throwerCooldown;

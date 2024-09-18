@@ -4,11 +4,8 @@
 class CanonBall : public Particle
 {
 public:
-	CanonBall(float _angle) {
-		float y = ofGetHeight();
-		position = {0, y, 0};
+	CanonBall(float _angle) : Particle() {
 		velocity = {80*cos(_angle), -100 *sin(_angle), 0};
-		acceleration = {0, 0, 0};
 		setMass(100);
 		lifeTime = 8;				
 	};
