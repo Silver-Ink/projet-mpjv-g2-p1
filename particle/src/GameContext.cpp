@@ -22,7 +22,6 @@ void GameContext::update(float _dt)
 		case EProjectile_FireBall:		f = new FireBall{aimAngle};				break;
 		case EProjectile_Laser:			f = new	Laser{};				break;
 		}
-		f->setMass(5.f);
 		lstParticle.emplace_back(f);
 	}
 }
