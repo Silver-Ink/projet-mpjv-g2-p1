@@ -60,7 +60,7 @@ bool GameContext::updateThrower(float _dt)
 	else if (ofGetKeyPressed(OF_KEY_F2))
 	{
 		currentProjectile = EProjectile_CanonBall;
-		throwerCooldown = .8;
+		throwerCooldown = 6.5;
 		throwerCooldownTimer = 0;
 	}
 	else if (ofGetKeyPressed(OF_KEY_F3))
