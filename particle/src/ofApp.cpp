@@ -22,12 +22,12 @@ void ofApp::update(){
 	GameContext::getInstance().update(dt); 
 	for (auto iter = GameContext::getInstance().lstParticle.begin(); iter != GameContext::getInstance().lstParticle.end();)
 	{
-		if ((*iter)->getlifeTime() < 0)
+		if ((*iter)->getlifeTime() < 0)	//If the particle is dead, we delete it
 		{
 			delete* iter;
 			iter = GameContext::getInstance().lstParticle.erase(iter);
 		}
-		else
+		else							//If the particle is alive, we update it
 		{
 			(*iter)->computeForces(dt);
 			(*iter)->update(dt);
