@@ -14,3 +14,6 @@
 
 ## 17/09/2024
 - Singleton GameContext pour gérer l'interraction avec le joueur qui ne fait pas directement parti du moteur physique.
+
+## 21/09/2024
+- Créations des classes des différents tirs de projectiles

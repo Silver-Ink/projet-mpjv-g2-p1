@@ -18,9 +18,9 @@ void GameContext::update(float _dt)
 		switch (currentProjectile)
 		{
 		case EProjectile_Ball:			f = new Ball{aimAngle};					break;
-		case EProjectile_CanonBall:		f = new CanonBall{aimAngle};	break;
+		case EProjectile_CanonBall:		f = new CanonBall{aimAngle};			break;
 		case EProjectile_FireBall:		f = new FireBall{aimAngle};				break;
-		case EProjectile_Laser:			f = new	Laser{};				break;
+		case EProjectile_Laser:			f = new	Laser{aimAngle};				break;
 		}
 		lstParticle.emplace_back(f);
 	}
@@ -72,7 +72,7 @@ bool GameContext::updateThrower(float _dt)
 	else if (ofGetKeyPressed(OF_KEY_F4))
 	{
 		currentProjectile = EProjectile_Laser;
-		throwerCooldown = 1./20.;
+		throwerCooldown = 1./50.;
 		throwerCooldownTimer = 0;
 	}
 

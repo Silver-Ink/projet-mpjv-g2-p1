@@ -3,6 +3,10 @@
 
 class Laser : public Particle
 {
-	virtual void draw() {}
+public:
+	Laser(float _angle);
+
+	virtual void update(float _dt) override;
+	virtual void draw() override;
 };
 
