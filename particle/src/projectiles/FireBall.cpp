@@ -7,6 +7,7 @@ FireBall::FireBall(float _angle) : Particle()
 	velocity = { speed * cos(_angle), speed * -sin(_angle), 0 };
 	setMass(200);
 	lifeTime = 8;
+	damping = 0.98;
 }
 
 void FireBall::update(float _dt)

@@ -1,9 +1,11 @@
 #pragma once
 #include "../Particle.h"
 
-
 class Ball : public Particle
 {
-	virtual void draw() {}
+	public:
+		Ball(float);
+		void update(float) override;
+		void draw() override;
 };
 

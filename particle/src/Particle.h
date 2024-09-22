@@ -15,6 +15,7 @@ public:
 
 	void setMass(float _mass) { inverseMass = 1 / _mass; }
 	float getinverseMass() { return inverseMass; }
+	float getlifeTime() { return lifeTime; }
 
 	void integrate(float _dt);
 
@@ -22,6 +23,7 @@ protected:
 	Vec3 position;
 	Vec3 velocity;
 	Vec3 acceleration;
+	float damping;
 	float inverseMass;
 	float lifeTime;				// in seconds
 };

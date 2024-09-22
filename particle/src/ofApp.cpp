@@ -18,33 +18,22 @@ void spawParticle(int n)
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	float dt = ofGetLastFrameTime(); // TODO ; change to delta time
+	float dt = ofGetLastFrameTime();
 	GameContext::getInstance().update(dt); 
-	for (Particle* p : GameContext::getInstance().lstParticle)
+	for (auto iter = GameContext::getInstance().lstParticle.begin(); iter != GameContext::getInstance().lstParticle.end();)
 	{
-		p->computeForces(dt);
-		p->update(dt);
-	}
-	/*for(int i = GameContext::getInstance().lstParticle.size(); i>0 ; i--)
-	{
-		Particle* p = GameContext::getInstance().lstParticle[i];
-		if (p->getlifeTime() < 0)
-			GameContext::getInstance().lstParticle.;
-		p->computeForces(dt);
-		p->update(dt);
-	}*/
-	/*for(auto iter = GameContext::getInstance().lstParticle.rbegin(); iter!= GameContext::getInstance().lstParticle.rend();iter++)
-	{
-		if((*iter)->getlifeTime()<0)
+		if ((*iter)->getlifeTime() < 0)
 		{
-			iter
-			auto temp = iter++;
-			(*iter)
+			delete* iter;
+			iter = GameContext::getInstance().lstParticle.erase(iter);
 		}
-		(*iter)->computeForces(dt);
-		(*iter)->update(dt);
-	}*/
-
+		else
+		{
+			(*iter)->computeForces(dt);
+			(*iter)->update(dt);
+			iter++;
+		}
+	}
 }
 
 //--------------------------------------------------------------

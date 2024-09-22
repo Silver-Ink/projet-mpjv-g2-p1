@@ -17,7 +17,7 @@ void GameContext::update(float _dt)
 		Particle* f;
 		switch (currentProjectile)
 		{
-		case EProjectile_Ball:			f = new Ball{};					break;
+		case EProjectile_Ball:			f = new Ball{aimAngle};					break;
 		case EProjectile_CanonBall:		f = new CanonBall{aimAngle};	break;
 		case EProjectile_FireBall:		f = new FireBall{aimAngle};				break;
 		case EProjectile_Laser:			f = new	Laser{};				break;
