@@ -2,6 +2,7 @@
 
 #include <cstdio>
 #include "primitives/Vec3.h"
+#include "projectiles/Ball.h"
 #include "tests/TestClass.h"
 #include "projectiles/FireBall.h"
 
@@ -17,14 +18,33 @@ void spawParticle(int n)
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	float dt = 1. / 60.; // TODO ; change to delta time
+	float dt = ofGetLastFrameTime(); // TODO ; change to delta time
 	GameContext::getInstance().update(dt); 
-	
 	for (Particle* p : GameContext::getInstance().lstParticle)
 	{
 		p->computeForces(dt);
 		p->update(dt);
 	}
+	/*for(int i = GameContext::getInstance().lstParticle.size(); i>0 ; i--)
+	{
+		Particle* p = GameContext::getInstance().lstParticle[i];
+		if (p->getlifeTime() < 0)
+			GameContext::getInstance().lstParticle.;
+		p->computeForces(dt);
+		p->update(dt);
+	}*/
+	/*for(auto iter = GameContext::getInstance().lstParticle.rbegin(); iter!= GameContext::getInstance().lstParticle.rend();iter++)
+	{
+		if((*iter)->getlifeTime()<0)
+		{
+			iter
+			auto temp = iter++;
+			(*iter)
+		}
+		(*iter)->computeForces(dt);
+		(*iter)->update(dt);
+	}*/
+
 }
 
 //--------------------------------------------------------------
