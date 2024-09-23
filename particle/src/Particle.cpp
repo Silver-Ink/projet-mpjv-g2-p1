@@ -13,6 +13,7 @@ Particle::Particle()
 void Particle::computeForces(float _dt)
 {
 	acceleration = Vec3(0, 15, 0); //Apply Gravity
+	acceleration *= 1 / getinverseMass();
 	
 }
 

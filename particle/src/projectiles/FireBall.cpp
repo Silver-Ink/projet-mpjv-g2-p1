@@ -3,9 +3,9 @@
 
 FireBall::FireBall(float _angle) : Particle()
 {
-	initialSpeed = 175;
+	initialSpeed = 500;
 	velocity = { initialSpeed * cos(_angle), initialSpeed * -sin(_angle), 0 };
-	setMass(200);
+	setMass(20);
 	lifeTime = 12;
 	damping = 0.98;
 }
@@ -19,7 +19,7 @@ void FireBall::update(float _dt)
 
 void FireBall::draw()
 {
-	float scale = 0.25;
+	float scale = 2.5;
 	ofSetColor({ 255, 131, 48 });
 	ofDrawCircle({ position.x, position.y }, (scale / inverseMass));	// scale/inverseMasse to have a circle of radius 50 at the beginning + allow decrease of the radius
 	ofSetColor(ofColor::white);

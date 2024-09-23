@@ -2,9 +2,9 @@
 
 CanonBall::CanonBall(float _angle) : Particle() 
 {
-	initialSpeed = 200;
+	initialSpeed = 250;
 	velocity = { initialSpeed * cos(_angle), -initialSpeed * sin(_angle), 0 };
-	setMass(150);
+	setMass(15);
 	lifeTime = 20;
 	damping = 0.95;
 };

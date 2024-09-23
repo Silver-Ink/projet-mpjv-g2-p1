@@ -33,7 +33,7 @@ void Laser::collideBorders()
 		angle *= -1;
 	}
 
-	if ((position.x >= ofGetWidth() && velocity.x > 0) || (position.x <= 0 && velocity.x <0))
+	if ((position.x >= ofGetWidth() && velocity.x > 0) || (position.x <= 0 && velocity.x < 0))
 	{
 		velocity.x *= -1;
 		angle = 3.14 - angle;
