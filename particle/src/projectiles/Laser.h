@@ -8,5 +8,10 @@ public:
 
 	virtual void update(float _dt) override;
 	virtual void draw() override;
+	virtual void collideBorders() override;
+
+protected:
+	float angle;
+	float length;
 };
 

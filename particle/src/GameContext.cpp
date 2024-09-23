@@ -30,6 +30,7 @@ void GameContext::draw()
 {
 	//Draw the arrow
 	ofSetColor(255, 255, 255);
+	ofSetLineWidth(1);
 
 	float r = 100.;
 	float a = -aimAngle;
@@ -72,7 +73,7 @@ bool GameContext::updateThrower(float _dt)
 	else if (ofGetKeyPressed(OF_KEY_F4))
 	{
 		currentProjectile = EProjectile_Laser;
-		throwerCooldown = 1./50.;
+		throwerCooldown = 1.;
 		throwerCooldownTimer = 0;
 	}
 
