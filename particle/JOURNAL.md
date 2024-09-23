@@ -17,3 +17,8 @@
 
 ## 21/09/2024
 - Créations des classes des différents tirs de projectiles
+
+## Résumé
+Nous avons tentés de produire un code propre pour s'assurer une bonne base pour ce moteur physique. 
+Il n'y a pas de difficulté en particulier a reporter.
+Nous avons profités de cette première phase plus simple pour nous mettre à niveau sur quelques notions de C++, ainsi que pour nous organiser le travail et établir quelques conventions de code et de nommage.
