@@ -2,8 +2,8 @@
 
 Ball::Ball(float _angle) : Particle()
 {
-	float speed = 225;
-	velocity = { speed * cos(_angle), speed * -sin(_angle), 0 };
+	initialSpeed = 225;
+	velocity = { initialSpeed * cos(_angle), initialSpeed * -sin(_angle), 0 };
 	setMass(200);
 	lifeTime = 15;
 	damping = 0.95;

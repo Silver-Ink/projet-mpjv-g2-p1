@@ -27,6 +27,7 @@ protected:
 	Vec3 acceleration;
 	float damping;
 	float inverseMass;
-	float lifeTime;				
+	float lifeTime;
+	int initialSpeed;
 };
 

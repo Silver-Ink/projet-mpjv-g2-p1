@@ -7,6 +7,7 @@ Particle::Particle()
 	acceleration = { 0, 0, 0 };
 	damping = 1;
 	lifeTime = 10;
+	initialSpeed = 100;
 }
 
 void Particle::computeForces(float _dt)

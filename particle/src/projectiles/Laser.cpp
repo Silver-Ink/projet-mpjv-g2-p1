@@ -2,7 +2,8 @@
 
 Laser::Laser(float _angle) : Particle()
 {
-	velocity = { 3000 * cos(_angle), -3000 * sin(_angle), 0 };
+	initialSpeed = 3000;
+	velocity = { initialSpeed * cos(_angle), -initialSpeed * sin(_angle), 0 };
 	setMass(0.00001);
 	lifeTime = 10;
 	damping = 1;
