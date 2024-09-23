@@ -14,7 +14,6 @@ void FireBall::update(float _dt)
 {
 	Particle::update(_dt);
 	// The FireBall consumes itself overtime, so its mass decreases
-	// invMass_{f+1} = 1 / ( mass * coef/sec) 
 	inverseMass /= .999;			
 }
 

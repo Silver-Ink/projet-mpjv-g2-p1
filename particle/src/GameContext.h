@@ -39,8 +39,8 @@ private:
 	bool updateThrower(float _dt);
 
 	float aimAngle = 0;
-	EProjectile currentProjectile = EProjectile_FireBall;
+	EProjectile currentProjectile = EProjectile_Laser;
 	float throwerCooldown = 0;
-	float throwerCooldownTimer = .6;
+	float throwerCooldownTimer = 1. / 50.;
 };
 
