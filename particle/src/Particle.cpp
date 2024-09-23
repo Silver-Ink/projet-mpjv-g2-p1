@@ -30,6 +30,12 @@ void Particle::integrate(float _dt)
 
 void Particle::collideBorders()
 {
-	if (position.y >= ofGetHeight() || position.y <= 0) velocity.y *= -1;
-	if (position.x >= ofGetWidth() || position.x <= 0) velocity.x *= -1;
+	if ((position.y >= ofGetHeight() && velocity.y > 0) || (position.y <= 0 && velocity.y < 0))
+	{
+		velocity.y *= -1;
+	}
+	if ((position.x >= ofGetWidth() && velocity.x > 0) || (position.x <= 0 && velocity.x < 0))
+	{
+		velocity.x *= -1;
+	}
 }
