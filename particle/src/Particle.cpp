@@ -19,6 +19,7 @@ void Particle::update(float _dt)
 {
 	lifeTime -= _dt;
 	integrate(_dt);
+	collideBorders();
 }
 
 void Particle::integrate(float _dt)
@@ -27,4 +28,8 @@ void Particle::integrate(float _dt)
 	position += velocity * _dt;
 }
 
-
+void Particle::collideBorders()
+{
+	if (position.y >= ofGetHeight() || position.y <= 0) velocity.y *= -1;
+	if (position.x >= ofGetWidth() || position.x <= 0) velocity.x *= -1;
+}

@@ -19,6 +19,8 @@ public:
 
 	void integrate(float _dt);
 
+	void collideBorders();
+
 protected:
 	Vec3 position;
 	Vec3 velocity;
