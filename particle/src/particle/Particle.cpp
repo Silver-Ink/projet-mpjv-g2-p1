@@ -1,5 +1,5 @@
 #include "Particle.h"
-#include "ofApp.h"
+#include "../ofApp.h"
 
 Particle::Particle()
 {

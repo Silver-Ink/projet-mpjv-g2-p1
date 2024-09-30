@@ -2,16 +2,14 @@
 
 #include <cstdio>
 #include "primitives/Vec3.h"
-#include "projectiles/Ball.h"
 #include "tests/TestClass.h"
-#include "projectiles/FireBall.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 	TestClass::s_testVec3();
 }
 
-void spawParticle(int n)
+void spawnParticle(int n)
 {
 
 }
@@ -19,29 +17,10 @@ void spawParticle(int n)
 //--------------------------------------------------------------
 void ofApp::update(){
 	float dt = ofGetLastFrameTime();
-	GameContext::getInstance().update(dt); 
-	for (auto iter = GameContext::getInstance().lstParticle.begin(); iter != GameContext::getInstance().lstParticle.end();)
-	{
-		if ((*iter)->getlifeTime() < 0)	//If the particle is dead, we delete it
-		{
-			delete* iter;
-			iter = GameContext::getInstance().lstParticle.erase(iter);
-		}
-		else							//If the particle is alive, we update it
-		{
-			(*iter)->computeForces(dt);
-			(*iter)->update(dt);
-			iter++;
-		}
-	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	for (Particle* p : GameContext::getInstance().lstParticle)
-	{
-		p->draw();
-	}
 	GameContext::getInstance().draw();
 }
 

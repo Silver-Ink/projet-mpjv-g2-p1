@@ -1,6 +1,6 @@
 #pragma once
 
-#include "primitives/Vec3.h"
+#include "../primitives/Vec3.h"
 
 float rng(float a, float b) { return (rand() % static_cast<int>(b - a)) + a; }
 
@@ -29,5 +29,10 @@ protected:
 	float inverseMass;
 	float lifeTime;
 	int initialSpeed;
+
+public:
+	Vec3 accumForce;
+	void addForce(const Vec3& _force);
+	void clearAccum();
 };
 
