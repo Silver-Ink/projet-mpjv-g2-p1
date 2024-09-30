@@ -13,7 +13,8 @@ public:
 	virtual void update(float _dt);
 	virtual void draw() = 0;
 
-	void setMass(float _mass) { inverseMass = 1 / _mass; }
+	void setMass(float _mass) { inverseMass = (_mass != 0) ? (1 / _mass) : 999999; }
+	float getMass() { return 1 / inverseMass; }
 	float getinverseMass() { return inverseMass; }
 	float getlifeTime() { return lifeTime; }
 

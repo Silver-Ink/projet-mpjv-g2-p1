@@ -60,6 +60,11 @@ Vec3& Vec3::operator+=(Vec3& _v)
 	return *this;
 }
 
+Vec3& Vec3::operator+=(const Vec3& _v)
+{
+	return *this += const_cast<Vec3&>(_v);
+}
+
 Vec3 Vec3::operator-(Vec3& _v)
 {
 	Vec3 copy = *this;
