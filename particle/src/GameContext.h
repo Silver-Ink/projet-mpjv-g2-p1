@@ -22,14 +22,12 @@ public:
 
 // INTERFACE
 public:
-	typedef std::vector<ParticleForceRegistry::ParticleForceRegistration> Register;
-
-public:
 	void		update(float _dt);
 	void		draw();
 
 public:
-	Register particleForceRegister;
+	
+	ParticleForceRegistry particleForceRegistry;
 	std::vector<Particle> lstParticle;
 	std::vector<ParticleForceGenerator> lstForceGenerator;
 };
