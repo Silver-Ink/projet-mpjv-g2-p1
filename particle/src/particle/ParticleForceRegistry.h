@@ -4,6 +4,7 @@
 
 class ParticleForceRegistry
 {
+public:
 	struct ParticleForceRegistration {
 		Particle* particle;
 		ParticleForceGenerator* forceGenerator;

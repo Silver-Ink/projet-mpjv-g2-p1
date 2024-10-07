@@ -8,5 +8,5 @@ void GameContext::update(float _dt)
 
 void GameContext::draw()
 {
-
+	
 }

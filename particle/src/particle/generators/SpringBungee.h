@@ -11,6 +11,7 @@ class SpringBungee : public ParticleForceGenerator
 		elasticConstant(_elasticConstant)
 	{}
 	virtual void updateForce(Particle* _particle, float _dt) override;
+	virtual void drawForce(Particle* _particle) override;
 
 private:
 	Particle* hinge;

@@ -9,5 +9,6 @@ public:
 	Vec3 gravity { 0., -15., 0. };
 
 	virtual void updateForce(Particle* _particle, float _dt) override;
+	virtual void drawForce(Particle* _particle) override {}
 };
 

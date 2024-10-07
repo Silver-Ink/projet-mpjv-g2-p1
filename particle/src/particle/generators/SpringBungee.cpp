@@ -8,3 +8,10 @@ void SpringBungee::updateForce(Particle* _particle, float /*_dt*/)
 
 	_particle->addForce(- elasticConstant * extension);
 }
+
+
+void SpringBungee::drawForce(Particle* _particle)
+{
+	ofSetLineWidth(5.);
+	ofDrawLine((glm::vec2)_particle->getPos(), (glm::vec2)hinge->getPos());
+}
