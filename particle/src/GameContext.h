@@ -3,6 +3,7 @@
 #include "particle/Particle.h"
 #include "particle/ParticleForceGenerator.h"
 #include "particle/ParticleForceRegistry.h"
+#include "particle/generators/SpringBungee.h"
 
 class GameContext
 {
@@ -22,13 +23,16 @@ public:
 
 // INTERFACE
 public:
-	void		update(float _dt);
-	void		draw();
+	void		init	();
+	void		update	(float _dt);
+	void		draw	();
 
 public:
 	
 	ParticleForceRegistry particleForceRegistry;
-	std::vector<Particle> lstParticle;
-	std::vector<ParticleForceGenerator> lstForceGenerator;
+	std::vector<Particle*> lstParticle;
+	std::vector<ParticleForceGenerator*> lstForceGenerator;
 };
+
+
 

@@ -1,19 +1,18 @@
 #include "Particle.h"
 #include "../ofApp.h"
 
-Particle::Particle()
-{
-	position = { 0, 0, 0 };
-	acceleration = { 0, 0, 0 };
-	accumForce = { 0, 0, 0 };
 
+
+Particle::Particle(Vec3 _pos) : position(_pos)
+{
+	acceleration = { 0, 0, 0 };
+	clearAccum();
 }
 
 void Particle::computeForces(float _dt)
 {
 	acceleration = accumForce * getinverseMass();
 }
-
 
 void Particle::integrate(float _dt)
 {
@@ -38,5 +37,9 @@ void Particle::update(float _dt)
 
 void Particle::draw()
 {
+
+	ofSetColor(ofColor::darkSlateBlue);
+	ofDrawCircle((glm::vec2)position, 25.f);
+	ofSetColor(ofColor::white);
 	ofDrawCircle((glm::vec2)position, 20.f);
 }

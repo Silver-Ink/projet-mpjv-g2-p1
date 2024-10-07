@@ -13,5 +13,6 @@ void SpringBungee::updateForce(Particle* _particle, float /*_dt*/)
 void SpringBungee::drawForce(Particle* _particle)
 {
 	ofSetLineWidth(5.);
+	ofSetColor(ofColor::darkSlateBlue);
 	ofDrawLine((glm::vec2)_particle->getPos(), (glm::vec2)hinge->getPos());
 }
