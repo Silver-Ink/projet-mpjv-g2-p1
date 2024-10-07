@@ -44,6 +44,7 @@ public:
 	void	print() { printf("{%.1f;%.1f;%.1f}", x, y, z); }
 
 	explicit operator glm::vec3() { return { x, y, z }; }
+	explicit operator glm::vec2() { return { x, y }; }
 
 
 public :

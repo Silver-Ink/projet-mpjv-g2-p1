@@ -9,14 +9,10 @@ void ofApp::setup(){
 	TestClass::s_testVec3();
 }
 
-void spawnParticle(int n)
-{
-
-}
-
 //--------------------------------------------------------------
 void ofApp::update(){
 	float dt = ofGetLastFrameTime();
+	GameContext::getInstance().update(dt);
 }
 
 //--------------------------------------------------------------

@@ -14,10 +14,6 @@ void Particle::computeForces(float _dt)
 	acceleration = accumForce * getinverseMass();
 }
 
-void Particle::update(float _dt)
-{
-	integrate(_dt);
-}
 
 void Particle::integrate(float _dt)
 {
@@ -35,3 +31,12 @@ void Particle::clearAccum()
 	accumForce = { 0, 0, 0 };
 }
 
+void Particle::update(float _dt)
+{
+	integrate(_dt);
+}
+
+void Particle::draw()
+{
+	ofDrawCircle((glm::vec2)position, 20.f);
+}

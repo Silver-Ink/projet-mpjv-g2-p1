@@ -11,7 +11,7 @@ public:
 
 	void computeForces(float _dt);
 	virtual void update(float _dt);
-	virtual void draw() = 0;
+	virtual void draw();
 
 	void setMass(float _mass) { inverseMass = (_mass != 0) ? (1 / _mass) : 999999; }
 	float getMass() { return 1 / inverseMass; }
@@ -20,7 +20,7 @@ public:
 
 	void integrate(float _dt);
 
-	virtual void collideBorders();
+	Vec3& getPos() { return position; }
 
 protected:
 	Vec3 position;
