@@ -16,7 +16,8 @@ void Particle::computeForces(float _dt)
 
 void Particle::integrate(float _dt)
 {
-	velocity = pow(damping,_dt)*velocity + acceleration * _dt;
+	//velocity = pow(damping,_dt)*velocity + acceleration * _dt;
+	velocity = velocity + acceleration * _dt;
 	position += velocity * _dt;
 }
 
@@ -33,13 +34,14 @@ void Particle::clearAccum()
 void Particle::update(float _dt)
 {
 	integrate(_dt);
+	clearAccum();
 }
 
 void Particle::draw()
 {
 
-	ofSetColor(ofColor::darkSlateBlue);
-	ofDrawCircle((glm::vec2)position, 25.f);
 	ofSetColor(ofColor::white);
+	ofDrawCircle((glm::vec2)position, 25.f);
+	ofSetColor(ofColor::darkSlateBlue);
 	ofDrawCircle((glm::vec2)position, 20.f);
 }
