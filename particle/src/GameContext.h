@@ -32,6 +32,14 @@ public:
 	ParticleForceRegistry particleForceRegistry;
 	std::vector<Particle*> lstParticle;
 	std::vector<ParticleForceGenerator*> lstForceGenerator;
+
+private:
+	ParticleForceGenerator*		AddForceGenerator	(ParticleForceGenerator* _forceGenerator);
+	Particle*					AddParticle			(Particle* _particle);
+
+	ParticleForceGenerator*		AddForceGenerator	(const ParticleForceGenerator& _forceGenerator);
+	Particle*					AddParticle			(const Particle& _particle);
+
 };
 
 
