@@ -1,6 +1,7 @@
 #include "GameContext.h"
 #include "../ofMain.h"
 #include "particle/generators/ParticleGravity.h"
+#include "particle/generators/Friction.h"
 
 
 
@@ -25,6 +26,23 @@ void GameContext::init()
 
 
 	particleForceRegistry.Add(p2, springBungee1);
+}
+void GameContext::Testing() {
+
+	Particle* p = new Particle(500, 500);
+
+	lstParticle.emplace_back(p);
+
+	ParticleGravity* gravity = new ParticleGravity();
+
+	lstForceGenerator.emplace_back(gravity);
+	
+
+	//doit on mettre la force normal avec la friction ou en dehors?
+	Friction* friction = new Friction();
+	lstForceGenerator.emplace_back(friction);
+	particleForceRegistry.Add(p, friction);
+	particleForceRegistry.Add(p, gravity);
 }
 
 void GameContext::update(float _dt)

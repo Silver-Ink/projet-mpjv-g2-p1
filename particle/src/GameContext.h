@@ -24,6 +24,7 @@ public:
 // INTERFACE
 public:
 	void		init	();
+	void		Testing();
 	void		update	(float _dt);
 	void		draw	();
 
