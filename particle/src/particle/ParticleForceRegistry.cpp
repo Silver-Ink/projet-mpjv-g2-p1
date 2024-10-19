@@ -7,7 +7,7 @@ void ParticleForceRegistry::Add(Particle* _particle, ParticleForceGenerator* _fo
 
 void ParticleForceRegistry::Remove(Particle* _particle, ParticleForceGenerator* _forceGenerator)
 {
-	// for ?
+	
 }
 
 void ParticleForceRegistry::UpdateForces(float _dt)

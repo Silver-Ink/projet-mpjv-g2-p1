@@ -12,3 +12,5 @@ public:
 	virtual void drawForce		(Particle* _particle)				override {}
 };
 
+#define ADD_GRAVITY( _PARTICLE )\
+particleForceRegistry.Add(_PARTICLE, gravity);
