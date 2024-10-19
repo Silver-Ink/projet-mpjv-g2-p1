@@ -45,12 +45,26 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+	if (button == 0)
+	{
+		GameContext::getInstance().leftClickAt(x, y);
+	}
+	else if (button == 1)
+	{
+		GameContext::getInstance().rightClickAt(x, y);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+	if (button == 0)
+	{
+		GameContext::getInstance().releaseLeftClick(x, y);
+	}
+	else if (button == 1)
+	{
+		GameContext::getInstance().releaseRightClick(x, y);
+	}
 }
 
 //--------------------------------------------------------------

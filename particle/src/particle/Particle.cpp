@@ -41,7 +41,7 @@ void Particle::draw()
 {
 
 	ofSetColor(ofColor::white);
-	ofDrawCircle((glm::vec2)position, 25.f);
+	ofDrawCircle((glm::vec2)position, gRadiusAndBorder);
 	ofSetColor(ofColor::darkSlateBlue);
-	ofDrawCircle((glm::vec2)position, 20.f);
+	ofDrawCircle((glm::vec2)position, gRadius);
 }

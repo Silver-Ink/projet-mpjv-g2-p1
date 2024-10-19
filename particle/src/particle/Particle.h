@@ -29,7 +29,10 @@ protected:
 	Vec3 velocity;
 	Vec3 acceleration;
 	float damping{0};
-	float inverseMass{1};
+	float inverseMass{10};
+
+	static constexpr float gRadius{ 10. };
+	static constexpr float gRadiusAndBorder{ 13. };
 
 public:
 	Vec3 accumForce;

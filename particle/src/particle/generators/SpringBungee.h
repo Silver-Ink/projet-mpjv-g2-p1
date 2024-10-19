@@ -6,7 +6,7 @@
 class SpringBungee : public ParticleForceGenerator
 {
 public:
-	SpringBungee(Particle* _hinge, float _restLength, float _elasticConstant = .2) : 
+	SpringBungee(Particle* _hinge, float _restLength, float _elasticConstant = .01) : 
 		hinge(_hinge),
 		restLength(_restLength),
 		elasticConstant(_elasticConstant)

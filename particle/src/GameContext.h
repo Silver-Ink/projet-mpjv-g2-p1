@@ -1,7 +1,7 @@
 #pragma once
 #include "primitives/Vec3.h"
 #include "particle/Particle.h"
-#include "particle/ParticleForceGenerator.h"
+#include "particle/generators/ParticleGravity.h"
 #include "particle/ParticleForceRegistry.h"
 #include "particle/generators/SpringBungee.h"
 
@@ -34,13 +34,24 @@ public:
 	std::vector<Particle*> lstParticle;
 	std::vector<ParticleForceGenerator*> lstForceGenerator;
 
+	void generateBlob(int nbParticle, float firmness, ParticleGravity* gravity = nullptr);
+
+	void leftClickAt(int _x, int _y);
+	void rightClickAt(int _x, int _y);
+
+	void releaseLeftClick(int _x, int _y);
+	void releaseRightClick(int _x, int _y);
+
+	void updateGrabbed();
+
 private:
 	ParticleForceGenerator*		AddForceGenerator	(ParticleForceGenerator* _forceGenerator);
 	Particle*					AddParticle			(Particle* _particle);
 
-	ParticleForceGenerator*		AddForceGenerator	(const ParticleForceGenerator& _forceGenerator);
 	Particle*					AddParticle			(const Particle& _particle);
 
+	Vec3 grabOffset;
+	Particle* grabbedParticle{ nullptr };
 };
 
 
