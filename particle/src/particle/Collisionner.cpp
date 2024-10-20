@@ -35,29 +35,37 @@ void Collisionner::HandleAllCollision(std::vector<Particle*>& _lstParticle)
 
 				if (collision.isCollisionPresent)
 				{
-					// Replace les particule pour qu'elles ne se supperposent pas
-					float massP1 = p1->getMass();
-					float massP2 = p2->getMass();
+					repositionParticle(p1, p2, collision);
 
-					Vec3 deltaP1 = - massP2 / (massP1 + massP2) * collision.interPenetration * collision.normal;
-					Vec3 deltaP2 =   massP1 / (massP1 + massP2) * collision.interPenetration * collision.normal;
-
-					p1->getPos() += deltaP1;
-					p2->getPos() += deltaP2;
-
-
-
-					//Applique l'impulsion
-					Vec3 velocityRelative = p1->getVelocity() - p2->getVelocity();
-
-					float impulsionStrength = ( (restitutionCoef + 1.f) * velocityRelative.dot(collision.normal) ) /
-					//						  ----------------------------------------------------------------------
-													   ( p1->getinverseMass() + p2->getinverseMass() );
-
-					p1->addForce( -impulsionStrength * collision.normal * p1->getinverseMass() );
-					p2->addForce(  impulsionStrength * collision.normal * p2->getinverseMass() );
+					applyImpulsion(p1, p2, collision);
 				}
 			}
 		}
 	}
+}
+
+void Collisionner::repositionParticle(Particle* _p1, Particle* _p2, Collisionner::CollisionResult& _collision)
+{
+	// Replace les particule pour qu'elles ne se supperposent pas
+	float massP1 = _p1->getMass();
+	float massP2 = _p2->getMass();
+
+	Vec3 deltaP1 = -massP2 / (massP1 + massP2) * _collision.interPenetration * _collision.normal;
+	Vec3 deltaP2 =  massP1 / (massP1 + massP2) * _collision.interPenetration * _collision.normal;
+
+	_p1->getPos() += deltaP1;
+	_p2->getPos() += deltaP2;
+}
+
+void Collisionner::applyImpulsion(Particle* _p1, Particle* _p2, Collisionner::CollisionResult& _collision)
+{
+	//Applique l'impulsion
+	Vec3 velocityRelative = _p1->getVelocity() - _p2->getVelocity();
+
+	float impulsionStrength = (	(restitutionCoef + 1.f) * velocityRelative.dot(_collision.normal) ) /
+	//						  ----------------------------------------------------------------------
+										(_p1->getinverseMass() + _p2->getinverseMass());
+
+	_p1->addForce(-impulsionStrength * _collision.normal * _p1->getinverseMass());
+	_p2->addForce(impulsionStrength * _collision.normal * _p2->getinverseMass());
 }

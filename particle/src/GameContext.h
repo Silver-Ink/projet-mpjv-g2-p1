@@ -37,6 +37,7 @@ public:
 	void generateBlob(int nbParticle, float firmness, ParticleGravity* gravity = nullptr);
 	void generateTestInterpenetration(ParticleGravity* gravity);
 	void generateTestRestContact(ParticleGravity* gravity);
+	void generateTestCable(ParticleGravity* gravity);
 
 	void leftClickAt(int _x, int _y);
 	void rightClickAt(int _x, int _y);

@@ -4,6 +4,7 @@
 #include "particle/generators/RegularSpring.h"
 #include "particle/generators/SpringRod.h"
 #include "particle/Collisionner.h"
+#include "particle/generators/SpringCable.h"
 
 
 
@@ -25,7 +26,8 @@ void GameContext::init()
 	//particleForceRegistry.Add(p2, springBungee1);
 
 	//generateTestInterpenetration(gravity);
-	generateTestRestContact(gravity);
+	//generateTestRestContact(gravity);
+	generateTestCable(gravity);
 
 	//generateBlob(7, 1.);
 }
@@ -112,9 +114,9 @@ void GameContext::generateBlob(int nbParticle, float firmness, ParticleGravity* 
 			//SpringBungee* bungee = new SpringBungee(p1, 200., 1);
 			//AddForceGenerator(bungee);
 			//particleForceRegistry.Add(p2, bungee);
-			RegularSpring* bungee = new RegularSpring(200., p1->getPos());
-			AddForceGenerator(bungee);
-			particleForceRegistry.Add(p2, bungee);
+			RegularSpring* spring = new RegularSpring(200., p1->getPos());
+			AddForceGenerator(spring);
+			particleForceRegistry.Add(p2, spring);
 		}
 
 
@@ -156,6 +158,24 @@ void GameContext::generateTestRestContact(ParticleGravity* gravity)
 	ADD_GRAVITY(p1)
 	ADD_GRAVITY(p1)
 	
+}
+
+void GameContext::generateTestCable(ParticleGravity* gravity)
+{
+	Particle* p1 = AddParticle({ 300. , 1100. }); 
+
+	Particle* p2 = AddParticle({ 260., 0. });
+	Particle* p3 = AddParticle({ 340., 0. });
+
+	p1->setMass(10000.);
+	p1->radius = 1000.;
+
+	SpringCable* cable = new SpringCable(p2, 250.);
+	AddForceGenerator(cable);
+	particleForceRegistry.Add(p3, cable);
+
+	ADD_GRAVITY(p2)
+	ADD_GRAVITY(p3)
 }
 
 ParticleForceGenerator* GameContext::AddForceGenerator(ParticleForceGenerator* _forceGenerator)

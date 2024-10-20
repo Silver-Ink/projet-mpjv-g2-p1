@@ -1,10 +1,13 @@
-#include "SpringBungee.h"
+#include "SpringCable.h"
+#include "../Collisionner.h"
 
-void SpringBungee::updateForce(Particle* _particle, float /*_dt*/)
+
+void SpringCable::updateForce(Particle* _particle, float /*_dt*/)
 {
 	Vec3 springForce = _particle->getPos() - hinge->getPos();
 	float springLength = springForce.length();
 	float extension = springLength - restLength;
+
 	if (extension < 0)
 	{
 		return;
@@ -12,14 +15,13 @@ void SpringBungee::updateForce(Particle* _particle, float /*_dt*/)
 
 	springForce *= 1. / springLength; //Normalize
 
-	springForce *= -elasticConstant * extension;
-
-	_particle->addForce(springForce);
-
+	//Collision
+	Collisionner::repositionParticle(_particle, hinge, Collisionner::CollisionResult{ springForce, hinge->getPos(), extension });
+	
 }
 
 
-void SpringBungee::drawForce(Particle* _particle)
+void SpringCable::drawForce(Particle* _particle)
 {
 	ofSetLineWidth(5.);
 	ofSetColor(ofColor::red);
