@@ -6,6 +6,7 @@
 #include "particle/Collisionner.h"
 #include "particle/generators/SpringCable.h"
 #include "particle/generators/FixedSpring.h"
+#include "particle/generators/BlobSpring.h"
 
 
 
@@ -17,11 +18,12 @@ void GameContext::init()
 
 	//generateTestInterpenetration(gravity);
 	//generateTestRestContact(gravity);
-	//generateTestCable(gravity);
+	generateTestCable(gravity);
 	//generateTestRod(gravity);
 	//generateTestFixedSpring(gravity);
-	generateTestRegularSpring(gravity);
+	//generateTestRegularSpring(gravity);
 	//generateTestBungee(gravity);
+	//generateTestBlobSpring(gravity);
 
 	//generateBlob(7, 1.);
 }
@@ -218,6 +220,18 @@ void GameContext::generateTestBungee(ParticleGravity* gravity)
 	Particle* p2 = AddParticle({ 350., 100. });
 
 	RegularSpring* spring = new RegularSpring(p2, 200, true);
+	AddForceGenerator(spring);
+	particleForceRegistry.Add(p1, spring);
+
+	ADD_GRAVITY(p2)
+}
+
+void GameContext::generateTestBlobSpring(ParticleGravity* gravity)
+{
+	Particle* p1 = AddParticle({ 300., 200. });
+	Particle* p2 = AddParticle({ 350., 100. });
+
+	BlobSpring* spring = new BlobSpring(p2, 200, 220);
 	AddForceGenerator(spring);
 	particleForceRegistry.Add(p1, spring);
 

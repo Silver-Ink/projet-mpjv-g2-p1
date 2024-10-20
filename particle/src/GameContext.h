@@ -42,6 +42,7 @@ public:
 	void generateTestFixedSpring(ParticleGravity* gravity);
 	void generateTestRegularSpring(ParticleGravity* gravity);
 	void generateTestBungee(ParticleGravity* gravity);
+	void generateTestBlobSpring(ParticleGravity* gravity);
 
 	void leftClickAt(int _x, int _y);
 	void rightClickAt(int _x, int _y);
