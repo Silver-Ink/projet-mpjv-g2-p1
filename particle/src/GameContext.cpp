@@ -1,6 +1,9 @@
 #include "GameContext.h"
 #include "../ofMain.h"
 #include "particle/generators/Friction.h"
+#include "particle/generators/RegularSpring.h"
+#include "particle/generators/SpringRod.h"
+#include "particle/Collisionner.h"
 
 
 
@@ -17,13 +20,14 @@ void GameContext::init()
 	//Particle* p3 = AddParticle({100., 100.});
 
 
-	//SpringBungee* springBungee1 = new SpringBungee( p1, 200. );
+	//SpringBungee* springBungee1 = new SpringBungee( p1, 200., 1. );
 	//AddForceGenerator(springBungee1);
 	//particleForceRegistry.Add(p2, springBungee1);
 
-	//ADD_GRAVITY(p2)
-	//ADD_GRAVITY(p3)
-	generateBlob(7, 1.);
+	//generateTestInterpenetration(gravity);
+	generateTestRestContact(gravity);
+
+	//generateBlob(7, 1.);
 }
 void GameContext::Testing() {
 
@@ -49,15 +53,19 @@ void GameContext::update(float _dt)
 
 	//particleForceRegistry.Clear();
 
+	Collisionner::HandleAllCollision(lstParticle);
+
 	for (auto particle : lstParticle)
 	{
 		particle->computeForces(_dt);
 	}
 
+
 	for (auto particle : lstParticle)
 	{
 		particle->update(_dt);
 	}
+
 
 	updateGrabbed();
 }
@@ -101,7 +109,10 @@ void GameContext::generateBlob(int nbParticle, float firmness, ParticleGravity* 
 		{
 			p2 = lstBlobParticle[j];
 
-			SpringBungee* bungee = new SpringBungee(p1, 200., 1);
+			//SpringBungee* bungee = new SpringBungee(p1, 200., 1);
+			//AddForceGenerator(bungee);
+			//particleForceRegistry.Add(p2, bungee);
+			RegularSpring* bungee = new RegularSpring(200., p1->getPos());
 			AddForceGenerator(bungee);
 			particleForceRegistry.Add(p2, bungee);
 		}
@@ -115,6 +126,36 @@ void GameContext::generateBlob(int nbParticle, float firmness, ParticleGravity* 
 	SpringBungee* bungee = new SpringBungee(p1, 200.);
 	AddForceGenerator(bungee);
 	particleForceRegistry.Add(p2, bungee);
+}
+
+void GameContext::generateTestInterpenetration(ParticleGravity* gravity)
+{
+	Particle* p1 = AddParticle({ 300. , 0. });
+	Particle* p2 = AddParticle({ 305. , 200. });
+	Particle* p3 = AddParticle({ 248. , 400. });
+	Particle* p4 = AddParticle({ 240. , 600. });
+
+	p1->addForce({ 0., 1500., 0. });
+	//ADD_GRAVITY(p1)
+	//ADD_GRAVITY(p1)
+	//ADD_GRAVITY(p1)
+}
+
+void GameContext::generateTestRestContact(ParticleGravity* gravity)
+{
+	Particle* p1 = AddParticle({ 305. , 0. }); 
+	Particle* p2 = AddParticle({ 300. , 1100. }); //Contact point at 300; 100
+
+	p2->setMass(10000.);
+	p2->radius = 1000.;
+
+	ADD_GRAVITY(p1)
+	ADD_GRAVITY(p1)
+	ADD_GRAVITY(p1)
+	ADD_GRAVITY(p1)
+	ADD_GRAVITY(p1)
+	ADD_GRAVITY(p1)
+	
 }
 
 ParticleForceGenerator* GameContext::AddForceGenerator(ParticleForceGenerator* _forceGenerator)

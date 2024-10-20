@@ -15,12 +15,15 @@ void SpringBungee::updateForce(Particle* _particle, float /*_dt*/)
 	springForce *= -elasticConstant * extension;
 
 	_particle->addForce(springForce);
+
+
+
 }
 
 
 void SpringBungee::drawForce(Particle* _particle)
 {
 	ofSetLineWidth(5.);
-	ofSetColor(ofColor::white);
+	ofSetColor(ofColor::red);
 	ofDrawLine((glm::vec2)_particle->getPos(), (glm::vec2)hinge->getPos());
 }

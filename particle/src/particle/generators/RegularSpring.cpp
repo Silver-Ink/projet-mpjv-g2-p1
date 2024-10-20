@@ -13,3 +13,10 @@ void RegularSpring::updateForce(Particle* _particle, float _dt)
 		_particle->addForce(elasticConstant * spring);
 	}
 }
+
+void RegularSpring::drawForce(Particle* _particle)
+{
+	ofSetLineWidth(5.);
+	ofSetColor(ofColor::white);
+	ofDrawLine((glm::vec2)_particle->getPos(), (glm::vec2)springOriginPoint);
+}

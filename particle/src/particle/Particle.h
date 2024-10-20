@@ -16,13 +16,15 @@ public:
 	virtual void update(float _dt);
 	virtual void draw();
 
-	void setMass(float _mass) { inverseMass = (_mass != 0) ? (1 / _mass) : 999999; }
-	float getMass() { return 1 / inverseMass; }
-	float getinverseMass() { return inverseMass; }
+	void	setMass			(float _mass) { inverseMass = (_mass != 0) ? (1 / _mass) : 999999; }
+	float	getMass			() { return 1.f / inverseMass; }
+	float	getinverseMass	() { return inverseMass; }
+	Vec3&	getPos			() { return position; }
+	Vec3	getVelocity		() { return velocity; }
 
 	void integrate(float _dt);
 
-	Vec3& getPos() { return position; }
+
 
 protected:
 	Vec3 position;
@@ -31,10 +33,10 @@ protected:
 	float damping{0};
 	float inverseMass{10};
 
-	static constexpr float gRadius{ 10. };
-	static constexpr float gRadiusAndBorder{ 13. };
+	static constexpr float gBorder{ 3. };
 
 public:
+	float radius{ 10. };
 	Vec3 accumForce;
 	void addForce(const Vec3& _force);
 	void clearAccum();

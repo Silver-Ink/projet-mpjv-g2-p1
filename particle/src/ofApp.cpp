@@ -14,6 +14,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	float dt = ofGetLastFrameTime();
+	if (dt == 0.)
+		dt = 1. / 60.;
 	GameContext::getInstance().update(dt);
 }
 
