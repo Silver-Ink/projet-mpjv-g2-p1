@@ -5,6 +5,7 @@
 
 class SpringRod : public ParticleForceGenerator
 {
+public:
 	SpringRod(Particle* _particle, float _rodLength) :
 		particle(_particle),
 		rodLength(_rodLength)
