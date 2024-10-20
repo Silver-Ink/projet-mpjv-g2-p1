@@ -38,6 +38,7 @@ public:
 	void generateTestInterpenetration(ParticleGravity* gravity);
 	void generateTestRestContact(ParticleGravity* gravity);
 	void generateTestCable(ParticleGravity* gravity);
+	void generateTestRod(ParticleGravity* gravity);
 
 	void leftClickAt(int _x, int _y);
 	void rightClickAt(int _x, int _y);

@@ -27,7 +27,8 @@ void GameContext::init()
 
 	//generateTestInterpenetration(gravity);
 	//generateTestRestContact(gravity);
-	generateTestCable(gravity);
+	//generateTestCable(gravity);
+	generateTestRod(gravity);
 
 	//generateBlob(7, 1.);
 }
@@ -176,6 +177,20 @@ void GameContext::generateTestCable(ParticleGravity* gravity)
 
 	ADD_GRAVITY(p2)
 	ADD_GRAVITY(p3)
+}
+
+void GameContext::generateTestRod(ParticleGravity* gravity)
+{
+	Particle* p1 = AddParticle({ 300., 200. });
+	Particle* p2 = AddParticle({ 350., 100. });
+
+	SpringRod* rod = new SpringRod(p1, 200);
+	AddForceGenerator(rod);
+	particleForceRegistry.Add(p2, rod);
+
+	ADD_GRAVITY(p2)
+	ADD_GRAVITY(p2)
+	ADD_GRAVITY(p2)
 }
 
 ParticleForceGenerator* GameContext::AddForceGenerator(ParticleForceGenerator* _forceGenerator)

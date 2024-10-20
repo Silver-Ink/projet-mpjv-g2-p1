@@ -1,37 +1,21 @@
 #include "SpringRod.h"
+#include "../Collisionner.h"
 
 void SpringRod::updateForce(Particle* _otherParticle, float _dt)
 {
-    Vec3 direction = _otherParticle->getPos() - particle->getPos();
-    float currentLength = direction.length();
-    
-	// debug currentLength and rodLength
-	
-    if (currentLength > rodLength)
-    {
-        // Normalisation du vecteur de direction
-        direction *= 1.0f / currentLength;
+	Vec3 springForce = _otherParticle->getPos() - particle->getPos();
+	float springLength = springForce.length();
+	float extension = springLength - rodLength;
 
-        // Calcul de la force de correction
-        Vec3 correctionForce = direction * (currentLength - rodLength) * .01;
+	springForce *= 1. / springLength; //Normalize
+	//if (extension < 0)
+	//{
+	//	Collisionner::repositionParticle(_otherParticle, particle, Collisionner::CollisionResult{ springForce, particle->getPos(), extension });
+	//}
 
-        // Limiter la force maximale pour �viter les surcorrections
-        float maxForce = 100.0f; // Ajuste cette valeur en fonction de ton syst�me
-        if (correctionForce.length() > maxForce)
-        {
-            correctionForce *= maxForce / correctionForce.length();
-        }
 
-        // Application de la force corrig�e
-        _otherParticle->addForce(-1*correctionForce);
-        particle->addForce(correctionForce);
-    }
-
-    else if (currentLength < rodLength) 
-    {
-		_otherParticle->clearAccum();
-		particle->clearAccum();
-    }
+	//Collision
+	Collisionner::repositionParticle(_otherParticle, particle, Collisionner::CollisionResult{ springForce, particle->getPos(), extension });
 }
 
 
