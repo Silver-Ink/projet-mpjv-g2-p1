@@ -5,6 +5,7 @@
 #include "particle/generators/SpringRod.h"
 #include "particle/Collisionner.h"
 #include "particle/generators/SpringCable.h"
+#include "particle/generators/FixedSpring.h"
 
 
 
@@ -13,22 +14,14 @@ void GameContext::init()
 	ParticleGravity* gravity = new ParticleGravity();
 	AddForceGenerator(gravity);
 
-	//Particle* p1 = new Particle(300., 0. );
-	//Particle* p2 = new Particle(300., 250. );
-
-	//AddParticle(p1);
-	//AddParticle(p2);
-	//Particle* p3 = AddParticle({100., 100.});
-
-
-	//SpringBungee* springBungee1 = new SpringBungee( p1, 200., 1. );
-	//AddForceGenerator(springBungee1);
-	//particleForceRegistry.Add(p2, springBungee1);
 
 	//generateTestInterpenetration(gravity);
 	//generateTestRestContact(gravity);
 	//generateTestCable(gravity);
-	generateTestRod(gravity);
+	//generateTestRod(gravity);
+	//generateTestFixedSpring(gravity);
+	generateTestRegularSpring(gravity);
+	//generateTestBungee(gravity);
 
 	//generateBlob(7, 1.);
 }
@@ -115,7 +108,7 @@ void GameContext::generateBlob(int nbParticle, float firmness, ParticleGravity* 
 			//SpringBungee* bungee = new SpringBungee(p1, 200., 1);
 			//AddForceGenerator(bungee);
 			//particleForceRegistry.Add(p2, bungee);
-			RegularSpring* spring = new RegularSpring(200., p1->getPos());
+			RegularSpring* spring = new RegularSpring(p1, 200.);
 			AddForceGenerator(spring);
 			particleForceRegistry.Add(p2, spring);
 		}
@@ -190,6 +183,44 @@ void GameContext::generateTestRod(ParticleGravity* gravity)
 
 	ADD_GRAVITY(p2)
 	ADD_GRAVITY(p2)
+	ADD_GRAVITY(p2)
+}
+
+void GameContext::generateTestFixedSpring(ParticleGravity* gravity)
+{
+	Particle* p1 = AddParticle({ 300., 200. });
+
+	FixedSpring* spring = new FixedSpring(Vec3{350., 100., 0.}, 200);
+	AddForceGenerator(spring);
+	particleForceRegistry.Add(p1, spring);
+
+	ADD_GRAVITY(p1)
+	ADD_GRAVITY(p1)
+	ADD_GRAVITY(p1)
+
+}
+
+void GameContext::generateTestRegularSpring(ParticleGravity* gravity)
+{
+	Particle* p1 = AddParticle({ 300., 200. });
+	Particle* p2 = AddParticle({ 350., 100. });
+
+	RegularSpring* spring = new RegularSpring(p2, 200);
+	AddForceGenerator(spring);
+	particleForceRegistry.Add(p1, spring);
+
+	ADD_GRAVITY(p2)
+}
+
+void GameContext::generateTestBungee(ParticleGravity* gravity)
+{
+	Particle* p1 = AddParticle({ 300., 200. });
+	Particle* p2 = AddParticle({ 350., 100. });
+
+	RegularSpring* spring = new RegularSpring(p2, 200, true);
+	AddForceGenerator(spring);
+	particleForceRegistry.Add(p1, spring);
+
 	ADD_GRAVITY(p2)
 }
 

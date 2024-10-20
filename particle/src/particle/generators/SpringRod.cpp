@@ -8,12 +8,6 @@ void SpringRod::updateForce(Particle* _otherParticle, float _dt)
 	float extension = springLength - rodLength;
 
 	springForce *= 1. / springLength; //Normalize
-	//if (extension < 0)
-	//{
-	//	Collisionner::repositionParticle(_otherParticle, particle, Collisionner::CollisionResult{ springForce, particle->getPos(), extension });
-	//}
-
-
 	//Collision
 	Collisionner::repositionParticle(_otherParticle, particle, Collisionner::CollisionResult{ springForce, particle->getPos(), extension });
 }

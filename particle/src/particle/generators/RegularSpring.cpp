@@ -4,13 +4,22 @@ void RegularSpring::updateForce(Particle* _particle, float _dt)
 {
 	const float lengthThreshold = 0.01;
 
-	Vec3 spring = (_particle->getPos() - springOriginPoint);
+	Vec3 spring = (_particle->getPos() - hinge->getPos());
 	float currentLength = spring.length();
 
 	float difference = currentLength - restLength;
-	if (difference > lengthThreshold)
+
+	if (isBungee && difference < 0.)
 	{
-		_particle->addForce(elasticConstant * spring);
+		return;
+	}
+
+	if (fabs(difference) > lengthThreshold)
+	{
+		spring *= -1. / currentLength * difference * elasticConstant;
+		_particle->addForce(spring);
+		spring *= -1.;
+		hinge->addForce(spring);
 	}
 }
 
@@ -18,5 +27,5 @@ void RegularSpring::drawForce(Particle* _particle)
 {
 	ofSetLineWidth(5.);
 	ofSetColor(ofColor::white);
-	ofDrawLine((glm::vec2)_particle->getPos(), (glm::vec2)springOriginPoint);
+	ofDrawLine((glm::vec2)_particle->getPos(), (glm::vec2)hinge->getPos());
 }

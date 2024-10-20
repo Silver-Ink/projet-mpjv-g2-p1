@@ -39,6 +39,9 @@ public:
 	void generateTestRestContact(ParticleGravity* gravity);
 	void generateTestCable(ParticleGravity* gravity);
 	void generateTestRod(ParticleGravity* gravity);
+	void generateTestFixedSpring(ParticleGravity* gravity);
+	void generateTestRegularSpring(ParticleGravity* gravity);
+	void generateTestBungee(ParticleGravity* gravity);
 
 	void leftClickAt(int _x, int _y);
 	void rightClickAt(int _x, int _y);
