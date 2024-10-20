@@ -18,14 +18,18 @@ void GameContext::init()
 
 	//generateTestInterpenetration(gravity);
 	//generateTestRestContact(gravity);
-	generateTestCable(gravity);
+	//generateTestCable(gravity);
 	//generateTestRod(gravity);
 	//generateTestFixedSpring(gravity);
 	//generateTestRegularSpring(gravity);
 	//generateTestBungee(gravity);
 	//generateTestBlobSpring(gravity);
 
-	//generateBlob(7, 1.);
+	generateBlob(10, 1., gravity);
+
+	Particle* floor = AddParticle({ 300, 10600 });
+	floor->radius = 10000.;
+	floor->setMass(10000.);
 }
 void GameContext::Testing() {
 
@@ -48,8 +52,6 @@ void GameContext::Testing() {
 void GameContext::update(float _dt)
 {
 	particleForceRegistry.UpdateForces(_dt);
-
-	//particleForceRegistry.Clear();
 
 	Collisionner::HandleAllCollision(lstParticle);
 
@@ -88,7 +90,7 @@ void GameContext::generateBlob(int nbParticle, float firmness, ParticleGravity* 
 	lstBlobParticle.reserve(nbParticle);
 	for (int i = 0; i < nbParticle; i++)
 	{
-		float angle = rng(0, 6.283);
+		float angle = (float)i / nbParticle * 2 * PI;
 		Particle* p = AddParticle({ x + cos(angle) * radius, y + sin(angle) * radius});
 		lstBlobParticle.emplace_back(p);
 
@@ -98,32 +100,22 @@ void GameContext::generateBlob(int nbParticle, float firmness, ParticleGravity* 
 		}
 	}
 
-	for (int i = 1; i < nbParticle; i++)
+	for (int i = 0; i < nbParticle; i++)
 	{
-		Particle* p1 = lstBlobParticle[i-1];
-		Particle* p2;
-
-		for (int j = 0; j < i; j++)
+		Particle* p1 = lstBlobParticle[i];
+		for (int j = 0; j < nbParticle; j++)
 		{
-			p2 = lstBlobParticle[j];
+			if (i != j)
+			{
+				Particle* p2 = lstBlobParticle[j];
+				float length = Vec3{ p1->getPos() - p2->getPos() }.length();
 
-			//SpringBungee* bungee = new SpringBungee(p1, 200., 1);
-			//AddForceGenerator(bungee);
-			//particleForceRegistry.Add(p2, bungee);
-			RegularSpring* spring = new RegularSpring(p1, 200.);
-			AddForceGenerator(spring);
-			particleForceRegistry.Add(p2, spring);
+				BlobSpring* spring = new BlobSpring(p1, length, length * 1.6);
+				AddForceGenerator(spring);
+				particleForceRegistry.Add(p2, spring);
+			}
 		}
-
-
 	}
-
-	Particle* p1 = lstBlobParticle[nbParticle - 1];
-	Particle* p2 = lstBlobParticle[0];
-
-	SpringBungee* bungee = new SpringBungee(p1, 200.);
-	AddForceGenerator(bungee);
-	particleForceRegistry.Add(p2, bungee);
 }
 
 void GameContext::generateTestInterpenetration(ParticleGravity* gravity)

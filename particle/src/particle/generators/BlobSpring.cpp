@@ -7,6 +7,10 @@ void BlobSpring::updateForce(Particle* _particle, float _dt)
 
 	Vec3 spring = (_particle->getPos() - hinge->getPos());
 	float currentLength = spring.length();
+	if (currentLength == 0)
+	{
+		return;
+	}
 	float springDifference = currentLength - restLength;
 	float ropeDifference = currentLength - maxLength;
 	if (ropeDifference > 0)
@@ -25,6 +29,6 @@ void BlobSpring::updateForce(Particle* _particle, float _dt)
 void BlobSpring::drawForce(Particle* _particle)
 {
 	ofSetLineWidth(5.);
-	ofSetColor(ofColor::white);
+	ofSetColor(ofColor::green);
 	ofDrawLine((glm::vec2)_particle->getPos(), (glm::vec2)hinge->getPos());
 }
