@@ -8,7 +8,7 @@
 void ofApp::setup(){
 	//TestClass::s_testVec3();
 
-	GameContext::getInstance().init();
+	GameContext::getInstance().init(GameContext::EsceneType::BlobScene);
 }
 
 //--------------------------------------------------------------
@@ -26,8 +26,22 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	if (key == 57344)
-		GameContext::getInstance().Testing();
+	//if (key == 57344)
+	//	GameContext::getInstance().Testing();
+
+	std::cout << key << endl;
+
+	switch (key) {
+	case 97: GameContext::getInstance().init(GameContext::EsceneType::BlobScene); break;
+	case 122: GameContext::getInstance().init(GameContext::EsceneType::InterpenetrationScene); break;
+	case 101: GameContext::getInstance().init(GameContext::EsceneType::RestContactScene); break;
+	case 114: GameContext::getInstance().init(GameContext::EsceneType::CableScene); break;
+	case 116: GameContext::getInstance().init(GameContext::EsceneType::RodScene); break;
+	case 121: GameContext::getInstance().init(GameContext::EsceneType::FixedSpringScene); break;
+	case 117: GameContext::getInstance().init(GameContext::EsceneType::RegularSpringScene); break;
+	case 105: GameContext::getInstance().init(GameContext::EsceneType::BungeeScene); break;
+	case 111: GameContext::getInstance().init(GameContext::EsceneType::BlobSpringScene); break;
+	}
 }
 
 //--------------------------------------------------------------

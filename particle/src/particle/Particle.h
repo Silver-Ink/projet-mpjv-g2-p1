@@ -30,7 +30,7 @@ protected:
 	Vec3 position;
 	Vec3 velocity;
 	Vec3 acceleration;
-	float damping{0};
+	float damping{.8};
 	float inverseMass{10};
 
 	static constexpr float gBorder{ 3. };

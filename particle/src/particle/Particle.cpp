@@ -16,8 +16,8 @@ void Particle::computeForces(float _dt)
 
 void Particle::integrate(float _dt)
 {
-	//velocity = pow(damping,_dt)*velocity + acceleration * _dt;
-	velocity = velocity + acceleration * _dt;
+	velocity = pow(damping,_dt)*velocity + acceleration * _dt;
+	//velocity = velocity + acceleration * _dt;
 	position += velocity * _dt;
 }
 

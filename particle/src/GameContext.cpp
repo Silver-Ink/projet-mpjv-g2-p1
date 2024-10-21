@@ -10,26 +10,45 @@
 
 
 
-void GameContext::init()
+void GameContext::init(EsceneType sceneType)
 {
+	emptyScene();
+
 	ParticleGravity* gravity = new ParticleGravity();
 	AddForceGenerator(gravity);
 
 
-	//generateTestInterpenetration(gravity);
-	//generateTestRestContact(gravity);
-	//generateTestCable(gravity);
-	//generateTestRod(gravity);
-	//generateTestFixedSpring(gravity);
-	//generateTestRegularSpring(gravity);
-	//generateTestBungee(gravity);
-	//generateTestBlobSpring(gravity);
+	switch (sceneType)
+	{
+	case GameContext::BlobScene:
+		generateBlob(10, 1., gravity);	
+		break;
+	case GameContext::InterpenetrationScene:
+		generateTestInterpenetration(gravity);
+		break;
+	case GameContext::RestContactScene:
+		generateTestRestContact(gravity);
+		break;
+	case GameContext::CableScene:
+		generateTestCable(gravity);
+		break;
+	case GameContext::RodScene:
+		generateTestRod(gravity);
+		break;
+	case GameContext::FixedSpringScene:
+		generateTestFixedSpring(gravity);
+		break;
+	case GameContext::RegularSpringScene:
+		generateTestRegularSpring(gravity);
+		break;
+	case GameContext::BungeeScene:
+		generateTestBungee(gravity);
+		break;
+	case GameContext::BlobSpringScene:
+		generateTestBlobSpring(gravity);
+		break;
+	}
 
-	generateBlob(10, 1., gravity);
-
-	Particle* floor = AddParticle({ 300, 10600 });
-	floor->radius = 10000.;
-	floor->setMass(10000.);
 }
 void GameContext::Testing() {
 
@@ -72,6 +91,7 @@ void GameContext::update(float _dt)
 
 void GameContext::draw()
 {
+
 	particleForceRegistry.DrawForces();
 	for (auto particle : lstParticle)
 	{
@@ -79,11 +99,29 @@ void GameContext::draw()
 	}
 }
 
+void GameContext::emptyScene()
+{
+	particleForceRegistry.Clear();
+	for (auto p : lstParticle)
+	{
+		delete p;
+	}
+	lstParticle.clear();
+	for (auto fg : lstForceGenerator)
+	{
+		delete fg;
+	}
+	lstForceGenerator.clear();
+}
+
 void GameContext::generateBlob(int nbParticle, float firmness, ParticleGravity* gravity/* = nullptr*/)
 {
+	std::cout << "Blob\n";
 	float radius = 150.;
 	float x = 300.f;
 	float y = 300.f;
+
+	generateTestFloor();
 
 
 	std::vector<Particle*> lstBlobParticle;
@@ -120,19 +158,18 @@ void GameContext::generateBlob(int nbParticle, float firmness, ParticleGravity* 
 
 void GameContext::generateTestInterpenetration(ParticleGravity* gravity)
 {
+	std::cout << "Interpentration\n";
 	Particle* p1 = AddParticle({ 300. , 0. });
 	Particle* p2 = AddParticle({ 305. , 200. });
 	Particle* p3 = AddParticle({ 248. , 400. });
 	Particle* p4 = AddParticle({ 240. , 600. });
 
 	p1->addForce({ 0., 1500., 0. });
-	//ADD_GRAVITY(p1)
-	//ADD_GRAVITY(p1)
-	//ADD_GRAVITY(p1)
 }
 
 void GameContext::generateTestRestContact(ParticleGravity* gravity)
 {
+	std::cout << "Contact au repos\n";
 	Particle* p1 = AddParticle({ 305. , 0. }); 
 	Particle* p2 = AddParticle({ 300. , 1100. }); //Contact point at 300; 100
 
@@ -140,16 +177,12 @@ void GameContext::generateTestRestContact(ParticleGravity* gravity)
 	p2->radius = 1000.;
 
 	ADD_GRAVITY(p1)
-	ADD_GRAVITY(p1)
-	ADD_GRAVITY(p1)
-	ADD_GRAVITY(p1)
-	ADD_GRAVITY(p1)
-	ADD_GRAVITY(p1)
 	
 }
 
 void GameContext::generateTestCable(ParticleGravity* gravity)
 {
+	std::cout << "Cable\n";
 	Particle* p1 = AddParticle({ 300. , 1100. }); 
 
 	Particle* p2 = AddParticle({ 260., 0. });
@@ -168,6 +201,7 @@ void GameContext::generateTestCable(ParticleGravity* gravity)
 
 void GameContext::generateTestRod(ParticleGravity* gravity)
 {
+	std::cout << "Tige\n";
 	Particle* p1 = AddParticle({ 300., 200. });
 	Particle* p2 = AddParticle({ 350., 100. });
 
@@ -176,12 +210,12 @@ void GameContext::generateTestRod(ParticleGravity* gravity)
 	particleForceRegistry.Add(p2, rod);
 
 	ADD_GRAVITY(p2)
-	ADD_GRAVITY(p2)
-	ADD_GRAVITY(p2)
+
 }
 
 void GameContext::generateTestFixedSpring(ParticleGravity* gravity)
 {
+	std::cout << "Ressort a une particule\n";
 	Particle* p1 = AddParticle({ 300., 200. });
 
 	FixedSpring* spring = new FixedSpring(Vec3{350., 100., 0.}, 200);
@@ -189,13 +223,14 @@ void GameContext::generateTestFixedSpring(ParticleGravity* gravity)
 	particleForceRegistry.Add(p1, spring);
 
 	ADD_GRAVITY(p1)
-	ADD_GRAVITY(p1)
-	ADD_GRAVITY(p1)
+
 
 }
 
 void GameContext::generateTestRegularSpring(ParticleGravity* gravity)
 {
+	std::cout << "Ressort a deux particules\n";
+
 	Particle* p1 = AddParticle({ 300., 200. });
 	Particle* p2 = AddParticle({ 350., 100. });
 
@@ -208,6 +243,7 @@ void GameContext::generateTestRegularSpring(ParticleGravity* gravity)
 
 void GameContext::generateTestBungee(ParticleGravity* gravity)
 {
+	std::cout << "Bungee / Elastique\n";
 	Particle* p1 = AddParticle({ 300., 200. });
 	Particle* p2 = AddParticle({ 350., 100. });
 
@@ -220,6 +256,8 @@ void GameContext::generateTestBungee(ParticleGravity* gravity)
 
 void GameContext::generateTestBlobSpring(ParticleGravity* gravity)
 {
+	std::cout << "Ressort du Blob\n";
+
 	Particle* p1 = AddParticle({ 300., 200. });
 	Particle* p2 = AddParticle({ 350., 100. });
 
@@ -228,6 +266,13 @@ void GameContext::generateTestBlobSpring(ParticleGravity* gravity)
 	particleForceRegistry.Add(p1, spring);
 
 	ADD_GRAVITY(p2)
+}
+
+void GameContext::generateTestFloor()
+{
+	Particle* floor = AddParticle({ 300, 10600 });
+	floor->radius = 10000.;
+	floor->setMass(10000.);
 }
 
 ParticleForceGenerator* GameContext::AddForceGenerator(ParticleForceGenerator* _forceGenerator)

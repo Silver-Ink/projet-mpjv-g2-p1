@@ -7,7 +7,7 @@
 
 class GameContext
 {
-// SINGLETON
+	// SINGLETON
 public:
 	static GameContext& getInstance()
 	{
@@ -21,15 +21,29 @@ public:
 	GameContext(const GameContext&) = delete;
 	void operator=(const GameContext&) = delete;
 
-// INTERFACE
+	// INTERFACE
 public:
-	void		init	();
+	enum EsceneType;
+	void		init(EsceneType sceneType);
 	void		Testing();
-	void		update	(float _dt);
-	void		draw	();
+	void		update(float _dt);
+	void		draw();
+	void		emptyScene();
 
 public:
-	
+
+	enum EsceneType {
+		BlobScene,
+		InterpenetrationScene,
+		RestContactScene,
+		CableScene,
+		RodScene,
+		FixedSpringScene,
+		RegularSpringScene,
+		BungeeScene,
+		BlobSpringScene
+	};
+
 	ParticleForceRegistry particleForceRegistry;
 	std::vector<Particle*> lstParticle;
 	std::vector<ParticleForceGenerator*> lstForceGenerator;
@@ -43,6 +57,7 @@ public:
 	void generateTestRegularSpring(ParticleGravity* gravity);
 	void generateTestBungee(ParticleGravity* gravity);
 	void generateTestBlobSpring(ParticleGravity* gravity);
+	void generateTestFloor();
 
 	void leftClickAt(int _x, int _y);
 	void rightClickAt(int _x, int _y);
@@ -53,10 +68,10 @@ public:
 	void updateGrabbed();
 
 private:
-	ParticleForceGenerator*		AddForceGenerator	(ParticleForceGenerator* _forceGenerator);
-	Particle*					AddParticle			(Particle* _particle);
+	ParticleForceGenerator* AddForceGenerator(ParticleForceGenerator* _forceGenerator);
+	Particle* AddParticle(Particle* _particle);
 
-	Particle*					AddParticle			(const Particle& _particle);
+	Particle* AddParticle(const Particle& _particle);
 
 	Vec3 grabOffset;
 	Particle* grabbedParticle{ nullptr };
