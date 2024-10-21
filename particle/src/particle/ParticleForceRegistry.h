@@ -14,7 +14,7 @@ public:
 	typedef std::vector<ParticleForceRegistration> Register;
 
 	void Add			(Particle* _particle, ParticleForceGenerator* _forceGenerator);
-	void Remove			(Particle* _particle, ParticleForceGenerator* _forceGenerator);
+	void Remove			(int _registrationIndex);
 	void Clear			()																	{ registerForceToParticle.clear(); }
 
 	void UpdateForces	(float _dt);

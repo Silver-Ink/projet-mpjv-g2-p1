@@ -318,12 +318,12 @@ void GameContext::leftClickAt(int _x, int _y)
 
 void GameContext::middleClickAt(int _x, int _y)
 {
-	std::cout << "TTTT";
+	particleForceRegistry.destroyLineAt(_x, _y);
 }
 
 void GameContext::rightClickAt(int _x, int _y)
 {
-	particleForceRegistry.destroyLineAt(_x, _y);
+	
 }
 
 
