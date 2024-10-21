@@ -32,14 +32,23 @@ void ofApp::keyPressed(int key){
 	std::cout << key << endl;
 
 	switch (key) {
-	case 97: GameContext::getInstance().init(GameContext::EsceneType::BlobScene); break;
-	case 122: GameContext::getInstance().init(GameContext::EsceneType::InterpenetrationScene); break;
+	// Q
+	case 113: GameContext::getInstance().init(GameContext::EsceneType::BlobScene); break;
+	// W
+	case 119: GameContext::getInstance().init(GameContext::EsceneType::InterpenetrationScene); break;
+	// E
 	case 101: GameContext::getInstance().init(GameContext::EsceneType::RestContactScene); break;
+	// R
 	case 114: GameContext::getInstance().init(GameContext::EsceneType::CableScene); break;
+	// T
 	case 116: GameContext::getInstance().init(GameContext::EsceneType::RodScene); break;
+	// Y
 	case 121: GameContext::getInstance().init(GameContext::EsceneType::FixedSpringScene); break;
+	// U
 	case 117: GameContext::getInstance().init(GameContext::EsceneType::RegularSpringScene); break;
+	// I
 	case 105: GameContext::getInstance().init(GameContext::EsceneType::BungeeScene); break;
+	// O
 	case 111: GameContext::getInstance().init(GameContext::EsceneType::BlobSpringScene); break;
 	}
 }
