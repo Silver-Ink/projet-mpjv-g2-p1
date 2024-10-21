@@ -60,6 +60,7 @@ public:
 	void generateTestFloor();
 
 	void leftClickAt(int _x, int _y);
+	void middleClickAt(int _x, int _y);
 	void rightClickAt(int _x, int _y);
 
 	void releaseLeftClick(int _x, int _y);

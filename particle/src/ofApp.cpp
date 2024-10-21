@@ -76,6 +76,10 @@ void ofApp::mousePressed(int x, int y, int button){
 	}
 	else if (button == 1)
 	{
+		GameContext::getInstance().middleClickAt(x, y);
+	}
+	else if (button == 2)
+	{
 		GameContext::getInstance().rightClickAt(x, y);
 	}
 }
@@ -86,7 +90,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 	{
 		GameContext::getInstance().releaseLeftClick(x, y);
 	}
-	else if (button == 1)
+	else if (button == 2)
 	{
 		GameContext::getInstance().releaseRightClick(x, y);
 	}

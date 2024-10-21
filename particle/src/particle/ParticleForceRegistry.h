@@ -20,6 +20,8 @@ public:
 	void UpdateForces	(float _dt);
 	void DrawForces		();
 
+	void destroyLineAt(int _x, int _y);
+
 private:
 
 	Register registerForceToParticle;
