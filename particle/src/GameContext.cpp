@@ -300,23 +300,26 @@ Particle* GameContext::AddParticle(const Particle& _particle)
 
 void GameContext::leftClickAt(int _x, int _y)
 {
-	Vec3 mousePos{ static_cast<float>(_x), static_cast<float>(_y), 0. };
-
-	grabbedParticle = nullptr; //Reset grabbed particle
-	float shortestDist = 40.f * 40.f; //Shortest squared distance for grabbing a particle
-
-	for (Particle* p : lstParticle)
+	if (!currentLinkedParticle) // Preventing left-click while a right-click is going on
 	{
-		grabOffset = p->getPos() - mousePos;
-		float dist = grabOffset.sqLength();
-		if (dist < shortestDist)
-		{
-			shortestDist = dist;
-			grabbedParticle = p;
-		}
-	}
+		Vec3 mousePos{ static_cast<float>(_x), static_cast<float>(_y), 0. };
 
-	if (grabbedParticle != nullptr) grabbedParticle->freeze();
+		grabbedParticle = nullptr; //Reset grabbed particle
+		float shortestDist = 40.f * 40.f; //Shortest squared distance for grabbing a particle
+
+		for (Particle* p : lstParticle)
+		{
+			grabOffset = p->getPos() - mousePos;
+			float dist = grabOffset.sqLength();
+			if (dist < shortestDist)
+			{
+				shortestDist = dist;
+				grabbedParticle = p;
+			}
+		}
+
+		if (grabbedParticle != nullptr) grabbedParticle->freeze();
+	}
 }
 
 void GameContext::middleClickAt(int _x, int _y)
