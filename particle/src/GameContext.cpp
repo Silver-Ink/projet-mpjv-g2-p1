@@ -97,6 +97,9 @@ void GameContext::draw()
 	{
 		particle->draw();
 	}
+
+
+	drawLinePreview();
 }
 
 void GameContext::emptyScene()
@@ -323,7 +326,21 @@ void GameContext::middleClickAt(int _x, int _y)
 
 void GameContext::rightClickAt(int _x, int _y)
 {
-	
+	Vec3 mousePos{ static_cast<float>(_x), static_cast<float>(_y), 0. };
+
+	currentLinkedParticle = nullptr;
+	float shortestDist = 40.f * 40.f; //Shortest squared distance for grabbing a particle
+
+	for (Particle* p : lstParticle)
+	{
+		grabOffset = p->getPos() - mousePos;
+		float dist = grabOffset.sqLength();
+		if (dist < shortestDist)
+		{
+			shortestDist = dist;
+			currentLinkedParticle = p;
+		}
+	}
 }
 
 
@@ -334,12 +351,50 @@ void GameContext::releaseLeftClick(int _x, int _y)
 }
 
 void GameContext::releaseRightClick(int _x, int _y)
-{}
+{
+	if (currentLinkedParticle)
+	{
+		Particle* particleToLinkTo{ nullptr };
+
+		Vec3 mousePos{ static_cast<float>(_x), static_cast<float>(_y), 0. };
+		float shortestDist = 40.f * 40.f;
+
+		for (Particle* p : lstParticle)
+		{
+			grabOffset = p->getPos() - mousePos;
+			float dist = grabOffset.sqLength();
+			if (dist < shortestDist && p != currentLinkedParticle)
+			{
+				shortestDist = dist;
+				particleToLinkTo = p;
+			}
+		}
+
+		if (particleToLinkTo)
+		{
+			RegularSpring* spring = new RegularSpring(particleToLinkTo, 200);
+			AddForceGenerator(spring);
+			particleForceRegistry.Add(currentLinkedParticle, spring);
+		}
+
+		currentLinkedParticle = nullptr;
+	}
+}
 
 void GameContext::updateGrabbed()
 {
 	if (grabbedParticle)
 	{
 		grabbedParticle->getPos() = Vec3(ofGetMouseX(), ofGetMouseY(), 0.);
+	}
+}
+
+void GameContext::drawLinePreview()
+{
+	if (currentLinkedParticle)
+	{
+		ofSetLineWidth(1.5);
+		ofSetColor(ofColor::white);
+		ofDrawLine((glm::vec2)currentLinkedParticle->getPos(), glm::vec2(ofGetMouseX(), ofGetMouseY()));
 	}
 }

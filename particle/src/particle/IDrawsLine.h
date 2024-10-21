@@ -23,4 +23,3 @@ public:
 		return distance < _maxDist;
 	}
 };
-

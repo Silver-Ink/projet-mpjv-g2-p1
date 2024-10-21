@@ -67,6 +67,7 @@ public:
 	void releaseRightClick(int _x, int _y);
 
 	void updateGrabbed();
+	void drawLinePreview();
 
 private:
 	ParticleForceGenerator* AddForceGenerator(ParticleForceGenerator* _forceGenerator);
@@ -76,6 +77,7 @@ private:
 
 	Vec3 grabOffset;
 	Particle* grabbedParticle{ nullptr };
+	Particle* currentLinkedParticle{ nullptr };
 };
 
 
