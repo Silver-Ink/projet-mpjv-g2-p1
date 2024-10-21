@@ -13,6 +13,8 @@ public:
 	Particle(Vec3 _pos);
 
 	void computeForces(float _dt);
+	void freeze();
+	void unfreeze();
 	virtual void update(float _dt);
 	virtual void draw();
 
@@ -32,6 +34,7 @@ protected:
 	Vec3 acceleration;
 	float damping{.8};
 	float inverseMass{10};
+	bool frozen{ false };
 
 	static constexpr float gBorder{ 3. };
 

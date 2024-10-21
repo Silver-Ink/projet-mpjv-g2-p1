@@ -33,8 +33,19 @@ void Particle::clearAccum()
 
 void Particle::update(float _dt)
 {
-	integrate(_dt);
+	if (!frozen) integrate(_dt);
 	clearAccum();
+}
+
+void Particle::freeze()
+{
+	velocity = { 0, 0, 0 };
+	frozen = true;
+}
+
+void Particle::unfreeze()
+{
+	frozen = false;
 }
 
 void Particle::draw()
@@ -42,6 +53,9 @@ void Particle::draw()
 
 	ofSetColor(ofColor::white);
 	ofDrawCircle((glm::vec2)position, radius);
-	ofSetColor(ofColor::darkSlateBlue);
+
+	if (frozen) ofSetColor(ofColor::mediumSlateBlue);
+	else ofSetColor(ofColor::darkSlateBlue);
+
 	ofDrawCircle((glm::vec2)position, radius - gBorder);
 }

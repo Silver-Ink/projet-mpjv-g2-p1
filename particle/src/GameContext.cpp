@@ -313,6 +313,8 @@ void GameContext::leftClickAt(int _x, int _y)
 		}
 	}
 
+	if (grabbedParticle != nullptr) grabbedParticle->freeze();
+
 }
 
 void GameContext::rightClickAt(int _x, int _y)
@@ -321,6 +323,7 @@ void GameContext::rightClickAt(int _x, int _y)
 
 void GameContext::releaseLeftClick(int _x, int _y)
 {
+	if (grabbedParticle != nullptr) grabbedParticle->unfreeze();
 	grabbedParticle = nullptr;
 }
 void GameContext::releaseRightClick(int _x, int _y)
