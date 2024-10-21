@@ -29,7 +29,7 @@ void ofApp::keyPressed(int key){
 	//if (key == 57344)
 	//	GameContext::getInstance().Testing();
 
-	std::cout << key << endl;
+	//std::cout << key << endl;
 
 	switch (key) {
 	// Q
