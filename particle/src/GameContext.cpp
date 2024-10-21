@@ -354,27 +354,46 @@ void GameContext::releaseRightClick(int _x, int _y)
 {
 	if (currentLinkedParticle)
 	{
-		Particle* particleToLinkTo{ nullptr };
-
-		Vec3 mousePos{ static_cast<float>(_x), static_cast<float>(_y), 0. };
-		float shortestDist = 40.f * 40.f;
-
-		for (Particle* p : lstParticle)
+		if (linkCreationMode != 5)
 		{
-			grabOffset = p->getPos() - mousePos;
-			float dist = grabOffset.sqLength();
-			if (dist < shortestDist && p != currentLinkedParticle)
+			Particle* particleToLinkTo{ nullptr };
+
+			Vec3 mousePos{ static_cast<float>(_x), static_cast<float>(_y), 0. };
+			float shortestDist = 40.f * 40.f;
+
+			for (Particle* p : lstParticle)
 			{
-				shortestDist = dist;
-				particleToLinkTo = p;
+				grabOffset = p->getPos() - mousePos;
+				float dist = grabOffset.sqLength();
+				if (dist < shortestDist && p != currentLinkedParticle)
+				{
+					shortestDist = dist;
+					particleToLinkTo = p;
+				}
+			}
+
+			if (particleToLinkTo)
+			{
+				ParticleForceGenerator* spring;
+
+				switch (linkCreationMode) {
+				case 0: spring = new RegularSpring(particleToLinkTo, 200, false); break;
+				case 1: spring = new RegularSpring(particleToLinkTo, 200, true); break;
+				case 2: spring = new SpringCable(particleToLinkTo, 200.); break;
+				case 3: spring = new SpringRod(particleToLinkTo, 200.); break;
+				case 4: spring = new BlobSpring(particleToLinkTo, 200., 300.); break;
+				default: spring = new RegularSpring(particleToLinkTo, 200, false); break;
+				}
+
+				AddForceGenerator(spring);
+				particleForceRegistry.Add(currentLinkedParticle, spring);
 			}
 		}
-
-		if (particleToLinkTo)
-		{
-			RegularSpring* spring = new RegularSpring(particleToLinkTo, 200);
-			AddForceGenerator(spring);
-			particleForceRegistry.Add(currentLinkedParticle, spring);
+		else {
+			// Handling only link type that doesn't need another particle to exist
+			FixedSpring* fixedSpring = new FixedSpring(Vec3{ static_cast<float>(_x), static_cast<float>(_y), 0. }, 200);
+			AddForceGenerator(fixedSpring);
+			particleForceRegistry.Add(currentLinkedParticle, fixedSpring);
 		}
 
 		currentLinkedParticle = nullptr;
@@ -389,12 +408,24 @@ void GameContext::updateGrabbed()
 	}
 }
 
+void GameContext::changeLinkCreationMode(int _newMode)
+{
+	linkCreationMode = _newMode;
+}
+
 void GameContext::drawLinePreview()
 {
 	if (currentLinkedParticle)
 	{
 		ofSetLineWidth(1.5);
-		ofSetColor(ofColor::white);
+
+		switch (linkCreationMode) {
+		case 2: ofSetColor(ofColor::red); break;
+		case 3: ofSetColor(ofColor::blue); break;
+		case 4: ofSetColor(ofColor::green); break;
+		default: ofSetColor(ofColor::white); break;
+		}
+
 		ofDrawLine((glm::vec2)currentLinkedParticle->getPos(), glm::vec2(ofGetMouseX(), ofGetMouseY()));
 	}
 }

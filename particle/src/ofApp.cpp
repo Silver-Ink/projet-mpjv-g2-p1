@@ -50,6 +50,18 @@ void ofApp::keyPressed(int key){
 	case 105: GameContext::getInstance().init(GameContext::EsceneType::BungeeScene); break;
 	// O
 	case 111: GameContext::getInstance().init(GameContext::EsceneType::BlobSpringScene); break;
+	// F1
+	case 57344: GameContext::getInstance().changeLinkCreationMode(0); break;
+	// F2
+	case 57345: GameContext::getInstance().changeLinkCreationMode(1); break;
+	// F3
+	case 57346: GameContext::getInstance().changeLinkCreationMode(2); break;
+	// F4
+	case 57347: GameContext::getInstance().changeLinkCreationMode(3); break;
+	// F5
+	case 57348: GameContext::getInstance().changeLinkCreationMode(4); break;
+	// F6
+	case 57349: GameContext::getInstance().changeLinkCreationMode(5); break;
 	}
 }
 

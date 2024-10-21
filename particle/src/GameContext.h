@@ -67,6 +67,8 @@ public:
 	void releaseRightClick(int _x, int _y);
 
 	void updateGrabbed();
+
+	void changeLinkCreationMode(int _newMode);
 	void drawLinePreview();
 
 private:
@@ -78,6 +80,8 @@ private:
 	Vec3 grabOffset;
 	Particle* grabbedParticle{ nullptr };
 	Particle* currentLinkedParticle{ nullptr };
+
+	int linkCreationMode{ 0 };
 };
 
 
