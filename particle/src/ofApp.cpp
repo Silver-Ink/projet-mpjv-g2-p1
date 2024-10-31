@@ -8,8 +8,6 @@
 void ofApp::setup(){
 	TestClass::s_testMatrix3();
 	TestClass::s_testMatrix4();
-
-	GameContext::getInstance().init(GameContext::EsceneType::BlobScene);
 }
 
 //--------------------------------------------------------------
@@ -34,35 +32,36 @@ void ofApp::keyPressed(int key){
 
 	switch (key) {
 	// Q
-	case 113: GameContext::getInstance().init(GameContext::EsceneType::BlobScene); break;
-	// W
-	case 119: GameContext::getInstance().init(GameContext::EsceneType::InterpenetrationScene); break;
-	// E
-	case 101: GameContext::getInstance().init(GameContext::EsceneType::RestContactScene); break;
-	// R
-	case 114: GameContext::getInstance().init(GameContext::EsceneType::CableScene); break;
-	// T
-	case 116: GameContext::getInstance().init(GameContext::EsceneType::RodScene); break;
-	// Y
-	case 121: GameContext::getInstance().init(GameContext::EsceneType::FixedSpringScene); break;
-	// U
-	case 117: GameContext::getInstance().init(GameContext::EsceneType::RegularSpringScene); break;
-	// I
-	case 105: GameContext::getInstance().init(GameContext::EsceneType::BungeeScene); break;
-	// O
-	case 111: GameContext::getInstance().init(GameContext::EsceneType::BlobSpringScene); break;
+	case 113: //GameContext::getInstance().init(GameContext::EsceneType::BlobScene); break;
+	// W	  //
+	case 119: //GameContext::getInstance().init(GameContext::EsceneType::InterpenetrationScene); break;
+	// E	  //
+	case 101: //GameContext::getInstance().init(GameContext::EsceneType::RestContactScene); break;
+	// R	  //
+	case 114: //GameContext::getInstance().init(GameContext::EsceneType::CableScene); break;
+	// T	  //
+	case 116: //GameContext::getInstance().init(GameContext::EsceneType::RodScene); break;
+	// Y	  //
+	case 121: //GameContext::getInstance().init(GameContext::EsceneType::FixedSpringScene); break;
+	// U	  //
+	case 117: //GameContext::getInstance().init(GameContext::EsceneType::RegularSpringScene); break;
+	// I	  //
+	case 105: //GameContext::getInstance().init(GameContext::EsceneType::BungeeScene); break;
+	// O	  //
+	case 111: //GameContext::getInstance().init(GameContext::EsceneType::BlobSpringScene); break;
 	// F1
-	case 57344: GameContext::getInstance().changeLinkCreationMode(0); break;
-	// F2
-	case 57345: GameContext::getInstance().changeLinkCreationMode(1); break;
-	// F3
-	case 57346: GameContext::getInstance().changeLinkCreationMode(2); break;
-	// F4
-	case 57347: GameContext::getInstance().changeLinkCreationMode(3); break;
-	// F5
-	case 57348: GameContext::getInstance().changeLinkCreationMode(4); break;
-	// F6
-	case 57349: GameContext::getInstance().changeLinkCreationMode(5); break;
+	case 57344: //GameContext::getInstance().changeLinkCreationMode(0); break;
+	// F2		//
+	case 57345: //GameContext::getInstance().changeLinkCreationMode(1); break;
+	// F3		//
+	case 57346: //GameContext::getInstance().changeLinkCreationMode(2); break;
+	// F4		//
+	case 57347: //GameContext::getInstance().changeLinkCreationMode(3); break;
+	// F5		//
+	case 57348: //GameContext::getInstance().changeLinkCreationMode(4); break;
+	// F6		//
+	case 57349: //GameContext::getInstance().changeLinkCreationMode(5); break;
+		break;
 	}
 }
 
@@ -83,30 +82,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	if (button == 0)
-	{
-		GameContext::getInstance().leftClickAt(x, y);
-	}
-	else if (button == 1)
-	{
-		GameContext::getInstance().middleClickAt(x, y);
-	}
-	else if (button == 2)
-	{
-		GameContext::getInstance().rightClickAt(x, y);
-	}
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-	if (button == 0)
-	{
-		GameContext::getInstance().releaseLeftClick(x, y);
-	}
-	else if (button == 2)
-	{
-		GameContext::getInstance().releaseRightClick(x, y);
-	}
+
 }
 
 //--------------------------------------------------------------
