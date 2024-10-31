@@ -67,6 +67,14 @@ Quaternion Quaternion::operator*(Quaternion& _q)
 
 Quaternion& Quaternion::operator*=(Quaternion& _q)
 {
+	float resultA = a * _q.a - b * _q.b - c * _q.c - d * _q.d;
+	float resultB = a * _q.b + b * _q.a + c * _q.d - d * _q.c;
+	float resultC = a * _q.c + c * _q.a - b * _q.d + d * _q.b;
+	
+	d = a * _q.d + d * _q.a + b * _q.c - c * _q.b;
+	a = resultA;
+	b = resultB;
+	c = resultC;
 
 	return *this;
 }
@@ -104,7 +112,7 @@ Quaternion Quaternion::getInverse()
 Quaternion& Quaternion::inverse()
 {
 	conjugate();
-	this /= length();
+	*this /= length();
 	return *this;
 }
 
