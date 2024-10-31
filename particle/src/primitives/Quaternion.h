@@ -11,6 +11,9 @@ public:
 
 	Quaternion		operator*		(float _s);
 	Quaternion&		operator*=		(float _s);
+
+	Quaternion		operator/		(float _s);
+	Quaternion&		operator/=		(float _s);
 	
 	Quaternion		operator+		(Quaternion& _q);
 	Quaternion&		operator+=		(Quaternion& _q);

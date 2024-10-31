@@ -15,6 +15,22 @@ Quaternion& Quaternion::operator*=(float _s)
 	return *this;
 }
 
+Quaternion Quaternion::operator/(float _s)
+{
+	Quaternion q = *this;
+	return q /= _s;
+}
+
+Quaternion& Quaternion::operator/=(float _s)
+{
+	// Division by zero?
+	a /= _s;
+	b /= _s;
+	c /= _s;
+	d /= _s;
+	return *this;
+}
+
 Quaternion Quaternion::operator+(Quaternion& _q)
 {
 	Quaternion q = *this;
@@ -81,12 +97,14 @@ Quaternion& Quaternion::conjugate()
 
 Quaternion Quaternion::getInverse()
 {
-	return Quaternion();
+	Quaternion q = *this;
+	return q.inverse();
 }
 
 Quaternion& Quaternion::inverse()
 {
-	// TODO: insert return statement here
+	this.conjugate();
+	this /= this.length();
 	return *this;
 }
 
