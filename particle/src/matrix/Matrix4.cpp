@@ -218,30 +218,3 @@ float Matrix4::determinant()
             elements[1][2] * (elements[2][0] * elements[3][1] - elements[2][1] * elements[3][0])
             );
 }
-
-Matrix4 Matrix4::inverse() 
-{
-    float det = determinant();
-    if (det == 0) {
-        throw std::runtime_error("La matrice est singulière et n'a pas d'inverse.");
-    }
-
-    Matrix4 result;
-    float invDet = 1.0f / det;
-
-    result.set(0, 0, (elements[1][1] * (elements[2][2] * elements[3][3] - elements[2][3] * elements[3][2]) -
-        elements[1][2] * (elements[2][1] * elements[3][3] - elements[2][3] * elements[3][1]) +
-        elements[1][3] * (elements[2][1] * elements[3][2] - elements[2][2] * elements[3][1])) * invDet);
-    result.set(0, 1, -(elements[0][1] * (elements[2][2] * elements[3][3] - elements[2][3] * elements[3][2]) -
-        elements[0][2] * (elements[2][1] * elements[3][3] - elements[2][3] * elements[3][1]) +
-        elements[0][3] * (elements[2][1] * elements[3][2] - elements[2][2] * elements[3][1])) * invDet);
-    result.set(0, 2, (elements[0][1] * (elements[1][2] * elements[3][3] - elements[1][3] * elements[3][2]) -
-        elements[0][2] * (elements[1][1] * elements[3][3] - elements[1][3] * elements[3][1]) +
-        elements[0][3] * (elements[1][1] * elements[3][2] - elements[1][2] * elements[3][1])) * invDet);
-    result.set(0, 3, -(elements[0][1] * (elements[1][2] * elements[2][3] - elements[1][3] * elements[2][2]) -
-        elements[0][2] * (elements[1][1] * elements[2][3] - elements[1][3] * elements[2][1]) +
-        elements[0][3] * (elements[1][1] * elements[2][2] - elements[1][2] * elements[2][1])) * invDet);
-
-    return result;
-}
-

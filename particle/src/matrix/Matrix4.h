@@ -33,5 +33,4 @@ public:
 
     Matrix4 transpose();
     float determinant();
-    Matrix4 inverse();
 };
