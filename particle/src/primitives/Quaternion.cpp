@@ -82,6 +82,31 @@ Quaternion& Quaternion::conjugate()
 	return *this;
 }
 
+Quaternion Quaternion::getInverse()
+{
+	return Quaternion();
+}
+
+Quaternion& Quaternion::inverse()
+{
+	// TODO: insert return statement here
+}
+
+float Quaternion::dotProduct(Quaternion& _q)
+{
+	return 0.0f;
+}
+
+Quaternion Quaternion::getExpo(float _t)
+{
+	return Quaternion();
+}
+
+Quaternion& Quaternion::expo(float _t)
+{
+	// TODO: insert return statement here
+}
+
 float Quaternion::length()
 {
 	return sqrtf(a*a + b*b + c*c + d*d);
