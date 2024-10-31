@@ -38,11 +38,8 @@ Quaternion Quaternion::operator-(Quaternion& _q)
 
 Quaternion& Quaternion::operator-=(Quaternion& _q)
 {
-
-	a -= _q.a;
-	b -= _q.b;
-	c -= _q.c;
-	d -= _q.d;
+	Quaternion _qConj = _q.getConjugate();
+	*this *= _qConj;
 	return *this;
 }
 
@@ -90,6 +87,7 @@ Quaternion Quaternion::getInverse()
 Quaternion& Quaternion::inverse()
 {
 	// TODO: insert return statement here
+	return *this;
 }
 
 float Quaternion::dotProduct(Quaternion& _q)
@@ -99,12 +97,19 @@ float Quaternion::dotProduct(Quaternion& _q)
 
 Quaternion Quaternion::getExpo(float _t)
 {
-	return Quaternion();
+	Quaternion q = *this;
+	return q.expo(_t);
 }
 
 Quaternion& Quaternion::expo(float _t)
 {
-	// TODO: insert return statement here
+	float alpha = acos(a);
+	float beta = sin(_t * alpha) / sin(alpha);
+	a = cos(_t * alpha);
+	b *= beta;
+	c *= beta;
+	d *= beta;
+	return *this;
 }
 
 float Quaternion::length()
