@@ -103,14 +103,14 @@ Quaternion Quaternion::getInverse()
 
 Quaternion& Quaternion::inverse()
 {
-	this.conjugate();
-	this /= this.length();
+	conjugate();
+	this /= length();
 	return *this;
 }
 
 float Quaternion::dotProduct(Quaternion& _q)
 {
-	return 0.0f;
+	return a * _q.a + b * _q.b + c * _q.c + d * _q.d;
 }
 
 Quaternion Quaternion::getExpo(float _t)
