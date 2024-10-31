@@ -15,6 +15,22 @@ Quaternion& Quaternion::operator*=(float _s)
 	return *this;
 }
 
+Quaternion Quaternion::operator/(float _s)
+{
+	Quaternion q = *this;
+	return q /= _s;
+}
+
+Quaternion& Quaternion::operator/=(float _s)
+{
+	// Division by zero?
+	a /= _s;
+	b /= _s;
+	c /= _s;
+	d /= _s;
+	return *this;
+}
+
 Quaternion Quaternion::operator+(Quaternion& _q)
 {
 	Quaternion q = *this;
@@ -51,6 +67,14 @@ Quaternion Quaternion::operator*(Quaternion& _q)
 
 Quaternion& Quaternion::operator*=(Quaternion& _q)
 {
+	float resultA = a * _q.a - b * _q.b - c * _q.c - d * _q.d;
+	float resultB = a * _q.b + b * _q.a + c * _q.d - d * _q.c;
+	float resultC = a * _q.c + c * _q.a - b * _q.d + d * _q.b;
+	
+	d = a * _q.d + d * _q.a + b * _q.c - c * _q.b;
+	a = resultA;
+	b = resultB;
+	c = resultC;
 
 	return *this;
 }
@@ -81,18 +105,20 @@ Quaternion& Quaternion::conjugate()
 
 Quaternion Quaternion::getInverse()
 {
-	return Quaternion();
+	Quaternion q = *this;
+	return q.inverse();
 }
 
 Quaternion& Quaternion::inverse()
 {
-	// TODO: insert return statement here
+	conjugate();
+	*this /= length();
 	return *this;
 }
 
 float Quaternion::dotProduct(Quaternion& _q)
 {
-	return 0.0f;
+	return a * _q.a + b * _q.b + c * _q.c + d * _q.d;
 }
 
 Quaternion Quaternion::getExpo(float _t)
