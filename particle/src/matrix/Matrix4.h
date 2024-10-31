@@ -20,6 +20,7 @@ public:
     Matrix4& operator+=(const Matrix4& other);
 
     Matrix4 operator-(const Matrix4& other);
+    Matrix4 operator-();
     Matrix4& operator-=(const Matrix4& other);
 
     Matrix4 operator*(const Matrix4& other);
@@ -27,6 +28,8 @@ public:
 
     Matrix4 operator*(float scalar);
     Matrix4& operator*=(float scalar);
+
+    bool operator==(const Matrix4& other);
 
     Matrix4 transpose();
     float determinant();

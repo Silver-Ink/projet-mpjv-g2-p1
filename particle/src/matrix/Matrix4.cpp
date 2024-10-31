@@ -83,6 +83,19 @@ Matrix4 Matrix4::operator-(const Matrix4& other)
     return result;
 }
 
+Matrix4 Matrix4::operator-()
+{
+    Matrix4 result;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            result.elements[i][j] = -elements[i][j];  // Multiplie chaque élément par -1
+        }
+    }
+    return result;
+}
+
 Matrix4& Matrix4::operator-=(const Matrix4& other) 
 {
     for (int i = 0; i < 4; i++)
@@ -151,6 +164,21 @@ Matrix4& Matrix4::operator*=(float scalar)
         }
     }
     return *this;
+}
+
+bool Matrix4::operator==(const Matrix4& other)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (elements[i][j] != other.elements[i][j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 Matrix4 Matrix4::transpose() 

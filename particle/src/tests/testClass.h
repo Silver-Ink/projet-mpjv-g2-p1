@@ -22,4 +22,7 @@ class TestClass
 public:
 	static bool s_floatComp(float a, float b) { return fabs(a - b) < .001f; }
 	static void s_testVec3();
+
+	static void s_testMatrix3();
+	static void s_testMatrix4();
 };

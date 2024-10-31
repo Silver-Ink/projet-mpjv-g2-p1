@@ -22,6 +22,7 @@ public:
     Matrix3& operator+=(const Matrix3& other);
 
     Matrix3 operator-(const Matrix3& other); 
+    Matrix3 operator-();
     Matrix3& operator-=(const Matrix3& other);
 
     Matrix3 operator*(const Matrix3& other); 
@@ -29,6 +30,8 @@ public:
 
     Matrix3 operator*(float scalar); 
     Matrix3& operator*=(float scalar);
+
+	bool operator==(const Matrix3& other);
 
 	
     Matrix3 transpose(); 

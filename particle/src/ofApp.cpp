@@ -6,7 +6,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	//TestClass::s_testVec3();
+	TestClass::s_testMatrix3();
+	TestClass::s_testMatrix4();
 
 	GameContext::getInstance().init(GameContext::EsceneType::BlobScene);
 }

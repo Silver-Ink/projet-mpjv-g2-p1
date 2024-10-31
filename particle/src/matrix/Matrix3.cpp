@@ -87,6 +87,19 @@ Matrix3 Matrix3::operator-(const Matrix3& other)
     return result;
 }
 
+Matrix3 Matrix3::operator-()
+{
+    Matrix3 result;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            result.elements[i][j] = -elements[i][j];  // Multiplie chaque élément par -1
+        }
+    }
+    return result;
+}
+
 Matrix3& Matrix3::operator-=(const Matrix3& other)
 {
     for (int i = 0; i < 3; i++)
@@ -159,6 +172,21 @@ Matrix3& Matrix3::operator*=(float scalar)
         }
     }
     return *this;
+}
+
+bool Matrix3::operator==(const Matrix3& other)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (elements[i][j] != other.elements[i][j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 Matrix3 Matrix3::transpose()  
