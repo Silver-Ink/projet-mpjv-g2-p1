@@ -84,7 +84,6 @@ void TestClass::s_testMatrix3()
 	ASSERT(b * 1 == b)
 	ASSERT(b * -1 == -b)
 
-	// Test sur la transposée
 	Matrix3 b_transposed = b.transpose();
 	for (int i = 0; i < 3; i++)
 	{
@@ -94,14 +93,15 @@ void TestClass::s_testMatrix3()
 		}
 	}
 
-	// Test sur l'inverse - transposée - déterminant
+	ASSERT(a.determinant() == 0.f)
 	float elements2[3][3] = {
-		{1.f, 2.f, 3.f},
-		{0.f, 1.f, 4.f},
-		{5.f, 6.f, 0.f}
+		{2.f, 3.f, 1.f},
+		{4.f, 1.f, 6.f},
+		{7.f, 5.f, 3.f}
 	};
 	Matrix3 c(elements2);
-	Matrix3 c_inv = c.inverse();
+	c.print_matrix();
+	ASSERT(s_floatComp(c.determinant(), 49.f))
 
 
 
