@@ -1,5 +1,14 @@
 #include "Quaternion.h"
 
+Quaternion::Quaternion(float _theta, Vec3 _axis)
+{
+	a = cos(_theta / 2.f);
+	float s = sin(_theta / 2.f);
+	b = s * _axis.x;
+	c = s * _axis.y;
+	d = s * _axis.z;
+}
+
 Quaternion Quaternion::operator*(float _s)
 {
 	Quaternion q = *this;

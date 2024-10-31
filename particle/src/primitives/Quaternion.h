@@ -3,11 +3,13 @@
 #include <cmath>
 #include <cstdio>
 #include "ofMain.h"
+#include "vec3.h"
 
 struct Quaternion
 {
 public:
 	Quaternion() = default;
+	Quaternion(float _theta, Vec3 _axis);
 
 	Quaternion		operator*		(float _s);
 	Quaternion&		operator*=		(float _s);
