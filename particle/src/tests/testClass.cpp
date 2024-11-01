@@ -65,16 +65,18 @@ void TestClass::s_testMatrix3()
 	};
 
 	Matrix3 a;
-	Matrix3 b(elements1);
-	Matrix3 identity(elements_id);
+	Matrix3 b{ elements1 };
+	Matrix3 identity{ elements_id };
+	ASSERT(identity == Matrix3::identity)
 
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			ASSERT(a.get(i,j) == 0.f)
+			ASSERT(a.get(i, j) == 0.f)
 		}
-	}
+	};
+
 	
 	ASSERT(a + b == b)
 	ASSERT(b + b == b * 2.f)

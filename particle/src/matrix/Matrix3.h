@@ -1,8 +1,4 @@
-#pragma once
-
-#include <cmath>
-#include <cstdio>
-#include <iostream>
+#include <array>
 
 class Matrix3 {
 private:
@@ -11,12 +7,15 @@ private:
 public:
     Matrix3(); 
     Matrix3(float elements[3][3]); 
-
+    Matrix3(float diagonal[3]);
+    Matrix3(const Matrix3& other);
+    static Matrix3 identity;
 
     void print_matrix();
     float get(int row, int col);
+    std::array<float, 3> get_row(int row);
+    std::array<float, 3> get_col(int col);
     void set(int row, int col, float value);
-
 
     Matrix3 operator+(const Matrix3& other); 
     Matrix3& operator+=(const Matrix3& other);
@@ -31,9 +30,10 @@ public:
     Matrix3 operator*(float scalar); 
     Matrix3& operator*=(float scalar);
 
-	bool operator==(const Matrix3& other);
+    bool operator==(const Matrix3& other);
 
-	
     Matrix3 transpose(); 
     float determinant();
 };
+
+Matrix3 Matrix3::identity = Matrix3(new float[3]{1,1,1});
