@@ -8,6 +8,7 @@
 void ofApp::setup(){
 	TestClass::s_testMatrix3();
 	TestClass::s_testMatrix4();
+	GameContext::getInstance().init();
 }
 
 //--------------------------------------------------------------
@@ -30,44 +31,106 @@ void ofApp::keyPressed(int key){
 
 	//std::cout << key << endl;
 
+	float axisY = GameContext::getInstance().getCameraY();
+	if (key == 101 || key == 32)
+	{
+		axisY = 1.; // UP
+	}
+	else if (key == 97 || key == 3680)
+	{
+		axisY = -1.; // DOWN
+	}
+
+	float axisZ = GameContext::getInstance().getCameraZ();
+	if (key == 122 || key == 57357)
+	{
+		axisZ = 1.; // FORWARD
+	}
+	else if (key == 115 || key == 57359)
+	{
+		axisZ = -1.; // BACKWARD
+	}
+
+	float axisX = GameContext::getInstance().getCameraX();
+	if (key == 100 || key == 57358)
+	{
+		axisX = 1.; // RIGHT
+	}
+	else if (key == 113 || key == 57356)
+	{
+		axisX = -1.; // LEFT
+	}
+
+	GameContext::getInstance().setInputCamera(axisX, axisY, axisZ);
+
 	switch (key) {
 	// Q
-	case 113: //GameContext::getInstance().init(GameContext::EsceneType::BlobScene); break;
+	case 113: //GameContext::getInstance().init(GameContext::EsceneType::BlobScene);
+		break;
 	// W	  //
-	case 119: //GameContext::getInstance().init(GameContext::EsceneType::InterpenetrationScene); break;
+	case 119: //GameContext::getInstance().init(GameContext::EsceneType::InterpenetrationScene);
+		break;
 	// E	  //
-	case 101: //GameContext::getInstance().init(GameContext::EsceneType::RestContactScene); break;
+	case 101: //GameContext::getInstance().init(GameContext::EsceneType::RestContactScene);
+		break;
 	// R	  //
-	case 114: //GameContext::getInstance().init(GameContext::EsceneType::CableScene); break;
+	case 114: {GameContext::getInstance().ResetCamera(); break; }
 	// T	  //
-	case 116: //GameContext::getInstance().init(GameContext::EsceneType::RodScene); break;
+	case 116: //GameContext::getInstance().init(GameContext::EsceneType::RodScene);
+		break;
 	// Y	  //
-	case 121: //GameContext::getInstance().init(GameContext::EsceneType::FixedSpringScene); break;
+	case 121: //GameContext::getInstance().init(GameContext::EsceneType::FixedSpringScene);
+		break;
 	// U	  //
-	case 117: //GameContext::getInstance().init(GameContext::EsceneType::RegularSpringScene); break;
+	case 117: //GameContext::getInstance().init(GameContext::EsceneType::RegularSpringScene);
+		break;
 	// I	  //
-	case 105: //GameContext::getInstance().init(GameContext::EsceneType::BungeeScene); break;
+	case 105: //GameContext::getInstance().init(GameContext::EsceneType::BungeeScene);
+		break;
 	// O	  //
-	case 111: //GameContext::getInstance().init(GameContext::EsceneType::BlobSpringScene); break;
+	case 111: //GameContext::getInstance().init(GameContext::EsceneType::BlobSpringScene)
+		break;
 	// F1
-	case 57344: //GameContext::getInstance().changeLinkCreationMode(0); break;
+	case 57344: //GameContext::getInstance().changeLinkCreationMode(0); 
+		break;
 	// F2		//
-	case 57345: //GameContext::getInstance().changeLinkCreationMode(1); break;
+	case 57345: //GameContext::getInstance().changeLinkCreationMode(1); 
+		break;
 	// F3		//
-	case 57346: //GameContext::getInstance().changeLinkCreationMode(2); break;
+	case 57346: //GameContext::getInstance().changeLinkCreationMode(2);
+		break;
 	// F4		//
-	case 57347: //GameContext::getInstance().changeLinkCreationMode(3); break;
+	case 57347: //GameContext::getInstance().changeLinkCreationMode(3); 
+		break;
 	// F5		//
-	case 57348: //GameContext::getInstance().changeLinkCreationMode(4); break;
+	case 57348: //GameContext::getInstance().changeLinkCreationMode(4); 
+		break;
 	// F6		//
-	case 57349: //GameContext::getInstance().changeLinkCreationMode(5); break;
+	case 57349: //GameContext::getInstance().changeLinkCreationMode(5); 
 		break;
 	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
+	float axisY = GameContext::getInstance().getCameraY();
+	if (key == 101 || key == 32 || key == 97 || key == 3680)
+	{
+		axisY = 0.;
+	}
 
+	float axisZ = GameContext::getInstance().getCameraZ();
+	if (key == 122 || key == 57357 || key == 115 || key == 57359)
+	{
+		axisZ = 0.; // FORWARD
+	}
+
+	float axisX = GameContext::getInstance().getCameraX();
+	if (key == 100 || key == 57358 || key == 113 || key == 57356)
+	{
+		axisX = 0.; // RIGHT
+	}
+	GameContext::getInstance().setInputCamera(axisX, axisY, axisZ);
 }
 
 //--------------------------------------------------------------

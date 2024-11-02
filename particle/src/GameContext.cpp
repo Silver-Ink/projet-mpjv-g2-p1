@@ -12,6 +12,8 @@
 
 void GameContext::init()
 {
+	camera.setDistance(100.);
+
 	emptyScene();
 
 	ParticleGravity* gravity = new ParticleGravity();
@@ -36,16 +38,25 @@ void GameContext::update(float _dt)
 		particle->update(_dt);
 	}
 
+
+	updateCamera(_dt);
 }
 
 void GameContext::draw()
 {
 
-	particleForceRegistry.DrawForces();
-	for (auto particle : lstParticle)
-	{
-		particle->draw();
-	}
+	camera.begin();
+	ofNoFill();
+	ofDrawBox(30.);
+	ofDrawCylinder({0., 30., 0.}, 5., 30.);
+
+
+	//particleForceRegistry.DrawForces();
+	//for (auto particle : lstParticle)
+	//{
+	//	particle->draw();
+	//}
+	camera.end();
 }
 
 void GameContext::emptyScene()
@@ -61,6 +72,40 @@ void GameContext::emptyScene()
 		delete fg;
 	}
 	lstForceGenerator.clear();
+}
+
+void GameContext::setInputCamera(float _axisX, float _axisY, float _axisZ)
+{
+	axisX = _axisX;
+	axisY = _axisY;
+	axisZ = _axisZ;
+}
+
+
+void GameContext::updateCamera(float _dt)
+{
+	if (axisX || axisY || axisZ)
+	{
+		glm::vec3 forward = camera.getLookAtDir() * axisZ;
+		glm::vec3 side = camera.getSideDir() * axisX;
+
+		//float left = forward + PI / 2.;
+		//std::cout << forward << "  " << left << endl;
+		float speed = 100. * _dt;
+
+
+		camera.setPosition(camera.getGlobalPosition() + glm::vec3{
+			forward.x + side.x ,
+			axisY,
+			forward.z + side.z }
+			*speed);
+	}
+}
+
+void GameContext::ResetCamera()
+{
+	camera.reset();
+	camera.setDistance(100.);
 }
 
 ParticleForceGenerator* GameContext::AddForceGenerator(ParticleForceGenerator* _forceGenerator)
