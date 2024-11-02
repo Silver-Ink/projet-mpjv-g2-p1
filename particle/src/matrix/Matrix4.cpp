@@ -1,4 +1,6 @@
 #include "Matrix4.h"
+
+#include <array>
 #include <stdexcept>
 
 Matrix4::Matrix4() 
@@ -23,6 +25,37 @@ Matrix4::Matrix4(float elements[4][4])
     }
 }
 
+Matrix4::Matrix4(float diagonal[4])
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (i == j)
+			{
+				elements[i][j] = diagonal[i];
+			}
+			else
+			{
+				elements[i][j] = 0.0f;
+			}
+		}
+	}
+}
+
+Matrix4::Matrix4(const Matrix4& other)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			elements[i][j] = other.elements[i][j];
+		}
+	}
+}
+
+Matrix4 Matrix4::identity = Matrix4(new float[4] {1, 1, 1, 1});
+
 void Matrix4::print_matrix() 
 {
     for (int i = 0; i < 4; i++) 
@@ -38,6 +71,26 @@ void Matrix4::print_matrix()
 float Matrix4::get(int row, int col) 
 {
     return elements[row][col];
+}
+
+std::array<float, 4> Matrix4::get_row(int row) 
+{
+	std::array<float, 4> result;
+	for (int i = 0; i < 4; i++)
+	{
+		result[i] = elements[row][i];
+	}
+	return result;
+}
+
+std::array<float, 4> Matrix4::get_col(int col)
+{
+	std::array<float, 4> result;
+	for (int i = 0; i < 4; i++)
+	{
+		result[i] = elements[i][col];
+	}
+	return result;
 }
 
 void Matrix4::set(int row, int col, float value) 

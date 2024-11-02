@@ -58,6 +58,8 @@ Matrix3::Matrix3(const Matrix3& other)
     }
 }
 
+Matrix3 Matrix3::identity = Matrix3(new float[3] {1, 1, 1});
+
 
 
 void Matrix3::print_matrix()  

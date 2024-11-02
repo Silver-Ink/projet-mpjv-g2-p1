@@ -36,4 +36,3 @@ public:
     float determinant();
 };
 
-Matrix3 Matrix3::identity = Matrix3(new float[3]{1,1,1});
