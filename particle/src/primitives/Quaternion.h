@@ -9,6 +9,7 @@ struct Quaternion
 {
 public:
 	Quaternion() = default;
+	Quaternion(float _omega, float _x, float _y, float _z);
 	Quaternion(float _theta, Vec3 _axis);
 
 	Quaternion		operator*		(float _s);

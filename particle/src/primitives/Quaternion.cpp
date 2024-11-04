@@ -1,5 +1,11 @@
 #include "Quaternion.h"
 
+Quaternion Quaternion::IDENTITY{ 1., 0., 0., 0. };
+
+Quaternion::Quaternion(float _omega, float _x, float _y, float _z)
+	: a(_omega), b(_x), c(_y), d(_z)
+{}
+
 Quaternion::Quaternion(float _theta, Vec3 _axis)
 {
 	a = cos(_theta / 2.f);
