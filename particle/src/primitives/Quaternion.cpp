@@ -174,6 +174,23 @@ Quaternion& Quaternion::normalize()
 	return *this;
 }
 
+Matrix3 Quaternion::toMatrix3()
+{
+	Matrix3 m;
+	m.set(0, 0, 1 - 2 * c * c - 2 * d * d);
+	m.set(0, 1, 2 * b * c - 2 * a * d);
+	m.set(0, 2, 2 * b * d + 2 * a * c);
+
+	m.set(1, 0, 2 * b * c + 2 * a * d);
+	m.set(1, 1, 1 - 2 * b * b - 2 * d * d);
+	m.set(1, 2, 2 * c * d - 2 * a * b);
+
+	m.set(2, 0, 2 * b * d - 2 * a * c);
+	m.set(2, 1, 2 * c * d + 2 * a * b);
+	m.set(2, 2, 1 - 2 * b * b - 2 * c * c);
+	return m;
+}
+
 Quaternion operator*(float _s, Quaternion& _q)
 {
 	Quaternion q = _q;

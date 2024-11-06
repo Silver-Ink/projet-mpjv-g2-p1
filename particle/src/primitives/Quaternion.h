@@ -4,6 +4,7 @@
 #include <cstdio>
 #include "ofMain.h"
 #include "vec3.h"
+#include "../matrix/Matrix3.h"
 
 struct Quaternion
 {
@@ -44,6 +45,8 @@ public:
 	float			length			();
 	Quaternion		getNormalized	();
 	Quaternion&		normalize		();
+
+	Matrix3			toMatrix3		();
 
 	void			print			() {printf("%.2f %+.2f i %+.2f j %+.2f k", a, b, c, d); }
 
