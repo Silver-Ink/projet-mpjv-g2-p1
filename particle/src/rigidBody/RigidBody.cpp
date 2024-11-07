@@ -1,5 +1,15 @@
 #include "RigidBody.h"
 
+RigidBody::RigidBody(Vec3 _center, float _length, float _height, float _width, Quaternion _orientation, float _density) :
+	massCenter			(_center),
+	initialFront		(abs(_length/2.f), 0., 0.),
+	initialUp			(0., abs(_height / 2.f), 0.),
+	initialRight		(0., 0., abs(_width / 2.f)),
+	orientation			(_orientation),
+	totalMass			(abs(_length) * abs(_height) * abs(_width) * _density)
+{
+}
+
 void RigidBody::update(float _dt)
 {
 
