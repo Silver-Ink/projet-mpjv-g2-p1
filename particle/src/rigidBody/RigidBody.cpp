@@ -14,7 +14,7 @@ void RigidBody::update(float _dt)
 {
 
 	// update orientation
-	Quaternion angularSpeedQuat = Quaternion(angularSpeed.x, angularSpeed.y, angularSpeed.z, 0);
+	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parceque ça parait magique
 
 	Quaternion nextOrientation = orientation + 0.5 * angularSpeedQuat * orientation * _dt;
 
