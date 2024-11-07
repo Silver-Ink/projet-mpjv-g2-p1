@@ -12,7 +12,7 @@ public:
 	Quaternion() = default;
 	Quaternion(float _omega, float _x, float _y, float _z);
 	Quaternion(float _theta, Vec3 _axis);
-
+	Quaternion(Vec3 _v);
 	Quaternion		operator*		(float _s);
 	Quaternion&		operator*=		(float _s);
 

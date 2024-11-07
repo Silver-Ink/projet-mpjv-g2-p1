@@ -207,6 +207,16 @@ Matrix3& Matrix3::operator*=(const Matrix3& other)
 	return *this;
 }
 
+Vec3 Matrix3::operator*(const Vec3& other) const
+{
+	Vec3 result;
+	result.x = elements[0][0] * other.x + elements[0][1] * other.y + elements[0][2] * other.z;
+	result.y = elements[1][0] * other.x + elements[1][1] * other.y + elements[1][2] * other.z;
+	result.z = elements[2][0] * other.x + elements[2][1] * other.y + elements[2][2] * other.z;
+	return result;
+}
+
+
 Matrix3 Matrix3::operator*(float scalar)  
 {
     Matrix3 result;

@@ -15,6 +15,10 @@ Quaternion::Quaternion(float _theta, Vec3 _axis)
 	d = s * _axis.z;
 }
 
+Quaternion::Quaternion(const Vec3 _v)
+	: a(0), b(_v.x), c(_v.y), d(_v.z)
+{}
+
 Quaternion Quaternion::operator*(float _s)
 {
 	Quaternion q = *this;
