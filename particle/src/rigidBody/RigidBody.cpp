@@ -5,6 +5,9 @@ RigidBody::RigidBody(Vec3 _center, float _length, float _height, float _width, Q
 	initialFront		(abs(_length/2.f), 0., 0.),
 	initialUp			(0., abs(_height / 2.f), 0.),
 	initialRight		(0., 0., abs(_width / 2.f)),
+	front				(abs(_length/2.f), 0., 0.),
+	up					(0., abs(_height / 2.f), 0.),
+	right				(0., 0., abs(_width / 2.f)),
 	orientation			(_orientation),
 	totalMass			(abs(_length) * abs(_height) * abs(_width) * _density)
 {
@@ -14,7 +17,7 @@ void RigidBody::update(float _dt)
 {
 
 	// update orientation
-	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parceque ça parait magique
+	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parce que ça parait magique
 
 	Quaternion nextOrientation = orientation + 0.5 * angularSpeedQuat * orientation * _dt;
 
