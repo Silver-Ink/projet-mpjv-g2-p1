@@ -43,13 +43,13 @@ void RigidBody::draw()
 	ofDrawLine((glm::vec3)boxEnd1, (glm::vec3)(boxEnd1 + 2 * up));
 	ofDrawLine((glm::vec3)boxEnd1, (glm::vec3)(boxEnd1 - 2 * right));
 
-	Vec3 boxEnd2 = -1 * front + up + right;
+	Vec3 boxEnd2 = -front + up + right;
 
 	ofDrawLine((glm::vec3)boxEnd2, (glm::vec3)(boxEnd2 + 2 * front));
 	ofDrawLine((glm::vec3)boxEnd2, (glm::vec3)(boxEnd2 - 2 * up));
 	ofDrawLine((glm::vec3)boxEnd2, (glm::vec3)(boxEnd2 - 2 * right));
 
-	Vec3 boxEnd3 = -1 * front - up - right;
+	Vec3 boxEnd3 = -front - up - right;
 
 	ofDrawLine((glm::vec3)boxEnd3, (glm::vec3)(boxEnd3 + 2 * front));
 	ofDrawLine((glm::vec3)boxEnd3, (glm::vec3)(boxEnd3 + 2 * up));
