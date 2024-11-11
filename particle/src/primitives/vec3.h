@@ -26,10 +26,12 @@ public:
 
 	Vec3	operator+(Vec3& _v);
 	Vec3&	operator+=(Vec3& _v);
-	Vec3& operator+=(const Vec3& _v);
+	Vec3&	operator+=(const Vec3& _v);
 
 	Vec3	operator-(Vec3& _v);
 	Vec3&	operator-=(Vec3& _v);
+
+	Vec3	operator-();
 
 
 	bool	operator==(Vec3& _v);

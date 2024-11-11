@@ -87,3 +87,8 @@ bool Vec3::operator==(Vec3& _v)
 		fabs(y - _v.y) < EPS &&
 		fabs(z - _v.z) < EPS	);
 }
+
+Vec3 Vec3::operator-()
+{
+	return *this * -1;
+}
