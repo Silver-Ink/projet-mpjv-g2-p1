@@ -1,6 +1,6 @@
 #include "RigidBody.h"
 
-RigidBody::RigidBody(Vec3 _center, float _length, float _height, float _width, Quaternion _orientation, float _density) :
+RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _width, Quaternion _orientation, float _density) :
 	massCenter			(_center),
 	initialFront		(abs(_length/2.f), 0., 0.),
 	initialUp			(0., abs(_height / 2.f), 0.),
