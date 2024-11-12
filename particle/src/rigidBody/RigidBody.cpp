@@ -19,15 +19,16 @@ void RigidBody::update(float _dt)
 	// update orientation
 	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parce que ça parait magique
 
-	Quaternion nextOrientation = orientation + 0.5 * angularSpeedQuat * orientation * _dt;
+	orientation += 0.5 * angularSpeedQuat * orientation * _dt;
+	orientation.normalize();
 
 	// transform quaternion to matrix
-	Matrix3 rotationMatrix = nextOrientation.toMatrix3();
+	Matrix3 rotationMatrix = orientation.toMatrix3();
 
 	// apply matrix to initial vectors and stock them
-	/*front = rotationMatrix * initialFront;
+	front = rotationMatrix * initialFront;
 	up = rotationMatrix * initialUp;
-	right = rotationMatrix * initialRight;*/
+	right = rotationMatrix * initialRight;
 }
 
 void RigidBody::draw()
@@ -62,4 +63,11 @@ void RigidBody::draw()
 	ofDrawLine((glm::vec3)boxEnd4, (glm::vec3)(boxEnd4 + 2 * right));
 
 	ofPopMatrix(); // Resetting pivot
+}
+
+bool RigidBody::containsPoint(Vec3 _point)
+{
+	Vec3 relativePoint{ _point - massCenter.getPos() };
+
+	return false;
 }

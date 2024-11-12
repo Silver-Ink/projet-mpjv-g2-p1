@@ -1,7 +1,7 @@
 #pragma once
 #include <array>
 
-#include "vec3.h"
+#include "../primitives/vec3.h"
 
 class Matrix3 {
 private:
@@ -29,7 +29,7 @@ public:
 
     Matrix3 operator*(const Matrix3& other); 
     Matrix3& operator*=(const Matrix3& other);
-    Vec3 operator*(const Vec3& other);
+    Vec3 operator*(const Vec3& other) const;
 
     Matrix3 operator*(float scalar); 
     Matrix3& operator*=(float scalar);

@@ -49,9 +49,20 @@ public:
 
 private:
 	ParticleForceGenerator* AddForceGenerator(ParticleForceGenerator* _forceGenerator);
-	Particle* AddParticle(Particle* _particle);
 
+	Particle* AddParticle(Particle* _particle);
 	Particle* AddParticle(const Particle& _particle);
+
+	RigidBody* GameContext::AddRigidBody(RigidBody* _rigidBody);
+	RigidBody* GameContext::AddRigidBody(const RigidBody& _rigidBody);
+
+	struct raycastResult {
+		RigidBody* collisionner{ nullptr };
+		Vec3 collisionPosAbsolute{};
+		float rayLength{ -1 };
+	};
+
+	raycastResult raycast(Vec3 _direction, float _maxLength, std::vector<RigidBody*>& lstRigidBody);
 
 	ofEasyCam camera;
 

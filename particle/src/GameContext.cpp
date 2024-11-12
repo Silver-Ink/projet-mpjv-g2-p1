@@ -17,6 +17,10 @@ void GameContext::init()
 	emptyScene();
 
 	ParticleGravity* gravity = new ParticleGravity();
+
+	RigidBody* rb1 = AddRigidBody(RigidBody{ {0, 0, 0} });
+	rb1->setAngularSpeed({ 1, 1, 1 });
+
 	AddForceGenerator(gravity);
 
 }
@@ -51,8 +55,8 @@ void GameContext::draw()
 
 	camera.begin();
 	ofNoFill();
-	ofDrawBox(30.);
-	ofDrawCylinder({0., 30., 0.}, 5., 30.);
+	//ofDrawBox(30.);
+	//ofDrawCylinder({0., 30., 0.}, 5., 30.);
 
 
 	//particleForceRegistry.DrawForces();
@@ -60,6 +64,11 @@ void GameContext::draw()
 	//{
 	//	particle->draw();
 	//}
+
+	for each (RigidBody* rb in lstRigidBody)
+	{
+		rb->draw();
+	}
 	camera.end();
 }
 
@@ -129,4 +138,22 @@ Particle* GameContext::AddParticle(const Particle& _particle)
 	Particle* newParticle = new Particle(_particle);
 	lstParticle.emplace_back(newParticle);
 	return newParticle;
+}
+
+RigidBody* GameContext::AddRigidBody(RigidBody* _rigidBody)
+{
+	lstRigidBody.emplace_back(_rigidBody);
+	return _rigidBody;
+}
+
+RigidBody* GameContext::AddRigidBody(const RigidBody& _rigidBody)
+{
+	RigidBody* newRigidBody = new RigidBody(_rigidBody);
+	lstRigidBody.emplace_back(newRigidBody);
+	return newRigidBody;
+}
+
+GameContext::raycastResult GameContext::raycast(Vec3 _direction, float _maxLength, std::vector<RigidBody*>& lstRigidBody)
+{
+	return raycastResult();
 }
