@@ -7,6 +7,8 @@
 #include "particle/generators/SpringCable.h"
 #include "particle/generators/FixedSpring.h"
 #include "particle/generators/BlobSpring.h"
+#include "rigidBody/RigidBody.h"
+
 
 
 
@@ -65,10 +67,25 @@ void GameContext::draw()
 	//	particle->draw();
 	//}
 
+	raycastResult rc = raycast(
+		Vec3::fromGLM_vec3(camera.getGlobalPosition()),
+		Vec3::fromGLM_vec3(camera.getLookAtDir()),
+		100, lstRigidBody);
+
 	for each (RigidBody* rb in lstRigidBody)
 	{
+		if (rb == rc.collisionner)
+		{
+			ofSetColor(ofColor::orangeRed);
+		}
 		rb->draw();
+		ofSetColor(ofColor::white);
 	}
+
+	ofDrawSphere(camera.getGlobalPosition() + camera.getLookAtDir() * rc.rayLength, 1);
+
+
+	//ofDrawArrow({ 0,0,0 }, (glm::vec3)testArrow);
 	camera.end();
 }
 
@@ -105,7 +122,6 @@ void GameContext::updateCamera(float _dt)
 		//float left = forward + PI / 2.;
 		//std::cout << forward << "  " << left << endl;
 		float speed = 100. * _dt;
-
 
 		camera.setPosition(camera.getGlobalPosition() + glm::vec3{
 			forward.x + side.x ,
@@ -153,7 +169,42 @@ RigidBody* GameContext::AddRigidBody(const RigidBody& _rigidBody)
 	return newRigidBody;
 }
 
-GameContext::raycastResult GameContext::raycast(Vec3 _direction, float _maxLength, std::vector<RigidBody*>& lstRigidBody)
+GameContext::raycastResult GameContext::raycast(Vec3 _startPoint, Vec3 _direction, float _maxLength, std::vector<RigidBody*>& _lstRigidBody)
 {
+	_direction.normalize();
+
+	float distance = 0.;
+
+	do {
+		distance++;
+		
+		Vec3 rayHead = _startPoint + distance * _direction;
+
+		for (RigidBody* rb : _lstRigidBody)
+		{
+			if (rb->containsPoint(rayHead))
+			{
+				float backAjustement = .5;
+				float dichoStep = backAjustement;
+				for (size_t i = 0; i < 10; i++)
+				{
+					dichoStep /= 2.;
+					if (rb->containsPoint(rayHead - backAjustement * _direction))
+						//Intersection is closer
+						backAjustement += dichoStep;
+					else
+						//Intersection is farther
+						backAjustement -= dichoStep;
+				}
+				raycastResult r{};
+				r.collisionner = rb;
+				r.collisionPosAbsolute = rayHead - backAjustement * _direction;
+				r.rayLength = distance - backAjustement;
+				return r;
+			}
+		}
+
+	} while (distance < _maxLength);
+
 	return raycastResult();
 }

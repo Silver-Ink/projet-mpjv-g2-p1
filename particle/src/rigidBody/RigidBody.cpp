@@ -1,4 +1,5 @@
 #include "RigidBody.h"
+#include "../GameContext.h"
 
 RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _width, Quaternion _orientation, float _density) :
 	massCenter			(_center),
@@ -69,5 +70,12 @@ bool RigidBody::containsPoint(Vec3 _point)
 {
 	Vec3 relativePoint{ _point - massCenter.getPos() };
 
-	return false;
+	//Values of initial___ are used as length of vector front, up and right
+	float x = abs(relativePoint.dot(front)	/ initialFront.x);
+	float y = abs(relativePoint.dot(up)		/ initialUp.y);
+	float z = abs(relativePoint.dot(right)	/ initialRight.z);
+
+	return x < initialFront.x &&
+		   y < initialUp.y &&
+		   z < initialRight.z;
 }

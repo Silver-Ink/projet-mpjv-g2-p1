@@ -29,7 +29,7 @@ Vec3 Vec3::operator*(float _s)
 	return copy *= _s;
 }
 
-Vec3 operator*(float _s, Vec3& _v)
+Vec3 operator*(float _s, const Vec3& _v)
 {
 	Vec3 copy = _v;
 	return copy *= _s;

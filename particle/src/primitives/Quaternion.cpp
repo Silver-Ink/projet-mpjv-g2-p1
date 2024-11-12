@@ -195,6 +195,15 @@ Matrix3 Quaternion::toMatrix3()
 	return m;
 }
 
+Vec3 Quaternion::rotateVector(const Vec3& v)
+{
+	Vec3 u(b, c, d);
+
+	return 2.0f * u.dot(v) * u
+		+ (a * a - u.dot(u)) * v
+		+ 2.0f * a * u.cross(v);
+}
+
 Quaternion operator*(float _s, Quaternion& _q)
 {
 	Quaternion q = _q;

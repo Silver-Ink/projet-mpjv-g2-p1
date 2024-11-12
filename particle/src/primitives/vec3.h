@@ -38,8 +38,8 @@ public:
 	bool	operator<(Vec3& _v) { return _v.x < x && _v.y < y && _v.z < z; }
 	bool	operator>(Vec3& _v) { return _v.x > x && _v.y > y && _v.z > z; }
 
-	float	dot(Vec3& _v)	{ return x * _v.x + y * _v.y + z * _v.z; }
-	Vec3	cross(Vec3& _v) { return Vec3{	y * _v.z - z * _v.y,
+	float	dot(const Vec3& _v)	{ return x * _v.x + y * _v.y + z * _v.z; }
+	Vec3	cross(const Vec3& _v) { return Vec3{	y * _v.z - z * _v.y,
 											z * _v.x - x * _v.z,
 											x * _v.y - y * _v.x }; }
 
@@ -48,6 +48,7 @@ public:
 	explicit operator glm::vec3() { return { x, y, z }; }
 	explicit operator glm::vec2() { return { x, y }; }
 
+	static Vec3 fromGLM_vec3(glm::vec3 _v) { return { _v.x, _v.y, _v.z }; }
 
 public :
 	float x;
@@ -55,4 +56,4 @@ public :
 	float z;
 };
 
-Vec3 operator*(float _s, Vec3& _v);
+Vec3 operator*(float _s, const Vec3& _v);

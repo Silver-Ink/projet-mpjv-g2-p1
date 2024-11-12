@@ -4,7 +4,9 @@
 #include "particle/generators/ParticleGravity.h"
 #include "particle/ParticleForceRegistry.h"
 #include "particle/generators/SpringBungee.h"
-#include "rigidBody/RigidBody.h"
+
+
+class RigidBody;
 
 class GameContext
 {
@@ -47,6 +49,8 @@ public:
 
 	void ResetCamera();
 
+	//Vec3 testArrow;
+
 private:
 	ParticleForceGenerator* AddForceGenerator(ParticleForceGenerator* _forceGenerator);
 
@@ -62,7 +66,7 @@ private:
 		float rayLength{ -1 };
 	};
 
-	raycastResult raycast(Vec3 _direction, float _maxLength, std::vector<RigidBody*>& lstRigidBody);
+	raycastResult raycast(Vec3 _startPoint, Vec3 _direction, float _maxLength, std::vector<RigidBody*>& _lstRigidBody);
 
 	ofEasyCam camera;
 

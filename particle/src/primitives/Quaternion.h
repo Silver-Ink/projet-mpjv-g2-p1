@@ -50,6 +50,9 @@ public:
 
 	void			print			() {printf("%.2f %+.2f i %+.2f j %+.2f k", a, b, c, d); }
 
+	Vec3			rotateVector	(const Vec3& v);
+
+
 public:
 	static Quaternion	IDENTITY;
 
