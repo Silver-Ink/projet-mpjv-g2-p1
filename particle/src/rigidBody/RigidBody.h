@@ -9,7 +9,7 @@ class RigidBody
 {
 public:
 	RigidBody() = default;
-	RigidBody(Vec3 _center, float _length = 1., float _height = 1., float _width = 1., Quaternion _orientation = Quaternion::IDENTITY, float _density = 1);
+	RigidBody(const Vec3& _center, float _length = 1., float _height = 1., float _width = 1., Quaternion _orientation = Quaternion::IDENTITY, float _density = 1);
 
 	//void integrate(float _dt);
 	void update(float _dt);

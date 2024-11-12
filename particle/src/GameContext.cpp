@@ -37,6 +37,10 @@ void GameContext::update(float _dt)
 	{
 		particle->update(_dt);
 	}
+	for (RigidBody* rb : lstRigidBody)
+	{
+		rb->update(_dt);
+	}
 
 
 	updateCamera(_dt);

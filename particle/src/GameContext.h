@@ -4,6 +4,7 @@
 #include "particle/generators/ParticleGravity.h"
 #include "particle/ParticleForceRegistry.h"
 #include "particle/generators/SpringBungee.h"
+#include "rigidBody/RigidBody.h"
 
 class GameContext
 {
@@ -34,6 +35,8 @@ public:
 	ParticleForceRegistry particleForceRegistry;
 	std::vector<Particle*> lstParticle;
 	std::vector<ParticleForceGenerator*> lstForceGenerator;
+
+	std::vector<RigidBody*> lstRigidBody;
 
 	void setInputCamera(float _axisX, float _axisY, float _axisZ);
 	void updateCamera(float _dt);
