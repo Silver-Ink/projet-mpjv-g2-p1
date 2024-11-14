@@ -45,5 +45,7 @@ private:
 	Quaternion	orientation;
 	Vec3		angularSpeed;
 	Vec3		angularAcceleration;
+
+	Matrix3		inertiaTensor;
 };
 

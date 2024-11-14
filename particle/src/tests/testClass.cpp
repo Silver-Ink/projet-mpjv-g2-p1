@@ -121,16 +121,14 @@ void TestClass::s_testMatrix3()
 	}
 
 	ASSERT(a.determinant() == 0.f)
-		float elements2[3][3] = {
-			{2.f, 3.f, 1.f},
-			{4.f, 1.f, 6.f},
-			{7.f, 5.f, 3.f}
+	float elements2[3][3] = {
+		{2.f, 3.f, 1.f},
+		{4.f, 1.f, 6.f},
+		{7.f, 5.f, 3.f}
 	};
 	Matrix3 e(elements2);
 	e.print_matrix();
 	ASSERT(s_floatComp(e.determinant(), 49.f))
-
-
 
 }
 

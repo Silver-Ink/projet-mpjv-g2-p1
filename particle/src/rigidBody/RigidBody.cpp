@@ -12,10 +12,29 @@ RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _w
 	orientation			(_orientation),
 	totalMass			(abs(_length) * abs(_height) * abs(_width) * _density)
 {
+	// Calculate inertia tensor
+	float _rx = _length / 2.f;
+	float _ry = _height / 2.f;
+	float _rz = _width / 2.f;
+
+	float element[3][3] = {
+		{_ry*_ry + _rz*_rz, _ry*_rx*-1, _rz*_rx*-1},
+		{_rx*_ry*-1, _rx*_rx + _rz*_rz, _rz*_ry*-1},
+		{_rx*_rz*-1, _ry*_rz*-1, _rx*_rx + _ry*_ry}
+	};
+
+	inertiaTensor = Matrix3(element);
+	inertiaTensor *= totalMass;
 }
 
 void RigidBody::update(float _dt)
 {
+	Vec3 _torque = Vec3(0, 0, 0); // torque???
+	// get acceleration from a = T * J-1
+	angularAcceleration = inertiaTensor.inverse() * _torque;
+
+	// update angular speed
+	angularSpeed += angularAcceleration * _dt;
 
 	// update orientation
 	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parce que ça parait magique

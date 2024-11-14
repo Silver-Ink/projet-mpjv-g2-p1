@@ -153,7 +153,7 @@ Matrix3 Matrix3::operator-()
     {
         for (int j = 0; j < 3; j++)
         {
-            result.elements[i][j] = -elements[i][j];  // Multiplie chaque �l�ment par -1
+            result.elements[i][j] = -elements[i][j];  
         }
     }
     return result;
@@ -278,4 +278,24 @@ float Matrix3::determinant()
         + elements[0][2] * (elements[1][0] * elements[2][1] - elements[1][1] * elements[2][0]);
 }
 
+Matrix3 Matrix3::inverse()
+{
+	float det = determinant();
+	if (det == 0)
+	{
+		throw std::invalid_argument("Matrix is not invertible");
+	}
+	Matrix3 result;
+	result.elements[0][0] = (elements[1][1] * elements[2][2] - elements[1][2] * elements[2][1]) / det;
+	result.elements[0][1] = (elements[0][2] * elements[2][1] - elements[0][1] * elements[2][2]) / det;
+	result.elements[0][2] = (elements[0][1] * elements[1][2] - elements[0][2] * elements[1][1]) / det;
+	result.elements[1][0] = (elements[1][2] * elements[2][0] - elements[1][0] * elements[2][2]) / det;
+	result.elements[1][1] = (elements[0][0] * elements[2][2] - elements[0][2] * elements[2][0]) / det;
+	result.elements[1][2] = (elements[1][0] * elements[0][2] - elements[0][0] * elements[1][2]) / det;
+	result.elements[2][0] = (elements[1][0] * elements[2][1] - elements[2][0] * elements[1][1]) / det;
+	result.elements[2][1] = (elements[2][0] * elements[0][1] - elements[0][0] * elements[2][1]) / det;
+	result.elements[2][2] = (elements[0][0] * elements[1][1] - elements[1][0] * elements[0][1]) / det;
+
+	return result;
+}
 
