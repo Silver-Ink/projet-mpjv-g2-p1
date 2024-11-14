@@ -32,7 +32,7 @@ RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _w
 	inverseInertiaTensor = inverseInertiaTensor.inverse();
 }
 
-//si jamais on a besoin de calculer la matrice d'inertie à partir de points ( si l'objet n'est pas un cube)
+//si jamais on a besoin de calculer la matrice d'inertie ï¿½ partir de points ( si l'objet n'est pas un cube)
 /*Matrix3 calculateInertiaTensor(const std::vector<Vec3>& points, float density) {
 	float Ixx = 0, Iyy = 0, Izz = 0;
 	float Ixy = 0, Ixz = 0, Iyz = 0;
@@ -69,7 +69,7 @@ void RigidBody::update(float _dt)
 	angularSpeed += angularAcceleration * _dt;
 
 	// update orientation
-	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parce que ça parait magique
+	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parce que ï¿½a parait magique
 
 	orientation += 0.5 * angularSpeedQuat * orientation * _dt;
 	orientation.normalize();
