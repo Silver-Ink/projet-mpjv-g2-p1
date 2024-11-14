@@ -1,7 +1,7 @@
 #include "RigidBody.h"
 #include "../GameContext.h"
 
-RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _width, Quaternion _orientation, float _density) :
+RigidBody::RigidBody(const Vec3& _center, float _density, float _length, float _height, float _width, Quaternion _orientation) :
 	massCenter			(_center),
 	initialFront		(abs(_length/2.f), 0., 0.),
 	initialUp			(0., abs(_height / 2.f), 0.),
@@ -23,13 +23,12 @@ RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _w
 	float Izz = (1.0f / 12.0f) * totalMass * (_rx * _rx + _ry * _ry);
 
 	float element[3][3] = {
-		{Ixx, 0, 0},
-		{0, Iyy, 0},
-		{0, 0, Izz}
+		{1/Ixx, 0, 0},
+		{0, 1/Iyy, 0},
+		{0, 0, 1/Izz}
 	};
 
 	inverseInertiaTensor = Matrix3(element);
-	inverseInertiaTensor = inverseInertiaTensor.inverse();
 }
 
 //si jamais on a besoin de calculer la matrice d'inertie � partir de points ( si l'objet n'est pas un cube)
@@ -62,11 +61,15 @@ RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _w
 void RigidBody::update(float _dt)
 {
 	Vec3 _torque = massCenter.accumTorque;
+	massCenter.accumTorque = Vec3{ 0,0,0 };
+	
+
 	// get acceleration from a = T * J-1
 	angularAcceleration = inverseInertiaTensor * _torque;
 
 	// update angular speed
 	angularSpeed += angularAcceleration * _dt;
+
 
 	// update orientation
 	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parce que �a parait magique
@@ -84,6 +87,8 @@ void RigidBody::update(float _dt)
 	front = rotationMatrix * initialFront;
 	up = rotationMatrix * initialUp;
 	right = rotationMatrix * initialRight;
+
+	massCenter.update(_dt);
 }
 
 void RigidBody::draw()

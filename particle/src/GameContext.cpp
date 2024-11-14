@@ -20,15 +20,18 @@ void GameContext::init()
 
 	ParticleGravity* gravity = new ParticleGravity();
 
-	RigidBody* rb1 = AddRigidBody(RigidBody{ {0, 0, 0} });
-	rb1->setAngularSpeed({ 1, 1, 1 });
+	RigidBody* rb1 = AddRigidBody(RigidBody{ {0, 0, 0}, 0.0001 });
+	//rb1->setAngularSpeed({ 1, 1, 1 });
+	rb1->massCenter.addForce({ 0, 500, 0 }, { 30, 0, 0 });
 
 	AddForceGenerator(gravity);
+	particleForceRegistry.Add(&(rb1->massCenter), gravity);
 
 }
 
 void GameContext::update(float _dt)
 {
+	
 	particleForceRegistry.UpdateForces(_dt);
 
 	Collisionner::HandleAllCollision(lstParticle);
@@ -37,7 +40,6 @@ void GameContext::update(float _dt)
 	{
 		particle->computeForces(_dt);
 	}
-
 
 	for (auto particle : lstParticle)
 	{

@@ -6,7 +6,7 @@
 class ParticleGravity : public ParticleForceGenerator
 {
 public:
-	Vec3 gravity { 0., 50., 0. };
+	Vec3 gravity { 0., -9.81, 0. };
 
 	virtual void updateForce	(Particle* _particle, float _dt)	override;
 	virtual void drawForce		(Particle* _particle)				override {}
