@@ -66,6 +66,6 @@ void Collisionner::applyImpulsion(Particle* _p1, Particle* _p2, Collisionner::Co
 	//						  ----------------------------------------------------------------------
 										(_p1->getinverseMass() + _p2->getinverseMass());
 
-	_p1->addForce(-impulsionStrength * _collision.normal * _p1->getinverseMass());
-	_p2->addForce(impulsionStrength * _collision.normal * _p2->getinverseMass());
+	_p1->addForce(-impulsionStrength * _collision.normal * _p1->getinverseMass(), _collision.collisionPoint);
+	_p2->addForce(impulsionStrength * _collision.normal * _p2->getinverseMass(), _collision.collisionPoint);
 }

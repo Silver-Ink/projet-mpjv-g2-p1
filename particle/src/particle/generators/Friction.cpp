@@ -8,13 +8,13 @@ void Friction::updateForce(Particle* _particle, float _dt)
 	F.normalize();
 	F *= n.length();
 	if (gk.sqLength() < mu_stat * F.sqLength())
-		_particle->addForce(Vec3() - gk);
+		_particle->addForce(Vec3() - gk, _particle->getPos()); // TODO : change the point of application of the force
 	else
 	{
-		_particle->addForce(F*mu_dyn);
+		_particle->addForce(F*mu_dyn, _particle->getPos());
 	}
 	
-	_particle->addForce(n);
+	_particle->addForce(n, _particle->getPos());
 }
 void Friction::drawForce(Particle* _particle)
 {
