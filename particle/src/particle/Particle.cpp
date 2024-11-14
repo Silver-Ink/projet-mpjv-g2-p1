@@ -24,11 +24,16 @@ void Particle::integrate(float _dt)
 void Particle::addForce(const Vec3& _force, const Vec3& applicationPoint)
 {
 	accumForce += _force;
+	Vec3 torque = applicationPoint ;
+	torque -= position;
+	torque = torque.cross(_force);
+	accumTorque += torque;
 }
 
 void Particle::clearAccum()
 {
 	accumForce = { 0, 0, 0 };
+	accumTorque = { 0, 0, 0 };
 }
 
 void Particle::update(float _dt)

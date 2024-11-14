@@ -30,7 +30,7 @@ RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _w
 
 void RigidBody::update(float _dt)
 {
-	Vec3 _torque = Vec3(0, 0, 0); // torque???
+	Vec3 _torque = massCenter.accumTorque;
 	// get acceleration from a = T * J-1
 	angularAcceleration = inverseInertiaTensor * _torque;
 
