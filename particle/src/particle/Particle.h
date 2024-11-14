@@ -41,7 +41,7 @@ protected:
 public:
 	float radius{ 10. };
 	Vec3 accumForce;
-	void addForce(const Vec3& _force);
+	void addForce(const Vec3& _force, const Vec3& applicationPoint);
 	void clearAccum();
 };
 
