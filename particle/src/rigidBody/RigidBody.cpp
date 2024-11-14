@@ -23,15 +23,16 @@ RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _w
 		{_rx*_rz*-1, _ry*_rz*-1, _rx*_rx + _ry*_ry}
 	};
 
-	inertiaTensor = Matrix3(element);
-	inertiaTensor *= totalMass;
+	inverseInertiaTensor = Matrix3(element);
+	inverseInertiaTensor *= totalMass;
+	inverseInertiaTensor = inverseInertiaTensor.inverse();
 }
 
 void RigidBody::update(float _dt)
 {
 	Vec3 _torque = Vec3(0, 0, 0); // torque???
 	// get acceleration from a = T * J-1
-	angularAcceleration = inertiaTensor.inverse() * _torque;
+	angularAcceleration = inverseInertiaTensor * _torque;
 
 	// update angular speed
 	angularSpeed += angularAcceleration * _dt;
@@ -44,6 +45,9 @@ void RigidBody::update(float _dt)
 
 	// transform quaternion to matrix
 	Matrix3 rotationMatrix = orientation.toMatrix3();
+
+	//Update inverse inertia tensor
+	inverseInertiaTensor = rotationMatrix * inverseInertiaTensor * rotationMatrix.transpose(); 
 
 	// apply matrix to initial vectors and stock them
 	front = rotationMatrix * initialFront;

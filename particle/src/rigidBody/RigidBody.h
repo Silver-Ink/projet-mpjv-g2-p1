@@ -46,6 +46,6 @@ private:
 	Vec3		angularSpeed;
 	Vec3		angularAcceleration;
 
-	Matrix3		inertiaTensor;
+	Matrix3		inverseInertiaTensor;
 };
 
