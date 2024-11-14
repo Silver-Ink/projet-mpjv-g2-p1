@@ -21,7 +21,7 @@ void Particle::integrate(float _dt)
 	position += velocity * _dt;
 }
 
-void Particle::addForce(const Vec3& _force)
+void Particle::addForce(const Vec3& _force, const Vec3& applicationPoint)
 {
 	accumForce += _force;
 }

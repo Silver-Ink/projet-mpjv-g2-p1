@@ -12,7 +12,7 @@ void FixedSpring::updateForce(Particle* _particle, float _dt)
 	if (fabs(difference) > lengthThreshold)
 	{
 		spring *= -1. / currentLength * difference * elasticConstant;
-		_particle->addForce(spring);
+		_particle->addForce(spring, TODO);
 	}
 }
 

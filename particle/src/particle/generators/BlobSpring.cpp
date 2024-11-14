@@ -20,9 +20,9 @@ void BlobSpring::updateForce(Particle* _particle, float _dt)
 	else if (fabs(springDifference) > lengthThreshold)
 	{
 		spring *= -1. / currentLength * springDifference * elasticConstant;
-		_particle->addForce(spring);
+		_particle->addForce(spring, _particle->getPos());
 		spring *= -1.;
-		hinge->addForce(spring);
+		hinge->addForce(spring, hinge->getPos());
 	}
 }
 

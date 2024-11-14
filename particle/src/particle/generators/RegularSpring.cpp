@@ -17,9 +17,9 @@ void RegularSpring::updateForce(Particle* _particle, float _dt)
 	if (fabs(difference) > lengthThreshold)
 	{
 		spring *= -1. / currentLength * difference * elasticConstant;
-		_particle->addForce(spring);
+		_particle->addForce(spring, _particle->getPos());
 		spring *= -1.;
-		hinge->addForce(spring);
+		hinge->addForce(spring, hinge->getPos());
 	}
 }
 
