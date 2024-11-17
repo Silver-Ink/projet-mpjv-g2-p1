@@ -98,6 +98,16 @@ Quaternion& Quaternion::operator*=(Quaternion& _q)
 	return *this;
 }
 
+bool Quaternion::operator==(Quaternion& _q)
+{
+#define EPS .001
+	return
+		(fabs(a - _q.a) < EPS &&
+			fabs(b - _q.b) < EPS &&
+			fabs(c - _q.c) < EPS &&
+			fabs(d - _q.d) < EPS);
+}
+
 Quaternion Quaternion::operator-()
 {
 	Quaternion q = *this;

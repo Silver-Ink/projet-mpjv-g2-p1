@@ -28,6 +28,8 @@ public:
 	Quaternion		operator*		(Quaternion& _q);
 	Quaternion&		operator*=		(Quaternion& _q);
 
+	bool			operator==		(Quaternion& _q);
+
 	Quaternion		operator-		();
 	
 	Quaternion		getConjugate	();
