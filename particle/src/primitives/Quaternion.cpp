@@ -42,7 +42,6 @@ Quaternion Quaternion::operator/(float _s)
 
 Quaternion& Quaternion::operator/=(float _s)
 {
-	// Division by zero?
 	a /= _s;
 	b /= _s;
 	c /= _s;
