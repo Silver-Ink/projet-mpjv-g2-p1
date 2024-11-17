@@ -91,16 +91,20 @@ void ofApp::keyPressed(int key){
 	case 111: //GameContext::getInstance().init(GameContext::EsceneType::BlobSpringScene)
 		break;
 	// F1
-	case 57344: //GameContext::getInstance().changeLinkCreationMode(0); 
+	case 57344: 
+		GameContext::getInstance().spawnBox(20.f, 20.f, 50.f, 0.000001);
 		break;
 	// F2		//
 	case 57345: //GameContext::getInstance().changeLinkCreationMode(1); 
+		GameContext::getInstance().spawnBox(20.f, 20.f, 50.f, 0.00001);
 		break;
 	// F3		//
 	case 57346: //GameContext::getInstance().changeLinkCreationMode(2);
+		GameContext::getInstance().spawnBox(20.f, 20.f, 50.f, 0.00005);
 		break;
 	// F4		//
 	case 57347: //GameContext::getInstance().changeLinkCreationMode(3); 
+		GameContext::getInstance().spawnBox(20.f, 20.f, 50.f, 0.0002);
 		break;
 	// F5		//
 	case 57348: //GameContext::getInstance().changeLinkCreationMode(4); 

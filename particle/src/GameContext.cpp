@@ -87,6 +87,7 @@ void GameContext::draw()
 
 	//ofDrawArrow({ 0,0,0 }, (glm::vec3)testArrow);
 	camera.end();
+	//ofDrawCircle(glm:::vec3(0,0,  rc.rayLength), 5.);
 }
 
 void GameContext::emptyScene()
@@ -137,6 +138,20 @@ void GameContext::ResetCamera()
 	camera.setDistance(100.);
 }
 
+void GameContext::spawnBox(float _length, float _height, float _width, float _density)
+{
+	_height = _height == -1.f ? _length : _height;
+	_width= _width == -1.f ? _height : _width;
+
+	float dist = std::max(std::max(_length, _height), _width);
+
+	Vec3 pos = Vec3::fromGLM_vec3(camera.getGlobalPosition()) +
+		Vec3::fromGLM_vec3(camera.getLookAtDir()).normalize() * dist * 1.5f;
+
+	RigidBody* rb = new RigidBody(pos, _length, _height, _width, Quaternion::IDENTITY, _density);
+	lstRigidBody.emplace_back(rb);
+}
+
 ParticleForceGenerator* GameContext::AddForceGenerator(ParticleForceGenerator* _forceGenerator)
 {
 	lstForceGenerator.emplace_back(_forceGenerator);
@@ -174,9 +189,10 @@ GameContext::raycastResult GameContext::raycast(Vec3 _startPoint, Vec3 _directio
 	_direction.normalize();
 
 	float distance = 0.;
+	float longStep= 10.;
 
 	do {
-		distance++;
+		distance+=longStep;
 		
 		Vec3 rayHead = _startPoint + distance * _direction;
 
@@ -184,9 +200,9 @@ GameContext::raycastResult GameContext::raycast(Vec3 _startPoint, Vec3 _directio
 		{
 			if (rb->containsPoint(rayHead))
 			{
-				float backAjustement = .5;
+				float backAjustement = longStep / 2.;
 				float dichoStep = backAjustement;
-				for (size_t i = 0; i < 10; i++)
+				for (size_t i = 0; i < 20; i++)
 				{
 					dichoStep /= 2.;
 					if (rb->containsPoint(rayHead - backAjustement * _direction))

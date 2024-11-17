@@ -23,9 +23,9 @@ RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _w
 		{_rx*_rz*-1, _ry*_rz*-1, _rx*_rx + _ry*_ry}
 	};
 
-	inverseInertiaTensor = Matrix3(element);
+	/*inverseInertiaTensor = Matrix3(element);
 	inverseInertiaTensor *= totalMass;
-	inverseInertiaTensor = inverseInertiaTensor.inverse();
+	inverseInertiaTensor = inverseInertiaTensor.inverse();*/
 }
 
 void RigidBody::update(float _dt)

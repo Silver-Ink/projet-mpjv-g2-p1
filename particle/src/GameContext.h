@@ -49,6 +49,8 @@ public:
 
 	void ResetCamera();
 
+	void spawnBox(float _length, float _height = -1, float _width = -1, float _density = 1.);
+
 	//Vec3 testArrow;
 
 private:
