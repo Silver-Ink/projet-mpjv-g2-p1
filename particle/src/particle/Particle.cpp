@@ -33,11 +33,11 @@ void Particle::addForce(const Vec3& _force, const Vec3& applicationPoint)
 void Particle::clearAccum()
 {
 	accumForce = { 0, 0, 0 };
-	accumTorque = { 0, 0, 0 };
 }
 
 void Particle::update(float _dt)
 {
+	computeForces(_dt);
 	if (!frozen) integrate(_dt);
 	clearAccum();
 }

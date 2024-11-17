@@ -8,8 +8,9 @@
 class RigidBody
 {
 public:
+	Particle massCenter; // also geometric center
 	RigidBody() = default;
-	RigidBody(const Vec3& _center, float _length = 30., float _height = 30., float _width = 30., Quaternion _orientation = Quaternion::IDENTITY, float _density = 1);
+	RigidBody(const Vec3& _center,float _density = 0.001, float _length = 30., float _height = 30., float _width = 30., Quaternion _orientation = Quaternion::IDENTITY);
 
 	//void integrate(float _dt);
 	void update(float _dt);
@@ -29,7 +30,6 @@ public:
 
 
 private:
-	Particle massCenter; // also geometric center
 
 	// Bounds of the box, relative to massCenter's position
 	Vec3 front; // X

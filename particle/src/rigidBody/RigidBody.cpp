@@ -1,7 +1,7 @@
 #include "RigidBody.h"
 #include "../GameContext.h"
 
-RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _width, Quaternion _orientation, float _density) :
+RigidBody::RigidBody(const Vec3& _center, float _density, float _length, float _height, float _width, Quaternion _orientation) :
 	massCenter			(_center),
 	initialFront		(abs(_length/2.f), 0., 0.),
 	initialUp			(0., abs(_height / 2.f), 0.),
@@ -12,33 +12,67 @@ RigidBody::RigidBody(const Vec3& _center, float _length, float _height, float _w
 	orientation			(_orientation),
 	totalMass			(abs(_length) * abs(_height) * abs(_width) * _density)
 {
+
 	// Calculate inertia tensor
-	float _rx = _length / 2.f;
-	float _ry = _height / 2.f;
-	float _rz = _width / 2.f;
+	float _rx = _length;
+	float _ry = _height;
+	float _rz = _width;
+
+	float Ixx = (1.0f / 12.0f) * totalMass * (_ry * _ry + _rz * _rz);
+	float Iyy = (1.0f / 12.0f) * totalMass * (_rx * _rx + _rz * _rz);
+	float Izz = (1.0f / 12.0f) * totalMass * (_rx * _rx + _ry * _ry);
 
 	float element[3][3] = {
-		{_ry*_ry + _rz*_rz, _ry*_rx*-1, _rz*_rx*-1},
-		{_rx*_ry*-1, _rx*_rx + _rz*_rz, _rz*_ry*-1},
-		{_rx*_rz*-1, _ry*_rz*-1, _rx*_rx + _ry*_ry}
+		{1/Ixx, 0, 0},
+		{0, 1/Iyy, 0},
+		{0, 0, 1/Izz}
 	};
 
-	/*inverseInertiaTensor = Matrix3(element);
-	inverseInertiaTensor *= totalMass;
-	inverseInertiaTensor = inverseInertiaTensor.inverse();*/
+	inverseInertiaTensor = Matrix3(element);
 }
+
+//si jamais on a besoin de calculer la matrice d'inertie ï¿½ partir de points ( si l'objet n'est pas un cube)
+/*Matrix3 calculateInertiaTensor(const std::vector<Vec3>& points, float density) {
+	float Ixx = 0, Iyy = 0, Izz = 0;
+	float Ixy = 0, Ixz = 0, Iyz = 0;
+
+	for (const Vec3& p : points) {
+		float x = p.x;
+		float y = p.y;
+		float z = p.z;
+
+		Ixx += density * (y * y + z * z);
+		Iyy += density * (x * x + z * z);
+		Izz += density * (x * x + y * y);
+		Ixy -= density * (x * y);
+		Ixz -= density * (x * z);
+		Iyz -= density * (y * z);
+	}
+
+	float elements[3][3] = {
+		{Ixx, Ixy, Ixz},
+		{Ixy, Iyy, Iyz},
+		{Ixz, Iyz, Izz}
+	};
+
+	return Matrix3(elements);
+}*/
 
 void RigidBody::update(float _dt)
 {
 	Vec3 _torque = massCenter.accumTorque;
+	massCenter.accumTorque = Vec3{ 0,0,0 };
+	
+
 	// get acceleration from a = T * J-1
 	angularAcceleration = inverseInertiaTensor * _torque;
 
 	// update angular speed
 	angularSpeed += angularAcceleration * _dt;
 
+
 	// update orientation
-	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parce que ça parait magique
+	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parce que ï¿½a parait magique
 
 	orientation += 0.5 * angularSpeedQuat * orientation * _dt;
 	orientation.normalize();
@@ -53,6 +87,8 @@ void RigidBody::update(float _dt)
 	front = rotationMatrix * initialFront;
 	up = rotationMatrix * initialUp;
 	right = rotationMatrix * initialRight;
+
+	massCenter.update(_dt);
 }
 
 void RigidBody::draw()
