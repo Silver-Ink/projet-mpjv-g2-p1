@@ -58,7 +58,7 @@ void TestClass::s_testQuaternion()
 	//testing constructors
 	Quaternion a{1., 0., 0., 0.};
 	ASSERT(a == Quaternion::IDENTITY);
-
+	
 	Quaternion b1{ 0., {50., 60., 70.} };
 	ASSERT(b1 == Quaternion::IDENTITY);
 
@@ -103,15 +103,11 @@ void TestClass::s_testQuaternion()
 	ASSERT(f4 == f4 + f5);
 
 	Quaternion g1{ 2., 45., 1.4, 0.99 };
-	Quaternion g2{ 0.,0.,0.,0. };
-	/*std::cout << g1.a << "-" << g2.a << "=" << (g1 - g2).a << "\n";
-	std::cout << g1.b << "-" << g2.b << "=" << (g1 - g2).b << "\n";
-	std::cout << g1.c << "-" << g2.c << "=" << (g1 - g2).c << "\n";
-	std::cout << g1.d << "-" << g2.d << "=" << (g1 - g2).d << "\n";
-	ASSERT(g1 - g2 == g1);
-	ASSERT(g1 - g1 == g2);*/
-	
-	Quaternion h; // TODO operator*(Quaternion& _q) (potentiellement tester i*j=k et autres)
+	Quaternion g2 = g1 - g1;
+	ASSERT(!s_floatComp(g2.a, 0.));
+	ASSERT(s_floatComp(g2.b, 0.));
+	ASSERT(s_floatComp(g2.c, 0.));
+	ASSERT(s_floatComp(g2.d, 0.));
 
 	Quaternion i1{ 0., 0., 0., 0. };
 	ASSERT(i1 == -i1);
@@ -123,7 +119,70 @@ void TestClass::s_testQuaternion()
 	ASSERT(s_floatComp(-i2.c, i3.c));
 	ASSERT(s_floatComp(-i2.d, i3.d));
 
-	// TODO test regular methods
+	//testing quaternion multiplication specifically
+	Quaternion h1{ 34., 58.2, 41., 1. };
+	ASSERT(h1 == h1 * Quaternion::IDENTITY);
+
+	Quaternion quatMult_minusReal{ -1., 0., 0., 0. };
+	Quaternion quatMult_i{ 0., 1., 0., 0. }, quatMult_minusI{ 0., -1., 0., 0. };
+	Quaternion quatMult_j{ 0., 0., 1., 0. }, quatMult_minusJ{ 0., 0., -1., 0. };
+	Quaternion quatMult_k{ 0., 0., 0., 1. }, quatMult_minusK{ 0., 0., 0., -1. };
+
+	ASSERT(quatMult_i * quatMult_i == quatMult_minusReal);
+	ASSERT(quatMult_j * quatMult_j == quatMult_minusReal);
+	ASSERT(quatMult_k * quatMult_k == quatMult_minusReal);
+	ASSERT(quatMult_i * quatMult_j * quatMult_k == quatMult_minusReal);
+
+	ASSERT(quatMult_i * quatMult_j == quatMult_k);
+	ASSERT(quatMult_j * quatMult_i == quatMult_minusK);
+
+	ASSERT(quatMult_j * quatMult_k == quatMult_i);
+	ASSERT(quatMult_k * quatMult_j == quatMult_minusI);
+
+	ASSERT(quatMult_k * quatMult_i == quatMult_j);
+	ASSERT(quatMult_i * quatMult_k == quatMult_minusJ);
+
+	//testing remaining methods
+	Quaternion j1{ 100., 0., 0., 0. };
+	ASSERT(j1 == j1.getConjugate());
+
+	Quaternion j2{ 1., 2., 3., 4. };
+	Quaternion j3 = j2.getConjugate();
+	ASSERT((j2.a == j3.a) && (j2.b == -j3.b) && (j2.c == -j3.c) && (j2.d == -j3.d));
+
+	Quaternion k1;
+	for (float i = 1.; i < 6.; i++)
+	{
+		k1 = { i, 0., 0., 0. };
+		ASSERT(k1.getInverse() == Quaternion::IDENTITY); //inverse must also normalize
+	}
+
+	Quaternion k2{ 26., 30., 45., 7. };
+	Quaternion k3 = k2 * k2.getInverse();
+	k3 = k3 / k3.length();
+	ASSERT(k3 == Quaternion::IDENTITY);
+
+	//dotProduct()
+
+	//getExpo()
+
+	Quaternion n1{ 1., 1., 1., 1. };
+	ASSERT(s_floatComp(n1.length(), 2.));
+
+	Quaternion n2{ 0., 0., -1., 0. };
+	ASSERT(s_floatComp(n2.length(), 1.));
+
+	Quaternion o1{ 1., 1., 1., 1. };
+	Quaternion o2 = o1.getNormalized();
+	ASSERT(s_floatComp(o2.length(), 1.));
+	ASSERT((o2.a == .5) && (o2.b == .5) && (o2.c == .5) && (o2.d == .5));
+
+	Quaternion o3{ -1., 0., 0., 0. };
+	ASSERT(o3.getNormalized() == o3);
+
+	//toMatrix3()
+
+	//rotateVector()
 }
 
 void TestClass::s_testMatrix3()
