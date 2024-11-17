@@ -49,9 +49,11 @@ public:
 
 	void ResetCamera();
 
-	void spawnBox(float _length, float _height = -1, float _width = -1, float _density = 1.);
+	void spawnBox(float _length, float _height = -1, float _width = -1, float _density = 1., bool _addGravity = true);
 
 	//Vec3 testArrow;
+
+	float strength;
 
 private:
 	ParticleForceGenerator* AddForceGenerator(ParticleForceGenerator* _forceGenerator);
@@ -75,6 +77,9 @@ private:
 	float axisX{};
 	float axisY{};
 	float axisZ{};
+
+	raycastResult raycastData;
+
 };
 
 

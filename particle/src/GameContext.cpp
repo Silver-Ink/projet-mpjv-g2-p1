@@ -21,7 +21,7 @@ void GameContext::init()
 	ParticleGravity* gravity = new ParticleGravity();
 
 	RigidBody* rb1 = AddRigidBody(RigidBody{ {0, 0, 0}, 0.0001 });
-	//rb1->setAngularSpeed({ 1, 1, 1 });
+
 	rb1->massCenter.addForce({ 0, 500, 0 }, { 30, 0, 0 });
 
 	AddForceGenerator(gravity);
@@ -31,6 +31,19 @@ void GameContext::init()
 
 void GameContext::update(float _dt)
 {
+	updateCamera(_dt);
+
+	raycastData = raycast(
+		Vec3::fromGLM_vec3(camera.getGlobalPosition()),
+		Vec3::fromGLM_vec3(camera.getLookAtDir()),
+		100, lstRigidBody);
+
+	if (strength != 0. && raycastData.collisionner)
+	{
+		Vec3 force = Vec3::fromGLM_vec3(camera.getLookAtDir()).normalize() * 100.f;
+		raycastData.collisionner->massCenter.addForce(force, raycastData.collisionPosAbsolute);
+		strength = 0;
+	}
 	
 	particleForceRegistry.UpdateForces(_dt);
 
@@ -51,7 +64,6 @@ void GameContext::update(float _dt)
 	}
 
 
-	updateCamera(_dt);
 }
 
 void GameContext::draw()
@@ -69,14 +81,10 @@ void GameContext::draw()
 	//	particle->draw();
 	//}
 
-	raycastResult rc = raycast(
-		Vec3::fromGLM_vec3(camera.getGlobalPosition()),
-		Vec3::fromGLM_vec3(camera.getLookAtDir()),
-		100, lstRigidBody);
 
 	for each (RigidBody* rb in lstRigidBody)
 	{
-		if (rb == rc.collisionner)
+		if (rb == raycastData.collisionner)
 		{
 			ofSetColor(ofColor::orangeRed);
 		}
@@ -84,7 +92,7 @@ void GameContext::draw()
 		ofSetColor(ofColor::white);
 	}
 
-	ofDrawSphere(camera.getGlobalPosition() + camera.getLookAtDir() * rc.rayLength, 1);
+	ofDrawSphere(camera.getGlobalPosition() + camera.getLookAtDir() * raycastData.rayLength, 1);
 
 
 	//ofDrawArrow({ 0,0,0 }, (glm::vec3)testArrow);
@@ -140,7 +148,7 @@ void GameContext::ResetCamera()
 	camera.setDistance(100.);
 }
 
-void GameContext::spawnBox(float _length, float _height, float _width, float _density)
+void GameContext::spawnBox(float _length, float _height, float _width, float _density, bool _addGravity)
 {
 	_height = _height == -1.f ? _length : _height;
 	_width= _width == -1.f ? _height : _width;
@@ -150,8 +158,15 @@ void GameContext::spawnBox(float _length, float _height, float _width, float _de
 	Vec3 pos = Vec3::fromGLM_vec3(camera.getGlobalPosition()) +
 		Vec3::fromGLM_vec3(camera.getLookAtDir()).normalize() * dist * 1.5f;
 
-	RigidBody* rb = new RigidBody(pos, _length, _height, _width, Quaternion::IDENTITY, _density);
+	RigidBody* rb = new RigidBody(pos, _density, _length, _height, _width, Quaternion::IDENTITY);
 	lstRigidBody.emplace_back(rb);
+
+	if (_addGravity)
+	{
+		ParticleGravity* gravity = new ParticleGravity();
+		AddForceGenerator(gravity);
+		particleForceRegistry.Add(&(rb->massCenter), gravity);
+	}
 }
 
 ParticleForceGenerator* GameContext::AddForceGenerator(ParticleForceGenerator* _forceGenerator)

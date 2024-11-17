@@ -8,17 +8,17 @@ Pour compiler le projet :
 
 # Contrôles
 
-Les touches **Q**, **W**, **E**, **R**, **T**, **Y**, **U**, **I** et **O** permettent de charger une scène permettant de tester chacune des fonctionnalités. Le titre de la scène est affiché dans la console.
+Les touches *F1-4* permettent faire apparaitre des rigidBodies de density de plus en plus élevée.
 
-Chaque particule peut être déplacée en maintenant le **clic gauche** sur ladite particule.
+La touche *F5* permet d'activer ou désactiver la gravité à la création des prochains RigidBodies.
 
-Chaque lien peut être détruit à l'aide d'un **clic molette** sur le lien en question.
+*CLICK DROIT* permet de donner un coup de puissance normale, et le *CLICK MOLETTE* un petit coup
 
-### Contrôles pour la création de liens
+Les touches *Z Q S D* pour se déplacer latéralement
+*SHIFT* pour descendre 
+*ESPACE* pour monter
+*CLICK GAUCHE* pour changer la vue de la caméra autour de l'origine.
+*MOLETTE* pour avancer ou reculer selon la direction de la caméra
 
-Il est possible de créer n'importe quel type de lien en maintenant le **clic droit** sur une première particule, puis en relâchant le clic sur une deuxième particule.
-
-Le choix du type de lien peut se faire à tout moment à l'aide des touches Fx: **F1** pour un ressort normal, **F2** pour un ressort "bungee", **F3** pour un câble,
-**F4** pour une tige, **F5** pour un ressort-blob (mélange ressort classique / câble) et **F6** pour un ressort normal à unique particule.
-
-*A noter que pour le ressort normal à unique particule, il n'est pas nécessaire de relâcher le clic droit sur une autre particule, contrairement aux autres types de liens.*
+*R* pour réinitialiser la caméra
+*DOUBLE CLICK GAUCHE* fait beaucoup reculer la caméra
