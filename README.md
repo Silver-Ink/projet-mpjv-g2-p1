@@ -8,17 +8,18 @@ Pour compiler le projet :
 
 # Contrôles
 
-Les touches *F1-4* permettent faire apparaitre des rigidBodies de density de plus en plus élevée.
+* Création de RigidBody:  **F1-F4** permet de faire apparaitre des RigidBodies avec une densité de plus en plus élevée.
 
-La touche *F5* permet d'activer ou désactiver la gravité à la création des prochains RigidBodies.
+    * **F5** permet également d'activer ou désactiver la gravité pour la création des prochains RigidBodies.
 
-*CLICK DROIT* permet de donner un coup de puissance normale, et le *CLICK MOLETTE* un petit coup
+* Impacts: Le **CLIC DROIT** permet de donner un coup de puissance normale, et le **CLIC MOLETTE** un coup plus léger.
+Le RigidBody peut recevoir un impact lorsqu'il est colorié orange, le point blanc indiquant le lieu exact de l'impact.
 
-Les touches *Z Q S D* pour se déplacer latéralement
-*SHIFT* pour descendre 
-*ESPACE* pour monter
-*CLICK GAUCHE* pour changer la vue de la caméra autour de l'origine.
-*MOLETTE* pour avancer ou reculer selon la direction de la caméra
+* Déplacement: **Z-Q-S-D** permet de se déplacer latéralement.
+**SHIFT** et **ESPACE** permettent quant à eux un déplacement sur l'axe vertical.
 
-*R* pour réinitialiser la caméra
-*DOUBLE CLICK GAUCHE* fait beaucoup reculer la caméra
+* Orientation de la caméra: Il est possible de maintenir **CLIC GAUCHE** pour changer la vue de la caméra autour de l'origine.
+La **MOLETTE** sert à avancer ou reculer selon la direction de la caméra.
+
+    * Appuyer sur **R** va réinitialiser la caméra à son emplacement d'origine.
+    Un **DOUBLE CLIC GAUCHE** permettra au contraire de placer la caméra à un lieu éloigné de l'origine.
