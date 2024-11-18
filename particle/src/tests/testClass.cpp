@@ -163,8 +163,15 @@ void TestClass::s_testQuaternion()
 	ASSERT(k3 == Quaternion::IDENTITY);
 
 	//dotProduct()
+	Quaternion l1{ 1., 1., 0., 0.};
+	Quaternion l2{ 0., 0., 1., 1.};
+	ASSERT(l1.dotProduct(l2) == 0.f);
 
 	//getExpo()
+	Quaternion m1{ 0.383, 0., 0.,  0.924 }; //135° around Z axis
+	Quaternion m2{ 0.831, 0., 0.,  0.556 }; //135°/2 around Z axis
+	ASSERT(m1.getExpo(.5) == m2)
+	ASSERT(Quaternion::IDENTITY.getExpo(.3) == Quaternion::IDENTITY)
 
 	Quaternion n1{ 1., 1., 1., 1. };
 	ASSERT(s_floatComp(n1.length(), 2.));
@@ -181,8 +188,25 @@ void TestClass::s_testQuaternion()
 	ASSERT(o3.getNormalized() == o3);
 
 	//toMatrix3()
+	Quaternion p1{ .866, 0., 0., .5 };
+
+	float _matrix1[3][3] = {
+		{.5,   -.866,	0.},
+		{.866,	.5,	   -0.},
+		{0.,	0.,		1.},
+	};
+	Matrix3 matrix1{ _matrix1 };
+	Matrix3 matrix2{ p1.toMatrix3() };
+	ASSERT(p1.toMatrix3() == matrix1);
+	ASSERT(Quaternion::IDENTITY.toMatrix3() == Matrix3::identity);
 
 	//rotateVector()
+	Vec3 v1{1., 0., 0.};
+	Vec3 v2{ .5, .866, 0 };
+	Quaternion q1{ 0.866 , 0., 0., .5 }; //60° around Z axis
+	ASSERT(q1.rotateVector(v1) == v2)
+
+
 }
 
 void TestClass::s_testMatrix3()

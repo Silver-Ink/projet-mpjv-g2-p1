@@ -6,10 +6,10 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	TestClass::s_testVec3();
+	//TestClass::s_testVec3();
 	TestClass::s_testQuaternion();
-	TestClass::s_testMatrix3();
-	TestClass::s_testMatrix4();
+	//TestClass::s_testMatrix3();
+	//TestClass::s_testMatrix4();
 	GameContext::getInstance().init();
 }
 
@@ -69,53 +69,53 @@ void ofApp::keyPressed(int key){
 
 	switch (key) {
 	// Q
-	case 113: //GameContext::getInstance().init(GameContext::EsceneType::BlobScene);
+	case 113:
 		break;
 	// W	  //
-	case 119: //GameContext::getInstance().init(GameContext::EsceneType::InterpenetrationScene);
+	case 119: 
 		break;
 	// E	  //
-	case 101: //GameContext::getInstance().init(GameContext::EsceneType::RestContactScene);
+	case 101: 
 		break;
 	// R	  //
 	case 114: {GameContext::getInstance().ResetCamera(); break; }
 	// T	  //
-	case 116: //GameContext::getInstance().init(GameContext::EsceneType::RodScene);
+	case 116:
 		break;
 	// Y	  //
-	case 121: //GameContext::getInstance().init(GameContext::EsceneType::FixedSpringScene);
+	case 121:
 		break;
 	// U	  //
-	case 117: //GameContext::getInstance().init(GameContext::EsceneType::RegularSpringScene);
+	case 117: 
 		break;
 	// I	  //
-	case 105: //GameContext::getInstance().init(GameContext::EsceneType::BungeeScene);
+	case 105:
 		break;
 	// O	  //
-	case 111: //GameContext::getInstance().init(GameContext::EsceneType::BlobSpringScene)
+	case 111: 
 		break;
 	// F1
 	case 57344: 
 		GameContext::getInstance().spawnBox(20.f, 20.f, 50.f, 0.000001, addGravity);
 		break;
 	// F2		//
-	case 57345: //GameContext::getInstance().changeLinkCreationMode(1); 
+	case 57345: 
 		GameContext::getInstance().spawnBox(20.f, 20.f, 50.f, 0.00001, addGravity);
 		break;
 	// F3		//
-	case 57346: //GameContext::getInstance().changeLinkCreationMode(2);
+	case 57346: 
 		GameContext::getInstance().spawnBox(20.f, 20.f, 50.f, 0.00005, addGravity);
 		break;
 	// F4		//
-	case 57347: //GameContext::getInstance().changeLinkCreationMode(3); 
+	case 57347: 
 		GameContext::getInstance().spawnBox(20.f, 20.f, 50.f, 0.0002, addGravity);
 		break;
 	// F5		//
-	case 57348: //GameContext::getInstance().changeLinkCreationMode(4); 
+	case 57348:
 		addGravity = !addGravity;
 		break;
 	// F6		//
-	case 57349: //GameContext::getInstance().changeLinkCreationMode(5); 
+	case 57349:
 		break;
 	}
 }

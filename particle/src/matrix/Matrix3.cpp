@@ -245,11 +245,12 @@ Matrix3& Matrix3::operator*=(float scalar)
 
 bool Matrix3::operator==(const Matrix3& other)
 {
+#define EPS .001
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			if (elements[i][j] != other.elements[i][j])
+			if (fabs(elements[i][j] - other.elements[i][j]) > EPS)
 			{
 				return false;
 			}

@@ -158,6 +158,8 @@ Quaternion Quaternion::getExpo(float _t)
 Quaternion& Quaternion::expo(float _t)
 {
 	float alpha = acos(a);
+	if (alpha == 0.f)
+		return *this;
 	float beta = sin(_t * alpha) / sin(alpha);
 	a = cos(_t * alpha);
 	b *= beta;
