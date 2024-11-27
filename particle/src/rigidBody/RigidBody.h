@@ -27,6 +27,7 @@ public:
 	float			getTotalMass	()									{return totalMass;}
 	
 	bool			containsPoint	(Vec3 _point);
+	void			getPoints		(std::array<Vec3, 8>& _outBuffer);
 
 
 private:

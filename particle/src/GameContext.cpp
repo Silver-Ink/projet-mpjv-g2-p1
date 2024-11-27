@@ -8,6 +8,7 @@
 #include "particle/generators/FixedSpring.h"
 #include "particle/generators/BlobSpring.h"
 #include "rigidBody/RigidBody.h"
+#include "primitives/Octree.h"
 
 
 
@@ -63,7 +64,23 @@ void GameContext::update(float _dt)
 		rb->update(_dt);
 	}
 
+	glm::vec3 pos = camera.getGlobalPosition();
+	Octree octree{ {pos.x, pos.y-300.f, pos.z, 1000.f, 1000.f, 1000.f} };
+	for (RigidBody* rb : lstRigidBody)
+	{
+		octree.insert(rb);
+	}
 
+	std::vector<RigidBody*> possibleCollision;
+	for (RigidBody* rb : lstRigidBody)
+	{
+		octree.query(rb, possibleCollision);
+
+		// Test collisions here
+
+		possibleCollision.clear();
+	}
+	
 }
 
 void GameContext::draw()

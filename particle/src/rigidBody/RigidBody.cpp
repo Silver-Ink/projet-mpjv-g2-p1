@@ -138,3 +138,16 @@ bool RigidBody::containsPoint(Vec3 _point)
 		   y < initialUp.y &&
 		   z < initialRight.z;
 }
+
+void RigidBody::getPoints(std::array<Vec3, 8>& _outBuffer)
+{
+	Vec3& pos = massCenter.getPos();
+	_outBuffer[0] = pos	+ front + up + right;
+	_outBuffer[1] = pos	+ front + up - right;
+	_outBuffer[2] = pos	- front + up - right;
+	_outBuffer[3] = pos	- front + up + right;
+	_outBuffer[4] = pos	+ front - up + right;
+	_outBuffer[5] = pos	+ front - up - right;
+	_outBuffer[6] = pos	- front - up - right;
+	_outBuffer[7] = pos	- front - up + right;
+}
