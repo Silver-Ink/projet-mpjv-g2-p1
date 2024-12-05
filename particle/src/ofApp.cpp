@@ -10,6 +10,7 @@ void ofApp::setup(){
 	TestClass::s_testQuaternion();
 	TestClass::s_testMatrix3();
 	TestClass::s_testMatrix4();
+	TestClass::s_test_Planes();
 	GameContext::getInstance().init();
 }
 

@@ -27,4 +27,5 @@ public:
 
 	static void s_testMatrix3();
 	static void s_testMatrix4();
+	static void s_test_Planes();
 };
