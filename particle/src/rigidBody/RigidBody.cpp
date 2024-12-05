@@ -169,6 +169,17 @@ void RigidBody::getPoints(std::array<Vec3, 8>& _outBuffer)
 float RigidBody::getMaxRadius()
 {
 	// Return the maximum distance from the center to a corner of the box
-	return (massCenter.getPos() - (massCenter.getPos() + front + up + right)).length();
+	return (massCenter.getPos() - (massCenter.getPos() + front + up + right)).sqLength();
 	 
+}
+
+bool RigidBody::contact(RigidBody &_other)
+{
+	Vec3 Pos1 = massCenter.getPos();
+	Vec3 Pos2 = _other.massCenter.getPos();
+
+	float dist = (Pos1 - Pos2).length();
+	float sumRadius = getMaxRadius() + _other.getMaxRadius();
+
+	return (dist <= sumRadius);
 }

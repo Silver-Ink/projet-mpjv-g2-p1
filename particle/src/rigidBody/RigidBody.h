@@ -4,6 +4,7 @@
 #include "../primitives/Quaternion.h"
 #include "../matrix/Matrix3.h"
 #include "../matrix/Matrix4.h"
+#include "EnclosingVolume.h"
 
 class RigidBody
 {
@@ -31,6 +32,8 @@ public:
 
 	float			getMaxRadius	();
 
+	bool			contact			(RigidBody &_other);
+
 private:
 
 	// Bounds of the box, relative to massCenter's position
@@ -49,5 +52,6 @@ private:
 	Vec3		angularAcceleration;
 
 	Matrix3		inverseInertiaTensor;
+
 };
 

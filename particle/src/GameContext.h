@@ -66,9 +66,6 @@ private:
 	RigidBody* GameContext::AddRigidBody(RigidBody* _rigidBody);
 	RigidBody* GameContext::AddRigidBody(const RigidBody& _rigidBody);
 
-	EnclosingVolume* GameContext::AddEnclosingVolume(EnclosingVolume* _enclosingVolume);
-	EnclosingVolume* GameContext::AddEnclosingVolume(const EnclosingVolume& _enclosingVolume);
-
 	struct raycastResult {
 		RigidBody* collisionner{ nullptr };
 		Vec3 collisionPosAbsolute{};

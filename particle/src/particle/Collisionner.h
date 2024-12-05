@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../primitives/Vec3.h"
-#include "Particle.h"
+#include "../rigidBody/RigidBody.h"
 
 class Collisionner
 {
@@ -23,10 +23,9 @@ public:
 		float interPenetration{ 0.f };
 	};
 
-	static CollisionResult CheckCollision(Particle* _p1, Particle* _p2);
-	static void HandleAllCollision(std::vector<Particle*>& _lstParticle);
+	static void HandleAllCollision(std::vector<RigidBody*>& _lstRigidBody);
 
-	static void repositionParticle(Particle* _p1, Particle* _p2, Collisionner::CollisionResult& _collision);
-	static void applyImpulsion(Particle* _p1, Particle* _p2, Collisionner::CollisionResult& _collision);
+	static void repositionParticle(RigidBody* _rb1, RigidBody* _rb2, Collisionner::CollisionResult& _collision);
+	static void applyImpulsion(RigidBody* _rb1, RigidBody* _rb2, Collisionner::CollisionResult& _collision);
 };
 

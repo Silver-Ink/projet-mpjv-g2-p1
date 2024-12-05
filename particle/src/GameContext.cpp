@@ -219,19 +219,6 @@ RigidBody* GameContext::AddRigidBody(const RigidBody& _rigidBody)
 	return newRigidBody;
 }
 
-EnclosingVolume* GameContext::AddEnclosingVolume(EnclosingVolume* _enclosingVolume)
-{
-	lstEnclosingVolume.emplace_back(_enclosingVolume);
-	return _enclosingVolume;
-}
-
-EnclosingVolume* GameContext::AddEnclosingVolume(const EnclosingVolume& _enclosingVolume)
-{
-	EnclosingVolume* newEnclosingVolume = new EnclosingVolume(_enclosingVolume);
-	lstEnclosingVolume.emplace_back(newEnclosingVolume);
-	return newEnclosingVolume;
-}
-
 GameContext::raycastResult GameContext::raycast(Vec3 _startPoint, Vec3 _direction, float _maxLength, std::vector<RigidBody*>& _lstRigidBody)
 {
 	_direction.normalize();
