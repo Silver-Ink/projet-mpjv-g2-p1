@@ -7,6 +7,7 @@
 
 
 class RigidBody;
+class EnclosingVolume;
 
 class GameContext
 {
@@ -39,6 +40,7 @@ public:
 	std::vector<ParticleForceGenerator*> lstForceGenerator;
 
 	std::vector<RigidBody*> lstRigidBody;
+	std::vector<EnclosingVolume*> lstEnclosingVolume;
 
 	void setInputCamera(float _axisX, float _axisY, float _axisZ);
 	void updateCamera(float _dt);
@@ -63,6 +65,9 @@ private:
 
 	RigidBody* GameContext::AddRigidBody(RigidBody* _rigidBody);
 	RigidBody* GameContext::AddRigidBody(const RigidBody& _rigidBody);
+
+	EnclosingVolume* GameContext::AddEnclosingVolume(EnclosingVolume* _enclosingVolume);
+	EnclosingVolume* GameContext::AddEnclosingVolume(const EnclosingVolume& _enclosingVolume);
 
 	struct raycastResult {
 		RigidBody* collisionner{ nullptr };

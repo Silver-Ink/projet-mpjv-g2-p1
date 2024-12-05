@@ -29,6 +29,7 @@ public:
 	bool			containsPoint	(Vec3 _point);
 	void			getPoints		(std::array<Vec3, 8>& _outBuffer);
 
+	float			getMaxRadius	();
 
 private:
 
