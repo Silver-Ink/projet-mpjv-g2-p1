@@ -15,7 +15,7 @@ void BlobSpring::updateForce(Particle* _particle, float _dt)
 	float ropeDifference = currentLength - maxLength;
 	if (ropeDifference > 0)
 	{
-		Collisionner::repositionParticle(_particle, hinge, Collisionner::CollisionResult{ spring.getNormalized(), hinge->getPos(), ropeDifference });
+		//Collisionner::repositionParticle(_particle, hinge, Collisionner::CollisionResult{ spring.getNormalized(), hinge->getPos(), ropeDifference });
 	}
 	else if (fabs(springDifference) > lengthThreshold)
 	{

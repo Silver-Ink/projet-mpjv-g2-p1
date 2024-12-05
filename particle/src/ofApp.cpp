@@ -97,7 +97,7 @@ void ofApp::keyPressed(int key){
 		break;
 	// F1
 	case 57344: 
-		GameContext::getInstance().spawnBox(20.f, 20.f, 50.f, 0.000001, addGravity);
+		GameContext::getInstance().spawnBox(20.f, 20.f, 500.f, 0.000001, false);
 		break;
 	// F2		//
 	case 57345: 

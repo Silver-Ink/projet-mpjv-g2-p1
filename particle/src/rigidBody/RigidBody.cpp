@@ -126,9 +126,15 @@ void RigidBody::draw()
 	ofPopMatrix(); // Resetting pivot
 
 	// Draw Enclosing volume
-	float radius = getMaxRadius();
+	if (isColliding) {
+		ofSetColor(ofColor::red);
+	}
+	else {
+		ofSetColor(ofColor::blue);
+	}
 
-	ofSetColor(ofColor::red);
+	float radius = sqRadius;
+
 	ofSpherePrimitive sphere;
 	sphere.setPosition(massCenter.getPos().x, massCenter.getPos().y, massCenter.getPos().z);
 	sphere.setRadius(radius);
@@ -169,7 +175,7 @@ void RigidBody::getPoints(std::array<Vec3, 8>& _outBuffer)
 float RigidBody::getMaxRadius()
 {
 	// Return the maximum distance from the center to a corner of the box
-	return (massCenter.getPos() - (massCenter.getPos() + front + up + right)).sqLength();
+	return (massCenter.getPos() - (massCenter.getPos() + initialFront+ initialUp+ initialRight)).length();
 	 
 }
 
@@ -179,7 +185,7 @@ bool RigidBody::contact(RigidBody &_other)
 	Vec3 Pos2 = _other.massCenter.getPos();
 
 	float dist = (Pos1 - Pos2).length();
-	float sumRadius = getMaxRadius() + _other.getMaxRadius();
+	float sumRadius = sqRadius + _other.sqRadius;
 
-	return (dist <= sumRadius);
+	return (dist < sumRadius);
 }

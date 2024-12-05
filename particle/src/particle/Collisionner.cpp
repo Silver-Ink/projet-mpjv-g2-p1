@@ -13,9 +13,15 @@ void Collisionner::HandleAllCollision(std::vector<RigidBody*>& _lstRigidBody)
 
 				if (rb1->contact(*rb2)) // Collision élargie
 				{
+					rb1->isColliding = true;
+					rb2->isColliding = true;
 					//repositionParticle(rb1, rb2, collision);
 
 					//applyImpulsion(rb1, rb2, collision);
+				}
+				else {
+					rb1->isColliding = false;
+					rb2->isColliding = false;
 				}
 			}
 		}

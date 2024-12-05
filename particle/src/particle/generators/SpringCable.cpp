@@ -16,7 +16,7 @@ void SpringCable::updateForce(Particle* _particle, float /*_dt*/)
 	springForce *= 1. / springLength; //Normalize
 
 	//Collision
-	Collisionner::repositionParticle(_particle, hinge, Collisionner::CollisionResult{ springForce.getNormalized(), hinge->getPos(), extension });
+	//Collisionner::repositionParticle(_particle, hinge, Collisionner::CollisionResult{ springForce.getNormalized(), hinge->getPos(), extension });
 	
 }
 

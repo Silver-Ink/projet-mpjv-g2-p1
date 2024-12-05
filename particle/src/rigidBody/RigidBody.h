@@ -4,7 +4,6 @@
 #include "../primitives/Quaternion.h"
 #include "../matrix/Matrix3.h"
 #include "../matrix/Matrix4.h"
-#include "EnclosingVolume.h"
 
 class RigidBody
 {
@@ -34,6 +33,8 @@ public:
 
 	bool			contact			(RigidBody &_other);
 
+	bool isColliding = false;
+
 private:
 
 	// Bounds of the box, relative to massCenter's position
@@ -46,6 +47,7 @@ private:
 	Vec3 initialRight;	// Z
 
 	float totalMass;
+	float sqRadius = getMaxRadius();
 
 	Quaternion	orientation;
 	Vec3		angularSpeed;
