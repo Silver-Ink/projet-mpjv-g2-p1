@@ -2,6 +2,7 @@
 
 #include "../primitives/Vec3.h"
 #include "../rigidBody/RigidBody.h"
+#include "../primitives/Octree.h"
 
 class Collisionner
 {
@@ -23,7 +24,7 @@ public:
 		float interPenetration{ 0.f };
 	};
 
-	static void HandleAllCollision(std::vector<RigidBody*>& _lstRigidBody);
+	static void HandleAllCollision(Octree& _emptyOctree, std::vector<RigidBody*>& _lstRigidBody);
 
 	static void repositionParticle(RigidBody* _rb1, RigidBody* _rb2, Collisionner::CollisionResult& _collision);
 	static void applyImpulsion(RigidBody* _rb1, RigidBody* _rb2, Collisionner::CollisionResult& _collision);

@@ -35,7 +35,7 @@ public:
     void query(RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodies);
 
 private:
-    void queryReccursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodies);
+    void queryRecursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodies);
     void subdivide();
 
 private:

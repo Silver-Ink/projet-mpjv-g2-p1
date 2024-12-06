@@ -1,31 +1,73 @@
 #include "Collisionner.h"
 
-void Collisionner::HandleAllCollision(std::vector<RigidBody*>& _lstRigidBody)
+void Collisionner::HandleAllCollision(Octree& _emptyOctree, std::vector<RigidBody*>& _lstRigidBody)
 {
-	for (int i = 0; i < _lstRigidBody.size(); i++)
+	for (RigidBody* rb : _lstRigidBody)
 	{
-		for (int j = i; j < _lstRigidBody.size(); j++) // On ne teste que la collision [a;b] et pas [b;a]
+		_emptyOctree.insert(rb);
+	}
+
+	std::vector<RigidBody*> possibleCollision;
+
+	using RbPair = std::pair<RigidBody*, RigidBody*>;
+	std::vector<RbPair> lstCollisionProcessed; //Normalement pas très grand
+
+	for (RigidBody* rb1 : _lstRigidBody)
+	{
+		_emptyOctree.query(rb1, possibleCollision);
+
+		for (RigidBody* rb2 : possibleCollision) // Collision élargie (Octree)
 		{
-			if (i != j)
+			bool isNewCollision = true;
+			//Vérifie si la collision n'as pas déjà eu lieu dans l'autre sens
+			for (RbPair& pair : lstCollisionProcessed)
 			{
-				RigidBody* rb1 = _lstRigidBody[i];
-				RigidBody* rb2 = _lstRigidBody[j];
-
-				if (rb1->contact(*rb2)) // Collision élargie
+				if (pair.first	== rb2 && 
+					pair.second == rb1)
 				{
-					rb1->isColliding = true;
-					rb2->isColliding = true;
-					//repositionParticle(rb1, rb2, collision);
-
-					//applyImpulsion(rb1, rb2, collision);
-				}
-				else {
-					rb1->isColliding = false;
-					rb2->isColliding = false;
+					isNewCollision = false;
+					break;
 				}
 			}
+
+			if (isNewCollision && rb1->contact(*rb2)) // Collision élargie (Volume englobant)
+			{
+				rb1->isColliding = true;
+				rb2->isColliding = true;
+				//repositionParticle(rb1, rb2, collision);
+
+				//applyImpulsion(rb1, rb2, collision);
+				lstCollisionProcessed.emplace_back(RbPair{ rb1, rb2 });
+			}
 		}
+
+		possibleCollision.clear();
 	}
+
+	//for (int i = 0; i < _lstRigidBody.size(); i++)
+	//{
+	//	for (int j = i; j < _lstRigidBody.size(); j++) // On ne teste que la collision [a;b] et pas [b;a]
+	//	{
+	//		if (i != j)
+	//		{
+	//			RigidBody* rb1 = _lstRigidBody[i];
+	//			RigidBody* rb2 = _lstRigidBody[j];
+
+	//			if (rb1->contact(*rb2)) // Collision élargie
+	//			{
+	//				rb1->isColliding = true;
+	//				rb2->isColliding = true;
+	//				//repositionParticle(rb1, rb2, collision);
+
+	//				//applyImpulsion(rb1, rb2, collision);
+	//			}
+	//			else {
+	//				rb1->isColliding = false;
+	//				rb2->isColliding = false;
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 void Collisionner::repositionParticle(RigidBody* _rb1, RigidBody* _rb2, Collisionner::CollisionResult& _collision)

@@ -48,7 +48,9 @@ void GameContext::update(float _dt)
 	
 	particleForceRegistry.UpdateForces(_dt);
 
-	Collisionner::HandleAllCollision(lstRigidBody);
+	glm::vec3 pos = camera.getGlobalPosition();
+	Octree octree{ {pos.x, pos.y - 300.f, pos.z, 1000.f, 1000.f, 1000.f} };
+	Collisionner::HandleAllCollision(octree, lstRigidBody);
 
 	for (auto particle : lstParticle)
 	{
@@ -64,23 +66,6 @@ void GameContext::update(float _dt)
 		rb->update(_dt);
 	}
 
-	glm::vec3 pos = camera.getGlobalPosition();
-	Octree octree{ {pos.x, pos.y-300.f, pos.z, 1000.f, 1000.f, 1000.f} };
-	for (RigidBody* rb : lstRigidBody)
-	{
-		octree.insert(rb);
-	}
-
-	std::vector<RigidBody*> possibleCollision;
-	for (RigidBody* rb : lstRigidBody)
-	{
-		octree.query(rb, possibleCollision);
-
-		// Test collisions here
-
-		possibleCollision.clear();
-	}
-	
 }
 
 void GameContext::draw()

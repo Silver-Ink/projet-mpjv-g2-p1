@@ -60,6 +60,8 @@ RigidBody::RigidBody(const Vec3& _center, float _density, float _length, float _
 
 void RigidBody::update(float _dt)
 {
+	
+
 	Vec3 _torque = massCenter.accumTorque;
 	massCenter.accumTorque = Vec3{ 0,0,0 };
 	
@@ -72,7 +74,7 @@ void RigidBody::update(float _dt)
 
 
 	// update orientation
-	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);		// Demander au prof explications parce que �a parait magique
+	Quaternion angularSpeedQuat = Quaternion(0, angularSpeed.x, angularSpeed.y, angularSpeed.z);
 
 	orientation += 0.5 * angularSpeedQuat * orientation * _dt;
 	orientation.normalize();
@@ -132,6 +134,7 @@ void RigidBody::draw()
 	else {
 		ofSetColor(ofColor::blue);
 	}
+	isColliding = false;
 
 	float radius = sqRadius;
 

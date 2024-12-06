@@ -5,8 +5,8 @@ bool Octree::insert(RigidBody* _rigidbody)
     std::array<Vec3, 8> points;
     _rigidbody->getPoints(points);
 
-    if (!boundary.intersects(points));
-    return false;
+    if (!boundary.intersects(points))
+        return false;
 
     if (contentCount < 5 && !nwTop)
     {
@@ -34,10 +34,10 @@ void Octree::query(RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodi
 {
     std::array<Vec3, 8> rigidbodyPoints{};
     _rigidbody->getPoints(rigidbodyPoints);
-    queryReccursive(rigidbodyPoints, _rigidbody, _outRigidBodies);
+    queryRecursive(rigidbodyPoints, _rigidbody, _outRigidBodies);
 }
 
-void Octree::queryReccursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodies)
+void Octree::queryRecursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodies)
 {
     if (!boundary.intersects(_rigidbodyPoints))
         return;
@@ -47,11 +47,15 @@ void Octree::queryReccursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidB
     {
         RigidBody* rb = content[i];
 
+        //Checks autoCollision
+        if (rb == _rigidbody)
+            break;
+
         //Checks if contained rigidBody is not already in the results list
         bool found = false;
         for (size_t i = 0; i < _outRigidBodies.size(); i++)
         {
-            if (_outRigidBodies[i] == rb || _rigidbody == rb)
+            if (_outRigidBodies[i] == rb)
             {
                 found = true;
                 break;
@@ -63,14 +67,14 @@ void Octree::queryReccursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidB
 
     if (nwTop)
     {
-        nwTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        neTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        swTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        seTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        nwBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        neBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        swBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        seBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        nwTop->queryRecursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        neTop->queryRecursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        swTop->queryRecursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        seTop->queryRecursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        nwBot->queryRecursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        neBot->queryRecursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        swBot->queryRecursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        seBot->queryRecursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
     }
 }
 
