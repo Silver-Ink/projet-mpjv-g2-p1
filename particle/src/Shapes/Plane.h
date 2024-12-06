@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Vec3.h"
+#include "../primitives/vec3.h"
 
 class Plane
 {
