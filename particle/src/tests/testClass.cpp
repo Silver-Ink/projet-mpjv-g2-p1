@@ -3,6 +3,7 @@
 #include "../primitives/Quaternion.h"
 #include "../matrix/Matrix3.h"
 #include "../matrix/Matrix4.h"
+#include "../Shapes/Plane.h"
 
 #define COMMA ,
 
@@ -375,4 +376,22 @@ void TestClass::s_testMatrix4()
 	e.print_matrix();
 	ASSERT(s_floatComp(e.determinant(), -104.f))
 
+}
+
+void TestClass::s_test_Planes()
+{
+	INIT_TEST();
+	Plane p1{ {0.f, 0.f, 0.f}, {1.f, 0.f, 0.f} };
+	
+	//check the projection of the point (1, 0, 0) on the plane
+	ASSERT(p1.getDistance({ 1.f, 0.f, 0.f }) == 1.f)
+	ASSERT(p1.getDistance({ 0.f, 1.f, 0.f }) == 0.f)
+	ASSERT(p1.getDistance({ 0.f, 0.f, 1.f }) == 0.f)
+	ASSERT(p1.getDistance({ 1.f, 1.f, 1.f }) == 1.f)
+
+	Vec3 projected = p1.projectPoint({ 1.f, 0.f, 0.f });
+	ASSERT(projected == Vec3( 0.f, 0.f, 0.f ))
+
+	Vec3 projected2 = p1.projectPoint({ 1.f, 1.f, 1.f });
+	ASSERT(projected2 == Vec3(0.f, 1.f, 1.f))
 }

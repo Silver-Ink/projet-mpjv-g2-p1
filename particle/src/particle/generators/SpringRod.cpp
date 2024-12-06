@@ -9,7 +9,7 @@ void SpringRod::updateForce(Particle* _otherParticle, float _dt)
 
 	springForce *= 1. / springLength; //Normalize
 	//Collision
-	Collisionner::repositionParticle(_otherParticle, particle, Collisionner::CollisionResult{ springForce.getNormalized(), particle->getPos(), extension });
+	//Collisionner::repositionParticle(_otherParticle, particle, Collisionner::CollisionResult{ springForce.getNormalized(), particle->getPos(), extension });
 }
 
 

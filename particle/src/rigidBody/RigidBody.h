@@ -29,6 +29,11 @@ public:
 	bool			containsPoint	(Vec3 _point);
 	void			getPoints		(std::array<Vec3, 8>& _outBuffer);
 
+	float			getMaxRadius	();
+
+	bool			contact			(RigidBody &_other);
+
+	bool isColliding = false;
 
 private:
 
@@ -42,11 +47,13 @@ private:
 	Vec3 initialRight;	// Z
 
 	float totalMass;
+	float sqRadius = getMaxRadius();
 
 	Quaternion	orientation;
 	Vec3		angularSpeed;
 	Vec3		angularAcceleration;
 
 	Matrix3		inverseInertiaTensor;
+
 };
 

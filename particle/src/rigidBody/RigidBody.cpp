@@ -93,6 +93,7 @@ void RigidBody::update(float _dt)
 
 void RigidBody::draw()
 {
+	ofSetColor(ofColor::white);
 	ofPushMatrix(); // Temporarly moving pivot
 
 	ofTranslate((glm::vec3)massCenter.getPos()); // Pivot translation to box center
@@ -123,6 +124,25 @@ void RigidBody::draw()
 	ofDrawLine((glm::vec3)boxEnd4, (glm::vec3)(boxEnd4 + 2 * right));
 
 	ofPopMatrix(); // Resetting pivot
+
+	// Draw Enclosing volume
+	if (isColliding) {
+		ofSetColor(ofColor::red);
+	}
+	else {
+		ofSetColor(ofColor::blue);
+	}
+
+	float radius = sqRadius;
+
+	ofSpherePrimitive sphere;
+	sphere.setPosition(massCenter.getPos().x, massCenter.getPos().y, massCenter.getPos().z);
+	sphere.setRadius(radius);
+	sphere.setResolution(6);
+	ofNoFill();                 
+	ofSetLineWidth(1.5);
+	sphere.drawWireframe();
+	ofFill();
 }
 
 bool RigidBody::containsPoint(Vec3 _point)
@@ -150,4 +170,22 @@ void RigidBody::getPoints(std::array<Vec3, 8>& _outBuffer)
 	_outBuffer[5] = pos	+ front - up - right;
 	_outBuffer[6] = pos	- front - up - right;
 	_outBuffer[7] = pos	- front - up + right;
+}
+
+float RigidBody::getMaxRadius()
+{
+	// Return the maximum distance from the center to a corner of the box
+	return (massCenter.getPos() - (massCenter.getPos() + initialFront+ initialUp+ initialRight)).length();
+	 
+}
+
+bool RigidBody::contact(RigidBody &_other)
+{
+	Vec3 Pos1 = massCenter.getPos();
+	Vec3 Pos2 = _other.massCenter.getPos();
+
+	float dist = (Pos1 - Pos2).length();
+	float sumRadius = sqRadius + _other.sqRadius;
+
+	return (dist < sumRadius);
 }

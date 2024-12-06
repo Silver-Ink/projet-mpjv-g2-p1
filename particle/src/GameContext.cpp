@@ -48,7 +48,7 @@ void GameContext::update(float _dt)
 	
 	particleForceRegistry.UpdateForces(_dt);
 
-	Collisionner::HandleAllCollision(lstParticle);
+	Collisionner::HandleAllCollision(lstRigidBody);
 
 	for (auto particle : lstParticle)
 	{
@@ -172,8 +172,11 @@ void GameContext::spawnBox(float _length, float _height, float _width, float _de
 
 	float dist = std::max(std::max(_length, _height), _width);
 
-	Vec3 pos = Vec3::fromGLM_vec3(camera.getGlobalPosition()) +
-		Vec3::fromGLM_vec3(camera.getLookAtDir()).normalize() * dist * 1.5f;
+	//Vec3 pos = Vec3::fromGLM_vec3(camera.getGlobalPosition()) +
+	//	Vec3::fromGLM_vec3(camera.getLookAtDir()).normalize() * dist * 1.5f;
+
+	Vec3 pos = (0,(Vec3::fromGLM_vec3(camera.getGlobalPosition()) +
+		Vec3::fromGLM_vec3(camera.getLookAtDir()).normalize() * dist * 1.5f).y,0);
 
 	RigidBody* rb = new RigidBody(pos, _density, _length, _height, _width, Quaternion::IDENTITY);
 	lstRigidBody.emplace_back(rb);
