@@ -30,6 +30,15 @@ void Particle::addForce(const Vec3& _force, const Vec3& applicationPoint)
 	accumTorque += torque;
 }
 
+void Particle::addImpulsion(const Vec3& _impulsion, const Vec3& applicationPoint)
+{
+	velocity += _impulsion;
+	Vec3 torque = applicationPoint;
+	torque -= position;
+	torque = torque.cross(_impulsion);
+	accumTorque += torque;
+}
+
 void Particle::clearAccum()
 {
 	accumForce = { 0, 0, 0 };

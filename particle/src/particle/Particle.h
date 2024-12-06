@@ -43,6 +43,7 @@ public:
 	Vec3 accumForce;
 	Vec3 accumTorque;
 	void addForce(const Vec3& _force, const Vec3& applicationPoint);
+	void addImpulsion(const Vec3& _impulsion, const Vec3& applicationPoint);
 	void clearAccum();
 };
 

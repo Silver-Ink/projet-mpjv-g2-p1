@@ -64,13 +64,13 @@ void Octree::queryReccursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidB
     if (nwTop)
     {
         nwTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        nwTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        nwTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        nwTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        neTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        swTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        seTop->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
         nwBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        nwBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        nwBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
-        nwBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        neBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        swBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
+        seBot->queryReccursive(_rigidbodyPoints, _rigidbody, _outRigidBodies);
     }
 }
 
