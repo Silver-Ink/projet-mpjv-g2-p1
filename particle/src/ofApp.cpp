@@ -97,7 +97,7 @@ void ofApp::keyPressed(int key){
 		break;
 	// F1
 	case 57344: 
-		GameContext::getInstance().spawnBox(20.f, 20.f, 500.f, 0.000001, false);
+		GameContext::getInstance().spawnBox(20.f, 20.f, 500.f, 0.000001, addGravity);
 		break;
 	// F2		//
 	case 57345: 
@@ -157,10 +157,10 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
 
 	if (button == 1) // Scroll wheel Click tiny hit
-		GameContext::getInstance().strength = 10.f;
+		GameContext::getInstance().strength = 1000.f;
 
 	if (button == 2) //Right click heavy hit
-		GameContext::getInstance().strength = 200.f;
+		GameContext::getInstance().strength = 4000.f;
 }
 
 //--------------------------------------------------------------

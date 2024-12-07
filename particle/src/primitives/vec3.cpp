@@ -46,6 +46,23 @@ Vec3& Vec3::operator*=(float _s)
 	return *this;
 }
 
+Vec3 Vec3::operator/(float _s)
+{
+	Vec3 copy = *this;
+	return copy /= _s;
+}
+
+Vec3& Vec3::operator/=(float _s)
+{
+	if (_s != 1.f)
+	{
+		x /= _s;
+		y /= _s;
+		z /= _s;
+	}
+	return *this;
+}
+
 Vec3 Vec3::operator+(Vec3& _v)
 {
 	Vec3 copy = *this;
@@ -86,6 +103,17 @@ bool Vec3::operator==(Vec3& _v)
 	(	fabs(x - _v.x) < EPS &&
 		fabs(y - _v.y) < EPS &&
 		fabs(z - _v.z) < EPS	);
+}
+
+Vec3 Vec3::getProjectionOntoAxis(Vec3& _axis)
+{
+	float axisLenth = _axis.length();
+	return dot(_axis) * _axis / (axisLenth * axisLenth);
+}
+
+float Vec3::getProjectionLengthOntoAxis(Vec3& _axis)
+{
+	return dot(_axis) / _axis.length();
 }
 
 Vec3 Vec3::operator-()

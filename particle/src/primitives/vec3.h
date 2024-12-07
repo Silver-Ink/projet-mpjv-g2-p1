@@ -24,6 +24,9 @@ public:
 	Vec3	operator*(float _s);
 	Vec3&	operator*=(float _s);
 
+	Vec3	operator/(float _s);
+	Vec3&	operator/=(float _s);
+
 	Vec3	operator+(Vec3& _v);
 	Vec3&	operator+=(Vec3& _v);
 	Vec3&	operator+=(const Vec3& _v);
@@ -42,6 +45,9 @@ public:
 	Vec3	cross(const Vec3& _v) { return Vec3{	y * _v.z - z * _v.y,
 											z * _v.x - x * _v.z,
 											x * _v.y - y * _v.x }; }
+
+	Vec3	getProjectionOntoAxis					(Vec3& _axis);
+	float	getProjectionLengthOntoAxis				(Vec3& _axis);
 
 	void	print() { printf("{%.1f;%.1f;%.1f}", x, y, z); }
 

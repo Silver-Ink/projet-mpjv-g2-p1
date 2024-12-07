@@ -26,7 +26,7 @@ public:
 
 	static void HandleAllCollision(Octree& _emptyOctree, std::vector<RigidBody*>& _lstRigidBody);
 
-	static void repositionParticle(RigidBody* _rb1, RigidBody* _rb2, Collisionner::CollisionResult& _collision);
-	static void applyImpulsion(RigidBody* _rb1, RigidBody* _rb2, Collisionner::CollisionResult& _collision);
+	static void repositionBody(RigidBody* _rb1, RigidBody* _rb2, RigidBody::SatCollisionResult& _collisionData);
+	static void applyImpulsion(RigidBody* _rb1, RigidBody* _rb2, RigidBody::SatCollisionResult& _collisionData);
 };
 

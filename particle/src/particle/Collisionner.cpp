@@ -34,14 +34,20 @@ void Collisionner::HandleAllCollision(Octree& _emptyOctree, std::vector<RigidBod
 			{
 				rb1->isColliding = true;
 				rb2->isColliding = true;
-				//repositionParticle(rb1, rb2, collision);
 
-				//applyImpulsion(rb1, rb2, collision);
+				RigidBody::SatCollisionResult collisionData = rb1->checkCollision(*rb2);
+				if (collisionData.isCollisionPresent)
+				{
+					repositionBody(rb1, rb2, collisionData);
+					//applyImpulsion(rb1, rb2, collision);
+
+				}
+
 				lstCollisionProcessed.emplace_back(RbPair{ rb1, rb2 });
 			}
 		}
 
-		possibleCollision.clear();
+		//possibleCollision.clear();
 	}
 
 	//for (int i = 0; i < _lstRigidBody.size(); i++)
@@ -70,28 +76,28 @@ void Collisionner::HandleAllCollision(Octree& _emptyOctree, std::vector<RigidBod
 	//}
 }
 
-void Collisionner::repositionParticle(RigidBody* _rb1, RigidBody* _rb2, Collisionner::CollisionResult& _collision)
+void Collisionner::repositionBody(RigidBody* _rb1, RigidBody* _rb2, RigidBody::SatCollisionResult& _collisionData)
 {
 	// Replace les particule pour qu'elles ne se supperposent pas
 	float massP1 = _rb1->massCenter.getMass();
 	float massP2 = _rb2->massCenter.getMass();
 
-	Vec3 deltaP1 = -massP2 / (massP1 + massP2) * _collision.interPenetration * _collision.normal;
-	Vec3 deltaP2 =  massP1 / (massP1 + massP2) * _collision.interPenetration * _collision.normal;
+	Vec3 deltaP1 = -massP2 / (massP1 + massP2) * _collisionData.interpenetration * _collisionData.minimumSeparationAxis;
+	Vec3 deltaP2 =  massP1 / (massP1 + massP2) * _collisionData.interpenetration * _collisionData.minimumSeparationAxis;
 
 	_rb1->massCenter.getPos() += deltaP1;
 	_rb2->massCenter.getPos() += deltaP2;
 }
 
-void Collisionner::applyImpulsion(RigidBody* _rb1, RigidBody* _rb2, Collisionner::CollisionResult& _collision)
+void Collisionner::applyImpulsion(RigidBody* _rb1, RigidBody* _rb2, RigidBody::SatCollisionResult& _collisionData)
 {
 	//Applique l'impulsion
 	Vec3 velocityRelative = _rb1->massCenter.getVelocity() - _rb2->massCenter.getVelocity();
 
-	float impulsionStrength = (	(restitutionCoef + 1.f) * velocityRelative.dot(_collision.normal) ) /
+	float impulsionStrength = (	(restitutionCoef + 1.f) * velocityRelative.dot(_collisionData.minimumSeparationAxis) ) /
 	//						  ----------------------------------------------------------------------
 										(_rb1->massCenter.getinverseMass() + _rb2->massCenter.getinverseMass());
 
-	_rb1->massCenter.addForce(-impulsionStrength * _collision.normal * _rb1->massCenter.getinverseMass(), _collision.collisionPoint);
-	_rb2->massCenter.addForce(impulsionStrength * _collision.normal * _rb2->massCenter.getinverseMass(), _collision.collisionPoint);
+	//_rb1->massCenter.addForce(-impulsionStrength * _collisionData.normal * _rb1->massCenter.getinverseMass(), _collisionData.collisionPoint);
+	//_rb2->massCenter.addForce(impulsionStrength * _collisionData.normal * _rb2->massCenter.getinverseMass(), _collisionData.collisionPoint);
 }

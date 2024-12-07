@@ -8,7 +8,6 @@
 class RigidBody
 {
 public:
-	Particle massCenter; // also geometric center
 	RigidBody() = default;
 	RigidBody(const Vec3& _center,float _density = 0.001, float _length = 30., float _height = 30., float _width = 30., Quaternion _orientation = Quaternion::IDENTITY);
 
@@ -27,12 +26,23 @@ public:
 	float			getTotalMass	()									{return totalMass;}
 	
 	bool			containsPoint	(Vec3 _point);
-	void			getPoints		(std::array<Vec3, 8>& _outBuffer);
+	void			getPoints		(std::array<Vec3, 8>& _outBuffer, bool _localPosition = false);
 
 	float			getMaxRadius	();
 
 	bool			contact			(RigidBody &_other);
 
+
+
+	struct SatCollisionResult {
+		bool isCollisionPresent{ false };
+		float interpenetration{ 0. };
+		Vec3 minimumSeparationAxis{ 0. }; // AKA normal vector
+	};
+
+	SatCollisionResult		checkCollision		(RigidBody& _other);
+
+	Particle massCenter{}; // also geometric center
 	bool isColliding = false;
 
 private:
@@ -47,7 +57,7 @@ private:
 	Vec3 initialRight;	// Z
 
 	float totalMass;
-	float sqRadius = getMaxRadius();
+	float sqRadius{};
 
 	Quaternion	orientation;
 	Vec3		angularSpeed;
