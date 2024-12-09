@@ -134,25 +134,28 @@ void RigidBody::draw()
 
 	ofPopMatrix(); // Resetting pivot
 
-	// Draw Enclosing volume
-	if (isColliding) {
-		ofSetColor(ofColor::red);
-	}
-	else {
-		ofSetColor(ofColor::blue);
-	}
-	isColliding = false;
+	if (GameContext::getInstance().drawEnclosingBodies)
+	{
+		// Draw Enclosing volume
+		if (isColliding) {
+			ofSetColor(ofColor::red, 30);
+		}
+		else {
+			ofSetColor(ofColor::blue, 30);
+		}
+		isColliding = false;
 
-	float radius = sqRadius;
+		float radius = sqRadius;
 
-	ofSpherePrimitive sphere;
-	sphere.setPosition(massCenter.getPos().x, massCenter.getPos().y, massCenter.getPos().z);
-	sphere.setRadius(radius);
-	sphere.setResolution(6);
-	ofNoFill();                 
-	ofSetLineWidth(1.5);
-	sphere.drawWireframe();
-	ofFill();
+		ofSpherePrimitive sphere;
+		sphere.setPosition(massCenter.getPos().x, massCenter.getPos().y, massCenter.getPos().z);
+		sphere.setRadius(radius);
+		sphere.setResolution(6);
+		ofNoFill();                 
+		ofSetLineWidth(1.5);
+		sphere.drawWireframe();
+		ofFill();
+	}
 }
 
 bool RigidBody::containsPoint(Vec3 _point)
@@ -202,7 +205,7 @@ bool RigidBody::contact(RigidBody &_other)
 	return (dist < sumRadius);
 }
 
-RigidBody::SatCollisionResult RigidBody::checkCollision(RigidBody& _other)
+SatCollisionResult RigidBody::checkCollision(RigidBody& _other)
 {
 	SatCollisionResult result;
 	result.isCollisionPresent = true;
@@ -246,7 +249,7 @@ RigidBody::SatCollisionResult RigidBody::checkCollision(RigidBody& _other)
 
 	int bestAxisId = 0;
 	float minInterpenetration = 99999.f;
-
+	bool shouldInvertNormal = false;
 
 	for (size_t i = 0; i < 15; i++) // axis loop
 	{
@@ -305,16 +308,33 @@ RigidBody::SatCollisionResult RigidBody::checkCollision(RigidBody& _other)
 		if ( caseA || caseB || caseC || caseD )
 		{
 			float interpenetration = 0.f;
+			bool caseInvertedNormal = false;
 
-			if		(caseA)
+			if (caseA)
+			{
 				interpenetration = maxOther - minThis;
+				caseInvertedNormal = true;
+			}
 			else if (caseB)
+			{
 				interpenetration = maxThis - minOther;
+				caseInvertedNormal = false;
+			}
 			else if (caseC || caseD)
 			{
 				float ip1 = maxThis - minOther;
 				float ip2 = maxOther - minThis;
 
+				if (abs(ip1) < abs(ip2))
+				{
+					interpenetration = ip1;
+					caseInvertedNormal = false;
+				}
+				else
+				{
+					interpenetration = ip2;
+					caseInvertedNormal = true;
+				}
 				interpenetration = (abs(ip1) < abs(ip2)) ? ip1 : ip2;
 			}
 
@@ -322,6 +342,7 @@ RigidBody::SatCollisionResult RigidBody::checkCollision(RigidBody& _other)
 			{
 				minInterpenetration = interpenetration;
 				bestAxisId = i;
+				shouldInvertNormal = caseInvertedNormal;
 			}
 		}
 		else
@@ -333,7 +354,17 @@ RigidBody::SatCollisionResult RigidBody::checkCollision(RigidBody& _other)
 
 	// At this point, collision is guaranteed
 	result.interpenetration = minInterpenetration;
-	result.minimumSeparationAxis = lstAxis[bestAxisId];
+	result.collisionPoint = this->massCenter.getPos() + relativeDist / 2.;
+
+	result.normal = lstAxis[bestAxisId].getNormalized();
+
+	if (shouldInvertNormal)
+		result.normal = -result.normal;
+
+	//if (minInterpenetration > 4)
+	{
+		GameContext::getInstance().collisionData.emplace_back(result);
+	}
 
 	return result;
 }

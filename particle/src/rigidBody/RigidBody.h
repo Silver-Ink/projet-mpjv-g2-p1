@@ -5,6 +5,13 @@
 #include "../matrix/Matrix3.h"
 #include "../matrix/Matrix4.h"
 
+struct SatCollisionResult {
+	bool isCollisionPresent{ false };
+	float interpenetration{ 0. };
+	Vec3 normal{ 0. }; // AKA normal vector
+	Vec3 collisionPoint{};
+};
+
 class RigidBody
 {
 public:
@@ -33,13 +40,6 @@ public:
 	bool			contact			(RigidBody &_other);
 
 
-
-	struct SatCollisionResult {
-		bool isCollisionPresent{ false };
-		float interpenetration{ 0. };
-		Vec3 minimumSeparationAxis{ 0. }; // AKA normal vector
-	};
-
 	SatCollisionResult		checkCollision		(RigidBody& _other);
 
 	Particle massCenter{}; // also geometric center
@@ -66,4 +66,6 @@ private:
 	Matrix3		inverseInertiaTensor;
 
 };
+
+
 

@@ -94,6 +94,7 @@ void ofApp::keyPressed(int key){
 		break;
 	// O	  //
 	case 111: 
+		GameContext::getInstance().drawOctree = !GameContext::getInstance().drawOctree;
 		break;
 	// F1
 	case 57344: 
@@ -117,6 +118,14 @@ void ofApp::keyPressed(int key){
 		break;
 	// F6		//
 	case 57349:
+		break;
+	// B		//
+	case 98:
+		GameContext::getInstance().drawEnclosingBodies = !GameContext::getInstance().drawEnclosingBodies;
+		break;
+	// N		//
+	case 110:
+		GameContext::getInstance().drawNormals = !GameContext::getInstance().drawNormals;
 		break;
 	}
 }
