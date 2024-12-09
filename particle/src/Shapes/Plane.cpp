@@ -2,7 +2,7 @@
 
 Plane::Plane(Vec3 _origin, Vec3 _normal) : origin(_origin), normal(_normal.normalize())
 {
-	impulsionStrength = 10;
+	impulsionStrength = 1;
 }
 
 Plane::Plane(Vec3 _p1, Vec3 _p2, Vec3 _p3)
@@ -11,7 +11,7 @@ Plane::Plane(Vec3 _p1, Vec3 _p2, Vec3 _p3)
 	Vec3 v2 = _p3 - _p1;
 	normal = v1.cross(v2).normalize();
 	origin = _p1;
-	impulsionStrength = 10;
+	impulsionStrength = 1;
 }
 
 Vec3 Plane::getOrigin()
@@ -50,33 +50,38 @@ void Plane::draw()
 
 void Plane::collisionResolve(RigidBody* _rb)
 {
-	array<Vec3, 8> points;
-	_rb->getPoints(points);
-	Vec3 correction(0, 0, 0);
-	int collisionCount = 0;
+    array<Vec3, 8> points;
+    _rb->getPoints(points);
+    Vec3 correction(0, 0, 0);
+    int collisionCount = 0;
 
-	for (Vec3 point : points)
-	{
-		float distance = getDistance(point);
-		if (distance < 0)
-		{
-			Vec3 projectedPoint = projectPoint(point);
-			Vec3 normal = (point - projectedPoint);
-			correction += normal;
-			collisionCount++;
-		}
-	}
+    for (Vec3 point : points)
+    {
+        float distance = getDistance(point);
+        if (distance < 0)
+        {
+            Vec3 projectedPoint = projectPoint(point);
+            Vec3 normal = (point - projectedPoint).getNormalized();
+            correction += normal;
+            collisionCount++;
 
-	if (collisionCount > 0)
-	{
-		correction /= collisionCount; // Moyenne des corrections
-		_rb->massCenter.getPos() -= correction;
+            // Calculer l'impulsion en tenant compte de la masse infinie du plan
+            float massCube = _rb->massCenter.getMass();
+            Vec3 impulsion = -massCube * normal;
+            _rb->massCenter.addImpulsion(impulsion, point);
+        }
+    }
 
-		// Ajuster la vélocité pour éviter les oscillations
-		Vec3 velocity = _rb->massCenter.getVelocity();
-		if (velocity.dot(correction) < 0)
-		{
-			_rb->massCenter.getVelocity() -= velocity.dot(correction) * correction.getNormalized();
-		}
-	}
+    if (collisionCount > 0)
+    {
+        correction /= collisionCount; // Moyenne des corrections
+        _rb->massCenter.getPos() -= correction;
+
+        // Ajuster la vélocité pour éviter les oscillations
+        Vec3 velocity = _rb->massCenter.getVelocity();
+        if (velocity.dot(correction) < 0)
+        {
+            _rb->massCenter.getVelocity() -= velocity.dot(correction) * correction.getNormalized();
+        }
+    }
 }
