@@ -4,6 +4,7 @@
 #include "particle/generators/ParticleGravity.h"
 #include "particle/ParticleForceRegistry.h"
 #include "particle/generators/SpringBungee.h"
+#include "Shapes/Plane.h"
 
 
 class RigidBody;
@@ -79,6 +80,8 @@ private:
 	float axisX{};
 	float axisY{};
 	float axisZ{};
+
+	Plane* ground;
 
 	raycastResult raycastData;
 

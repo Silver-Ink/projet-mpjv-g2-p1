@@ -21,12 +21,14 @@ void GameContext::init()
 
 	ParticleGravity* gravity = new ParticleGravity();
 
-	RigidBody* rb1 = AddRigidBody(RigidBody{ {0, 0, 0}, 0.0001 });
+	RigidBody* rb1 = AddRigidBody(RigidBody{ {0, 100, 0}, 0.0001 });
 
-	rb1->massCenter.addForce({ 0, 500, 0 }, { 30, 0, 0 });
+	//rb1->massCenter.addForce({ 0, 500, 0 }, { 30, 0, 0 });
 
 	AddForceGenerator(gravity);
 	particleForceRegistry.Add(&(rb1->massCenter), gravity);
+
+	ground = new Plane({ 0, -20,  0}, { 0, 1, 0 });
 
 }
 
@@ -63,6 +65,7 @@ void GameContext::update(float _dt)
 	}
 	for (RigidBody* rb : lstRigidBody)
 	{
+		ground->collisionResolve(rb);
 		rb->update(_dt);
 	}
 
@@ -73,6 +76,7 @@ void GameContext::draw()
 
 	camera.begin();
 	ofNoFill();
+	ground->draw();
 	//ofDrawBox(30.);
 	//ofDrawCylinder({0., 30., 0.}, 5., 30.);
 
@@ -95,6 +99,7 @@ void GameContext::draw()
 	}
 
 	ofDrawSphere(camera.getGlobalPosition() + camera.getLookAtDir() * raycastData.rayLength, 1);
+
 
 
 	//ofDrawArrow({ 0,0,0 }, (glm::vec3)testArrow);

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../primitives/vec3.h"
+#include "rigidBody/RigidBody.h"
 
 class Plane
 {
@@ -7,6 +8,7 @@ class Plane
 private:
 	Vec3 origin;
 	Vec3 normal;
+	float impulsionStrength;
 
 public:
 	Plane(Vec3 _origin, Vec3 _normal);
@@ -17,6 +19,10 @@ public:
 
 	Vec3 projectPoint(Vec3 _point);
 	float getDistance(Vec3 _point);
+
+	void draw();
+
+	void collisionResolve(RigidBody* _rb);
 
 
 
