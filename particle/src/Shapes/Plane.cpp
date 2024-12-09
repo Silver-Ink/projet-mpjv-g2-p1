@@ -52,22 +52,31 @@ void Plane::collisionResolve(RigidBody* _rb)
 {
 	array<Vec3, 8> points;
 	_rb->getPoints(points);
+	Vec3 correction(0, 0, 0);
+	int collisionCount = 0;
+
 	for (Vec3 point : points)
 	{
 		float distance = getDistance(point);
-		if (abs(distance) < 0.01)
-			continue;
 		if (distance < 0)
 		{
 			Vec3 projectedPoint = projectPoint(point);
-			Vec3 normal = (point - projectedPoint).normalize();
-			_rb->massCenter.addForce(-1 * normal * impulsionStrength, projectedPoint);
-			_rb->massCenter.getPos() += normal * distance;
+			Vec3 normal = (point - projectedPoint);
+			correction += normal;
+			collisionCount++;
 		}
-		else
-			if(distance < 0.1 && _rb->massCenter.getVelocity().sqLength()<3)
-			{
-				_rb->massCenter.getVel() = _rb->massCenter.getVel() - _rb->massCenter.getVel().dot(normal) * normal;
-			}
+	}
+
+	if (collisionCount > 0)
+	{
+		correction /= collisionCount; // Moyenne des corrections
+		_rb->massCenter.getPos() -= correction;
+
+		// Ajuster la vélocité pour éviter les oscillations
+		Vec3 velocity = _rb->massCenter.getVelocity();
+		if (velocity.dot(correction) < 0)
+		{
+			_rb->massCenter.getVelocity() -= velocity.dot(correction) * correction.getNormalized();
+		}
 	}
 }

@@ -4,11 +4,13 @@
 #include "particle/generators/ParticleGravity.h"
 #include "particle/ParticleForceRegistry.h"
 #include "particle/generators/SpringBungee.h"
-#include "Shapes/Plane.h"
+#include "rigidBody/RigidBody.h"
+#include "primitives/Octree.h"
 
 
 class RigidBody;
 class EnclosingVolume;
+//class Octree;
 
 class GameContext
 {
@@ -58,6 +60,11 @@ public:
 
 	float strength;
 
+	std::vector<SatCollisionResult> collisionData;
+
+	bool drawNormals = true;
+	bool drawEnclosingBodies = true;
+	bool drawOctree = true;
 private:
 	ParticleForceGenerator* AddForceGenerator(ParticleForceGenerator* _forceGenerator);
 
@@ -84,6 +91,7 @@ private:
 	Plane* ground;
 
 	raycastResult raycastData;
+	Octree octree;
 
 };
 

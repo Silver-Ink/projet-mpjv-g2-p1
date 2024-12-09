@@ -8,7 +8,7 @@ bool Octree::insert(RigidBody* _rigidbody)
     if (!boundary.intersects(points))
         return false;
 
-    if (contentCount < 5 && !nwTop)
+    if (contentCount < OCTREE_SIZE && !nwTop)
     {
         content.at(contentCount++) = _rigidbody;
         return true;
@@ -35,6 +35,37 @@ void Octree::query(RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodi
     std::array<Vec3, 8> rigidbodyPoints{};
     _rigidbody->getPoints(rigidbodyPoints);
     queryRecursive(rigidbodyPoints, _rigidbody, _outRigidBodies);
+}
+
+void Octree::draw()
+{
+    ofSetColor(ofColor::lawnGreen, 10);
+    //ofBoxPrimitive box;
+    //box.setPosition((glm::vec3)boundary.center);
+    //box.setDepth(boundary.h_length * 2);
+    //box.setHeight(boundary.h_height * 2);
+    //box.setWidth(boundary.h_width * 2);
+    //box.setResolution(1);
+    ////box.drawFaces();
+
+    if (swBot)
+    {
+        ofSetColor(ofColor::lawnGreen, 20);
+        Vec3 front  { boundary.h_length, 0, 0 };
+        Vec3 up     { 0, boundary.h_height, 0 };
+        Vec3 right  { 0, 0, boundary.h_width };
+        ofDrawLine( (glm::vec3)(boundary.center + front ), (glm::vec3)(boundary.center - front  ));
+        ofDrawLine( (glm::vec3)(boundary.center + up    ), (glm::vec3)(boundary.center - up     ));
+        ofDrawLine( (glm::vec3)(boundary.center + right ), (glm::vec3)(boundary.center - right  ));
+        nwTop->draw();
+        neTop->draw();
+        swTop->draw();
+        seTop->draw();
+        nwBot->draw();
+        neBot->draw();
+        swBot->draw();
+        seBot->draw();
+    }
 }
 
 void Octree::queryRecursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodies)

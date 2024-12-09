@@ -9,8 +9,7 @@
 #include "particle/generators/BlobSpring.h"
 #include "rigidBody/RigidBody.h"
 #include "primitives/Octree.h"
-
-
+#include "Shapes/Plane.h"
 
 
 void GameContext::init()
@@ -51,7 +50,7 @@ void GameContext::update(float _dt)
 	particleForceRegistry.UpdateForces(_dt);
 
 	glm::vec3 pos = camera.getGlobalPosition();
-	Octree octree{ {pos.x, pos.y - 300.f, pos.z, 1000.f, 1000.f, 1000.f} };
+	octree = Octree{ {0., 0., 0., 3000.f, 3000.f, 3000.f} };
 	Collisionner::HandleAllCollision(octree, lstRigidBody);
 
 	for (auto particle : lstParticle)
@@ -86,6 +85,8 @@ void GameContext::draw()
 	//{
 	//	particle->draw();
 	//}
+	if (drawOctree)
+		octree.draw();
 
 
 	for each (RigidBody* rb in lstRigidBody)
@@ -99,6 +100,25 @@ void GameContext::draw()
 	}
 
 	ofDrawSphere(camera.getGlobalPosition() + camera.getLookAtDir() * raycastData.rayLength, 1);
+
+	if (drawNormals)
+	{
+		float step = 1. / static_cast<float>(collisionData.size());
+		float progress = 0.;
+		for (SatCollisionResult c : collisionData)
+		{
+			progress += step;
+			if (c.isCollisionPresent)
+			{
+				ofSetColor(ofColor::red* progress + ofColor::yellow * (1.-progress), 40);
+				ofDrawArrow((glm::vec3)c.collisionPoint, (glm::vec3)(c.collisionPoint + c.normal * 30), 1);
+				ofSetColor(ofColor::white);
+			}
+		}
+	}
+
+
+
 
 
 

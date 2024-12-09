@@ -35,11 +35,11 @@ void Collisionner::HandleAllCollision(Octree& _emptyOctree, std::vector<RigidBod
 				rb1->isColliding = true;
 				rb2->isColliding = true;
 
-				RigidBody::SatCollisionResult collisionData = rb1->checkCollision(*rb2);
+				SatCollisionResult collisionData = rb1->checkCollision(*rb2);
 				if (collisionData.isCollisionPresent)
 				{
 					repositionBody(rb1, rb2, collisionData);
-					//applyImpulsion(rb1, rb2, collision);
+					applyImpulsion(rb1, rb2, collisionData);
 
 				}
 
@@ -76,28 +76,41 @@ void Collisionner::HandleAllCollision(Octree& _emptyOctree, std::vector<RigidBod
 	//}
 }
 
-void Collisionner::repositionBody(RigidBody* _rb1, RigidBody* _rb2, RigidBody::SatCollisionResult& _collisionData)
+void Collisionner::repositionBody(RigidBody* _rb1, RigidBody* _rb2, SatCollisionResult& _collisionData)
 {
 	// Replace les particule pour qu'elles ne se supperposent pas
 	float massP1 = _rb1->massCenter.getMass();
 	float massP2 = _rb2->massCenter.getMass();
 
-	Vec3 deltaP1 = -massP2 / (massP1 + massP2) * _collisionData.interpenetration * _collisionData.minimumSeparationAxis;
-	Vec3 deltaP2 =  massP1 / (massP1 + massP2) * _collisionData.interpenetration * _collisionData.minimumSeparationAxis;
+	Vec3 normal = _collisionData.normal;
+
+	Vec3 deltaP1 = -massP2 / (massP1 + massP2) * _collisionData.interpenetration * normal;
+	Vec3 deltaP2 =  massP1 / (massP1 + massP2) * _collisionData.interpenetration * normal;
+
+	//if (deltaP1.length() > 2)
+	{
+		std::cout << deltaP1.length() << endl;
+
+	}
 
 	_rb1->massCenter.getPos() += deltaP1;
 	_rb2->massCenter.getPos() += deltaP2;
 }
 
-void Collisionner::applyImpulsion(RigidBody* _rb1, RigidBody* _rb2, RigidBody::SatCollisionResult& _collisionData)
+void Collisionner::applyImpulsion(RigidBody* _rb1, RigidBody* _rb2, SatCollisionResult& _collisionData)
 {
+	Vec3 normal = _collisionData.normal;
+
 	//Applique l'impulsion
 	Vec3 velocityRelative = _rb1->massCenter.getVelocity() - _rb2->massCenter.getVelocity();
 
-	float impulsionStrength = (	(restitutionCoef + 1.f) * velocityRelative.dot(_collisionData.minimumSeparationAxis) ) /
+	float impulsionStrength = (	(restitutionCoef + 1.f) * velocityRelative.dot(normal) ) /
 	//						  ----------------------------------------------------------------------
-										(_rb1->massCenter.getinverseMass() + _rb2->massCenter.getinverseMass());
+							(_rb1->massCenter.getinverseMass() + _rb2->massCenter.getinverseMass());
 
-	//_rb1->massCenter.addForce(-impulsionStrength * _collisionData.normal * _rb1->massCenter.getinverseMass(), _collisionData.collisionPoint);
-	//_rb2->massCenter.addForce(impulsionStrength * _collisionData.normal * _rb2->massCenter.getinverseMass(), _collisionData.collisionPoint);
+	//if (impulsionStrength < 0.)
+		//std::cout << impulsionStrength << "    " << velocityRelative.x << "; " << velocityRelative.y << "; " << velocityRelative.z << " -> " << velocityRelative.length() << endl;
+
+	_rb1->massCenter.addImpulsion(-impulsionStrength * normal * _rb1->massCenter.getinverseMass(), _collisionData.collisionPoint);
+	_rb2->massCenter.addImpulsion(impulsionStrength * normal * _rb2->massCenter.getinverseMass(), _collisionData.collisionPoint);
 }

@@ -1,8 +1,11 @@
 #pragma once
 #include "../rigidBody/RigidBody.h"
 
+#define OCTREE_SIZE 2
+
 struct AABB {
 public:
+    AABB() = default;
     AABB(float _x, float _y, float _z, float _length, float _height, float _width) : center(_x, _y, _z), h_length(_length / 2.f), h_height(_height / 2.f), h_width(_width / 2.f) {}
 
     bool contains(Vec3 _point)
@@ -29,10 +32,13 @@ public:
 class Octree
 {
 public:
+    Octree() = default;
     Octree(const AABB& area) : boundary(area) {}
 
     bool insert(RigidBody* _rigidbody);
     void query(RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodies);
+
+    void draw();
 
 private:
     void queryRecursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodies);
@@ -50,6 +56,6 @@ private:
     std::unique_ptr<Octree> seBot{};
 
     size_t contentCount{ 0 };
-    std::array<RigidBody*, 5> content;
+    std::array<RigidBody*, OCTREE_SIZE> content;
 };
 
