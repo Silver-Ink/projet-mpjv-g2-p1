@@ -61,14 +61,14 @@ void Plane::collisionResolve(RigidBody* _rb)
         if (distance < 0)
         {
             Vec3 projectedPoint = projectPoint(point);
-            Vec3 normal = (point - projectedPoint).getNormalized();
+            Vec3 normal = (point - projectedPoint);
             correction += normal;
             collisionCount++;
 
             // Calculer l'impulsion en tenant compte de la masse infinie du plan
-            float massCube = _rb->massCenter.getMass();
+            float massCube = _rb->getTotalMass();
             Vec3 impulsion = -massCube * normal;
-            _rb->massCenter.addImpulsion(impulsion, point);
+            _rb->massCenter.addImpulsion(impulsion*2, point);
         }
     }
 

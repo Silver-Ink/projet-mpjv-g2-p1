@@ -70,6 +70,9 @@ RigidBody::RigidBody(const Vec3& _center, float _density, float _length, float _
 void RigidBody::update(float _dt)
 {
 	Vec3 _torque = massCenter.accumTorque;
+	printf("Torque : ");
+	_torque.print();
+	printf("\n");
 	massCenter.accumTorque = Vec3{ 0,0,0 };
 	
 
