@@ -8,6 +8,7 @@
 #include "primitives/Octree.h"
 
 
+class Plane;
 class RigidBody;
 class EnclosingVolume;
 //class Octree;
