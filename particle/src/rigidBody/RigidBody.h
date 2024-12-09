@@ -44,6 +44,7 @@ public:
 
 	Particle massCenter{}; // also geometric center
 	bool isColliding = false;
+	float damping;
 
 private:
 

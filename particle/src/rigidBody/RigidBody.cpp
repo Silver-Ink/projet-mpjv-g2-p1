@@ -5,6 +5,7 @@ RigidBody::RigidBody(const Vec3& _center, float _density, float _length, float _
 	orientation			(_orientation),
 	totalMass			(abs(_length) * abs(_height) * abs(_width) * _density)
 {
+	damping = 0.95f;
 	massCenter = Particle{ _center };
 
 	front	= Vec3{ _length / 2.f, 0., 0. };
@@ -70,17 +71,14 @@ RigidBody::RigidBody(const Vec3& _center, float _density, float _length, float _
 void RigidBody::update(float _dt)
 {
 	Vec3 _torque = massCenter.accumTorque;
-	printf("Torque : ");
-	_torque.print();
-	printf("\n");
 	massCenter.accumTorque = Vec3{ 0,0,0 };
 	
 
 	// get acceleration from a = T * J-1
-	angularAcceleration = inverseInertiaTensor * _torque;
+	angularAcceleration = inverseInertiaTensor * _torque *100;
 
 	// update angular speed
-	angularSpeed += angularAcceleration * _dt;
+	angularSpeed = damping * angularSpeed + angularAcceleration * _dt;
 
 
 	// update orientation

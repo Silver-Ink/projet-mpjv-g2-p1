@@ -53,6 +53,8 @@ void Plane::collisionResolve(RigidBody* _rb)
     array<Vec3, 8> points;
     _rb->getPoints(points);
     Vec3 correction(0, 0, 0);
+    Vec3 totalImpulsion(0, 0, 0);
+    Vec3 averagePoint(0, 0, 0);
     int collisionCount = 0;
 
     for (Vec3 point : points)
@@ -63,19 +65,24 @@ void Plane::collisionResolve(RigidBody* _rb)
             Vec3 projectedPoint = projectPoint(point);
             Vec3 normal = (point - projectedPoint);
             correction += normal;
+            averagePoint += projectedPoint;
             collisionCount++;
 
             // Calculer l'impulsion en tenant compte de la masse infinie du plan
-            float massCube = _rb->getTotalMass();
+            float massCube = _rb->massCenter.getMass();
             Vec3 impulsion = -massCube * normal;
-            _rb->massCenter.addImpulsion(impulsion*2, point);
+            totalImpulsion += impulsion;
         }
     }
 
     if (collisionCount > 0)
     {
         correction /= collisionCount; // Moyenne des corrections
+        averagePoint /= collisionCount; // Moyenne des points d'application
         _rb->massCenter.getPos() -= correction;
+
+        // Appliquer l'impulsion totale au point moyen
+        _rb->massCenter.addImpulsion(totalImpulsion/2, averagePoint);
 
         // Ajuster la vélocité pour éviter les oscillations
         Vec3 velocity = _rb->massCenter.getVelocity();
