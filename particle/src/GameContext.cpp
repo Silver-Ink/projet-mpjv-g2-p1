@@ -20,12 +20,12 @@ void GameContext::init()
 
 	ParticleGravity* gravity = new ParticleGravity();
 
-	RigidBody* rb1 = AddRigidBody(RigidBody{ {0, 100, 0}, 0.0001 });
+	//RigidBody* rb1 = AddRigidBody(RigidBody{ {40, 100, 40}, 0.0001 });
 
 	//rb1->massCenter.addForce({ 0, 500, 0 }, { 30, 0, 0 });
 
 	AddForceGenerator(gravity);
-	particleForceRegistry.Add(&(rb1->massCenter), gravity);
+	//particleForceRegistry.Add(&(rb1->massCenter), gravity);
 
 	ground = new Plane({ 0, -20,  0}, { 0, 1, 0 });
 

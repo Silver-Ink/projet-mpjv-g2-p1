@@ -40,13 +40,13 @@ void Octree::query(RigidBody* _rigidbody, std::vector<RigidBody*>& _outRigidBodi
 void Octree::draw()
 {
     ofSetColor(ofColor::lawnGreen, 10);
-    //ofBoxPrimitive box;
-    //box.setPosition((glm::vec3)boundary.center);
-    //box.setDepth(boundary.h_length * 2);
-    //box.setHeight(boundary.h_height * 2);
-    //box.setWidth(boundary.h_width * 2);
-    //box.setResolution(1);
-    ////box.drawFaces();
+    ofBoxPrimitive box;
+    box.setPosition((glm::vec3)boundary.center);
+    box.setDepth(boundary.h_length * 2);
+    box.setHeight(boundary.h_height * 2);
+    box.setWidth(boundary.h_width * 2);
+    box.setResolution(1);
+    box.drawFaces();
 
     if (swBot)
     {
@@ -80,7 +80,7 @@ void Octree::queryRecursive(const std::array<Vec3, 8>& _rigidbodyPoints, RigidBo
 
         //Checks autoCollision
         if (rb == _rigidbody)
-            break;
+            continue;
 
         //Checks if contained rigidBody is not already in the results list
         bool found = false;
@@ -120,14 +120,14 @@ void Octree::subdivide()
     const float w = boundary.h_width;
 
 
-    nwTop = std::make_unique<Octree>(AABB{ x + l, y + h, z - w,    l * 2.f, h * 2.f, w * 2.f });
-    neTop = std::make_unique<Octree>(AABB{ x + l, y + h, z + w,    l * 2.f, h * 2.f, w * 2.f });
-    swTop = std::make_unique<Octree>(AABB{ x - l, y + h, z - w,    l * 2.f, h * 2.f, w * 2.f });
-    seTop = std::make_unique<Octree>(AABB{ x - l, y + h, z + w,    l * 2.f, h * 2.f, w * 2.f });
-    nwBot = std::make_unique<Octree>(AABB{ x + l, y - h, z - w,    l * 2.f, h * 2.f, w * 2.f });
-    neBot = std::make_unique<Octree>(AABB{ x + l, y - h, z + w,    l * 2.f, h * 2.f, w * 2.f });
-    swBot = std::make_unique<Octree>(AABB{ x - l, y - h, z - w,    l * 2.f, h * 2.f, w * 2.f });
-    seBot = std::make_unique<Octree>(AABB{ x - l, y - h, z + w,    l * 2.f, h * 2.f, w * 2.f });
+    nwTop = std::make_unique<Octree>(AABB{ x + l/2.f, y + h/2.f, z - w/2.f,    l, h, w });
+    neTop = std::make_unique<Octree>(AABB{ x + l/2.f, y + h/2.f, z + w/2.f,    l, h, w });
+    swTop = std::make_unique<Octree>(AABB{ x - l/2.f, y + h/2.f, z - w/2.f,    l, h, w });
+    seTop = std::make_unique<Octree>(AABB{ x - l/2.f, y + h/2.f, z + w/2.f,    l, h, w });
+    nwBot = std::make_unique<Octree>(AABB{ x + l/2.f, y - h/2.f, z - w/2.f,    l, h, w });
+    neBot = std::make_unique<Octree>(AABB{ x + l/2.f, y - h/2.f, z + w/2.f,    l, h, w });
+    swBot = std::make_unique<Octree>(AABB{ x - l/2.f, y - h/2.f, z - w/2.f,    l, h, w });
+    seBot = std::make_unique<Octree>(AABB{ x - l/2.f, y - h/2.f, z + w/2.f,    l, h, w });
 
     //for (RigidBody* rb : content)
     //{

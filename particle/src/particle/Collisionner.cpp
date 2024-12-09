@@ -18,6 +18,9 @@ void Collisionner::HandleAllCollision(Octree& _emptyOctree, std::vector<RigidBod
 
 		for (RigidBody* rb2 : possibleCollision) // Collision élargie (Octree)
 		{
+			if (rb1 == rb2)
+				continue;
+
 			bool isNewCollision = true;
 			//Vérifie si la collision n'as pas déjà eu lieu dans l'autre sens
 			for (RbPair& pair : lstCollisionProcessed)

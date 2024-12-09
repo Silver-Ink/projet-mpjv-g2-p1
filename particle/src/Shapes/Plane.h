@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "../primitives/vec3.h"
-#include "rigidBody/RigidBody.h"
+#include "../rigidBody/RigidBody.h"
 
 class Plane
 {
