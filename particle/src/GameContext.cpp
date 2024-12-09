@@ -22,7 +22,7 @@ void GameContext::init()
 
 	RigidBody* rb1 = AddRigidBody(RigidBody{ {0, 100, 0}, 0.0001 });
 
-	//rb1->massCenter.addForce({ 0, 500, 0 }, { 30, 0, 0 });
+	rb1->massCenter.addForce({ 0, 500, 0 }, { 30, 0, 0 });
 
 	AddForceGenerator(gravity);
 	particleForceRegistry.Add(&(rb1->massCenter), gravity);
@@ -50,7 +50,7 @@ void GameContext::update(float _dt)
 	particleForceRegistry.UpdateForces(_dt);
 
 	glm::vec3 pos = camera.getGlobalPosition();
-	octree = Octree{ {0., 0., 0., 3000.f, 3000.f, 3000.f} };
+	octree = Octree{ {0., 400., 0., 3000.f, 1000.f, 3000.f} };
 	Collisionner::HandleAllCollision(octree, lstRigidBody);
 
 	for (auto particle : lstParticle)
